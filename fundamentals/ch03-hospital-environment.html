@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>基础护理学第3章｜学生学习包</title>
+<style>
+:root{--bg:#f8f5ff;--paper:#fff;--ink:#28243a;--muted:#6f6983;--purple:#7352b8;--purple2:#a88de0;--lav:#eee7ff;--lav2:#f5f1ff;--line:#ddd2f4;--green:#2c8b71;--amber:#b56b12;--red:#b74162;--shadow:0 12px 32px rgba(89,61,139,.10)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(145deg,#faf8ff 0,#f3edff 45%,#fbfaff 100%);color:var(--ink);font:15px/1.75 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}
+a{color:inherit}button,input{font:inherit}button{cursor:pointer}.shell{max-width:1220px;margin:auto;padding:20px}
+.hero{background:linear-gradient(120deg,#5f419f,#8968cb 58%,#aa8ce2);color:white;border-radius:28px;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.10);right:-80px;top:-140px}.eyebrow{letter-spacing:.12em;font-size:12px;font-weight:800;opacity:.84}h1{font-size:clamp(28px,5vw,52px);line-height:1.15;margin:8px 0 12px}.hero p{max-width:760px;margin:0;opacity:.94}.hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}.stat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:14px;border-radius:16px;backdrop-filter:blur(6px)}.stat b{display:block;font-size:24px}.stat span{font-size:12px}
+.toolbar{position:sticky;top:0;z-index:20;margin:14px 0;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:18px;padding:10px;display:flex;gap:9px;align-items:center;box-shadow:0 8px 22px rgba(67,46,104,.09);backdrop-filter:blur(10px)}.seg{display:flex;background:var(--lav2);border-radius:12px;padding:3px}.seg button{border:0;background:transparent;padding:8px 12px;border-radius:9px;color:var(--muted)}.seg button.active{background:var(--purple);color:#fff}#search{min-width:220px;flex:1;border:1px solid var(--line);border-radius:11px;padding:9px 12px;background:#fff}.navbtn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 11px;text-decoration:none}.progressbox{display:flex;align-items:center;gap:8px;white-space:nowrap}.bar{width:110px;height:8px;border-radius:10px;background:#eee8fa;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),#c48ce8)}
+.notice{margin:14px 0;padding:14px 16px;background:#fff8e9;border:1px solid #efd5a9;border-radius:15px;color:#704d1f}main section.block{scroll-margin-top:88px;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:26px;margin:18px 0;box-shadow:var(--shadow)}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}.section-head h2{margin:0;font-size:26px}.section-head p{margin:2px 0 0;color:var(--muted)}.badge{background:var(--lav);color:var(--purple);border-radius:99px;padding:5px 10px;font-size:12px;font-weight:800}
+.toc{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.toc a{background:var(--lav2);border:1px solid var(--line);padding:13px;border-radius:14px;text-decoration:none;font-weight:700}.toc small{display:block;color:var(--muted);font-weight:400}.module{margin:22px 0;border-top:4px solid var(--purple2);padding-top:16px}.module-title{display:flex;gap:13px;align-items:start}.module-title>span{background:var(--purple);color:#fff;padding:6px 10px;border-radius:10px;font-weight:800}.module-title h3{margin:0;font-size:21px}.module-title p{margin:3px 0 12px;color:var(--muted)}.knowledge-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.knowledge{border:1px solid var(--line);background:#fdfcff;border-radius:15px;padding:14px}.khead{display:flex;align-items:center;gap:8px}.kid{font:700 11px/1 monospace;background:var(--lav);color:var(--purple);padding:5px;border-radius:6px}.khead h4{margin:0;flex:1}.knowledge p{margin:7px 0}.source{color:var(--muted);font-size:12px}.mastery,.attempt{border:1px solid var(--line);background:#fff;border-radius:9px;padding:5px 8px;color:var(--purple);font-size:12px}.mastery.done,.attempt.done{background:#e7f7f1;border-color:#a7d9ca;color:var(--green)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{border-collapse:collapse;width:100%;min-width:820px}th,td{padding:11px 12px;border-bottom:1px solid #ebe4f8;text-align:left;vertical-align:top}th{background:#f1ebff;color:#4d397c;position:sticky;top:0}tr:last-child td{border-bottom:0}.tier,.risk{display:inline-block;border-radius:99px;padding:3px 8px;font-weight:800;font-size:12px}.high,.rhigh{background:#fde8ee;color:var(--red)}.mid,.rmid{background:#fff0d5;color:var(--amber)}.low{background:#e8f5f0;color:var(--green)}.legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.method{background:var(--lav2);border-left:4px solid var(--purple);padding:12px 14px;border-radius:8px;color:#534b68}.paths{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.path-card{border:1px solid var(--line);border-radius:16px;padding:16px;background:linear-gradient(145deg,#fff,#faf7ff)}.path-card h3{margin:0 0 7px}.path-card p{margin:7px 0}.chant{background:var(--lav2);padding:9px;border-radius:9px;color:#513980}.number{font-weight:900;color:var(--purple);font-size:17px}.verify{font-size:12px;background:#f0edf7;padding:4px 7px;border-radius:8px}
+.question-list{display:grid;gap:12px}.question{border:1px solid var(--line);border-radius:17px;padding:17px;background:#fff}.question h3{font-size:16px;margin:12px 0;font-weight:650}.qmeta{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}.qnum{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--purple);color:#fff;font-weight:900}.qmeta span:nth-child(2){flex:1}.reveal{border:0;background:var(--lav);color:var(--purple);padding:8px 12px;border-radius:10px;font-weight:700}.answer{margin-top:10px;background:#f6f2ff;border-left:4px solid var(--purple2);padding:12px 14px;border-radius:8px}.answer p{margin:6px 0}.local-source{word-break:break-all}.exam-note{background:#eef8f5;border:1px solid #bfe1d7;padding:13px;border-radius:13px;margin-bottom:13px}
+.teacher-only{display:none}body.teacher .teacher-only{display:table-row}body.teacher p.teacher-only{display:block}body.teacher .answer{display:block!important}body.teacher .reveal{display:none}.hidden-by-search{display:none!important}.empty{display:none;color:var(--muted);text-align:center;padding:30px}footer{color:var(--muted);text-align:center;padding:26px 10px}.print-only{display:none}
+@media(max-width:850px){.shell{padding:10px}.hero{padding:24px 18px;border-radius:20px}.hero-grid{grid-template-columns:repeat(2,1fr)}.toolbar{flex-wrap:wrap}#search{order:3;flex-basis:100%}.progressbox{margin-left:auto}.toc{grid-template-columns:repeat(2,1fr)}.knowledge-grid,.paths{grid-template-columns:1fr}main section.block{padding:18px;border-radius:18px}.section-head{align-items:start;flex-direction:column}}
+@media print{body{background:#fff;font-size:11px}.shell{max-width:none;padding:0}.hero{box-shadow:none;border-radius:0}.toolbar,.reveal,.mastery,.attempt,.toc{display:none!important}main section.block{box-shadow:none;break-inside:auto;border-color:#bbb;margin:10px 0;padding:14px}.question,.knowledge,.path-card{break-inside:avoid}.answer{display:block!important}body.student .answer{display:none!important}.teacher-only{display:table-row!important}p.teacher-only{display:block!important}.print-only{display:block}}
+</style>
+</head>
+<body class="student">
+<div class="shell">
+<header class="hero">
+  <div class="eyebrow">FOUNDATIONS OF NURSING · CHAPTER 03</div>
+  <h1>预防与控制医院感染</h1>
+  <p>把本章拆成可查阅的知识框架、可理解的背诵路径和可检验的练习。先理解判断链，再记忆关键数据，最后用10道原创题与10道历年真题完成检验。</p>
+  <div class="hero-grid"><div class="stat"><b>36</b><span>双页码知识卡</span></div><div class="stat"><b>20</b><span>分层练习题</span></div><div class="stat"><b>74</b><span>最高院校覆盖数</span></div><div class="stat"><b>5</b><span>理解—背诵路径</span></div></div>
+</header>
+<div class="toolbar">
+  <span class="badge">学生学习版</span>
+  <input id="search" type="search" placeholder="搜索：无菌盘、4小时、标准预防……">
+  <a class="navbtn" href="#questions">去做题</a><button class="navbtn" id="printBtn">打印</button>
+  <div class="progressbox"><span id="progressText">0/56</span><span class="bar"><i id="progressBar"></i></span></div>
+</div>
+<main>
+<section class="block" id="home"><div class="section-head"><div><h2>怎么用这份包</h2><p>从理解、记忆到练习，按自己的节奏完成本章。</p></div><span class="badge">单文件 · 手机可开 · 离线可用</span></div>
+  <div class="toc"><a href="#knowledge">① 查知识<small>36张卡片，可搜索</small></a><a href="#tiers">② 定重点<small>按院校覆盖频次分层</small></a><a href="#numbers">③ 背数据<small>数字与对象绑定</small></a><a href="#questions">④ 做20题<small>先原创推理，再真题</small></a></div>
+</section>
+
+<section class="block" id="knowledge"><div class="section-head"><div><h2>01｜学生查阅知识框架</h2><p>每条知识标注教材页码，方便随时回到原文。</p></div><span class="badge">勾选会保存在本机</span></div><div class="encourage"><b>第一次不必全部记住。</b><span>先看懂每张卡在解决什么问题，再勾选真正理解的内容。稳定的小进步，比一次学完更重要。</span></div></div><section class="module searchable" id="M1" data-search="医院感染：先判边界，再拆感染链 能判断是否属于医院感染，并从感染源、传播途径、易感人群三个环节提出控制思路。">
+          <div class="module-title"><span>M1</span><div><h3>医院感染：先判边界，再拆感染链</h3><p>能判断是否属于医院感染，并从感染源、传播途径、易感人群三个环节提出控制思路。</p></div></div>
+          <div class="knowledge-grid"><article class="knowledge searchable" data-search="医院感染：先判边界，再拆感染链 医院感染的判断边界 住院期间获得、可在住院期间或出院后发病；入院前已经存在或处于潜伏期的感染通常不纳入。医务人员在医院内获得的感染也属于医院感染。判断应结合潜伏期、上次住院史、原感染基础上是否出现新的病原体或部位等条件。">
+              <div class="khead"><span class="kid">M1-K1</span><h4>医院感染的判断边界</h4><button class="mastery" data-key="M1-K1" aria-pressed="false">□ 已掌握</button></div>
+              <p>住院期间获得、可在住院期间或出院后发病；入院前已经存在或处于潜伏期的感染通常不纳入。医务人员在医院内获得的感染也属于医院感染。判断应结合潜伏期、上次住院史、原感染基础上是否出现新的病原体或部位等条件。</p><p class="source">教材第25页</p>
+            </article><article class="knowledge searchable" data-search="医院感染：先判边界，再拆感染链 感染不等于定植 只有检出微生物、没有临床症状或炎症证据时，不能只凭培养阳性直接判定为感染。">
+              <div class="khead"><span class="kid">M1-K2</span><h4>感染不等于定植</h4><button class="mastery" data-key="M1-K2" aria-pressed="false">□ 已掌握</button></div>
+              <p>只有检出微生物、没有临床症状或炎症证据时，不能只凭培养阳性直接判定为感染。</p><p class="source">教材第25页</p>
+            </article><article class="knowledge searchable" data-search="医院感染：先判边界，再拆感染链 内源性与外源性 分类依据是病原体来源：来自患者自身正常菌群或潜在病灶为内源性；来自其他患者、医务人员、环境或器械等为外源性。不要按发病早晚分类。">
+              <div class="khead"><span class="kid">M1-K3</span><h4>内源性与外源性</h4><button class="mastery" data-key="M1-K3" aria-pressed="false">□ 已掌握</button></div>
+              <p>分类依据是病原体来源：来自患者自身正常菌群或潜在病灶为内源性；来自其他患者、医务人员、环境或器械等为外源性。不要按发病早晚分类。</p><p class="source">教材第25–26页</p>
+            </article><article class="knowledge searchable" data-search="医院感染：先判边界，再拆感染链 发生原因 可从宿主因素、诊疗因素、环境与管理因素分析。侵入性操作会突破屏障，基础病、免疫抑制、营养状况等会增加易感性。">
+              <div class="khead"><span class="kid">M1-K4</span><h4>发生原因</h4><button class="mastery" data-key="M1-K4" aria-pressed="false">□ 已掌握</button></div>
+              <p>可从宿主因素、诊疗因素、环境与管理因素分析。侵入性操作会突破屏障，基础病、免疫抑制、营养状况等会增加易感性。</p><p class="source">教材第26页</p>
+            </article><article class="knowledge searchable" data-search="医院感染：先判边界，再拆感染链 感染链 医院感染发生需要感染源、传播途径和易感人群三个基本环节。控制措施应说明切断了哪一环，而不是罗列动作。">
+              <div class="khead"><span class="kid">M1-K5</span><h4>感染链</h4><button class="mastery" data-key="M1-K5" aria-pressed="false">□ 已掌握</button></div>
+              <p>医院感染发生需要感染源、传播途径和易感人群三个基本环节。控制措施应说明切断了哪一环，而不是罗列动作。</p><p class="source">教材第27–28页</p>
+            </article><article class="knowledge searchable" data-search="医院感染：先判边界，再拆感染链 传播途径与手 接触传播可分直接与间接接触；医务人员的手是重要的间接传播媒介。教材还列出空气、飞沫及其他途径。">
+              <div class="khead"><span class="kid">M1-K6</span><h4>传播途径与手</h4><button class="mastery" data-key="M1-K6" aria-pressed="false">□ 已掌握</button></div>
+              <p>接触传播可分直接与间接接触；医务人员的手是重要的间接传播媒介。教材还列出空气、飞沫及其他途径。</p><p class="source">教材第27–28页</p>
+            </article><article class="knowledge searchable" data-search="医院感染：先判边界，再拆感染链 防控是系统工程 建立责任体系、监测、培训、规范诊疗、改善环境与切断感染链需要协同。单靠一次消毒不能替代持续管理。">
+              <div class="khead"><span class="kid">M1-K7</span><h4>防控是系统工程</h4><button class="mastery" data-key="M1-K7" aria-pressed="false">□ 已掌握</button></div>
+              <p>建立责任体系、监测、培训、规范诊疗、改善环境与切断感染链需要协同。单靠一次消毒不能替代持续管理。</p><p class="source">教材第28–29页</p>
+            </article></div>
+        </section><section class="module searchable" id="M2" data-search="清洁、消毒与灭菌：对象—风险—方法—监测 能依据目标层级和物品特性选择处理路径，并识别‘参数正确但过程失败’的风险。">
+          <div class="module-title"><span>M2</span><div><h3>清洁、消毒与灭菌：对象—风险—方法—监测</h3><p>能依据目标层级和物品特性选择处理路径，并识别‘参数正确但过程失败’的风险。</p></div></div>
+          <div class="knowledge-grid"><article class="knowledge searchable" data-search="清洁、消毒与灭菌：对象—风险—方法—监测 三个层级 清洁是去除污染物并降低微生物负荷，通常是后续处理的前提；消毒杀灭或清除传播媒介上的病原微生物，但未必达到杀灭全部微生物；灭菌要求杀灭或清除一切微生物。">
+              <div class="khead"><span class="kid">M2-K1</span><h4>三个层级</h4><button class="mastery" data-key="M2-K1" aria-pressed="false">□ 已掌握</button></div>
+              <p>清洁是去除污染物并降低微生物负荷，通常是后续处理的前提；消毒杀灭或清除传播媒介上的病原微生物，但未必达到杀灭全部微生物；灭菌要求杀灭或清除一切微生物。</p><p class="source">教材第30–31页</p>
+            </article><article class="knowledge searchable" data-search="清洁、消毒与灭菌：对象—风险—方法—监测 随时与终末消毒 随时消毒在传染源仍存在期间及时处理污染；终末消毒在传染源离开疫源地后进行彻底处理。二者按时点和目的区分。">
+              <div class="khead"><span class="kid">M2-K2</span><h4>随时与终末消毒</h4><button class="mastery" data-key="M2-K2" aria-pressed="false">□ 已掌握</button></div>
+              <p>随时消毒在传染源仍存在期间及时处理污染；终末消毒在传染源离开疫源地后进行彻底处理。二者按时点和目的区分。</p><p class="source">教材第31页</p>
+            </article><article class="knowledge searchable" data-search="清洁、消毒与灭菌：对象—风险—方法—监测 干热与湿热 湿热穿透性通常更强，可在较低温度、较短时间完成处理；干热适用于耐高温而不宜湿处理的物品。油脂、粉剂等不适合压力蒸汽灭菌。">
+              <div class="khead"><span class="kid">M2-K3</span><h4>干热与湿热</h4><button class="mastery" data-key="M2-K3" aria-pressed="false">□ 已掌握</button></div>
+              <p>湿热穿透性通常更强，可在较低温度、较短时间完成处理；干热适用于耐高温而不宜湿处理的物品。油脂、粉剂等不适合压力蒸汽灭菌。</p><p class="source">教材第31–33页</p>
+            </article><article class="knowledge searchable" data-search="清洁、消毒与灭菌：对象—风险—方法—监测 灭菌效果监测 物理、化学和生物监测各自回答不同问题，不能把化学指示物变色等同于整批物品无菌。预真空压力蒸汽灭菌还涉及B-D试验。">
+              <div class="khead"><span class="kid">M2-K4</span><h4>灭菌效果监测</h4><button class="mastery" data-key="M2-K4" aria-pressed="false">□ 已掌握</button></div>
+              <p>物理、化学和生物监测各自回答不同问题，不能把化学指示物变色等同于整批物品无菌。预真空压力蒸汽灭菌还涉及B-D试验。</p><p class="source">教材第32页</p>
+            </article><article class="knowledge searchable" data-search="清洁、消毒与灭菌：对象—风险—方法—监测 化学消毒的共同逻辑 先按要求清洁、干燥，打开关节或管腔并保证完全接触；效果由浓度、时间、温度、有机物、物品结构和操作共同决定。">
+              <div class="khead"><span class="kid">M2-K5</span><h4>化学消毒的共同逻辑</h4><button class="mastery" data-key="M2-K5" aria-pressed="false">□ 已掌握</button></div>
+              <p>先按要求清洁、干燥，打开关节或管腔并保证完全接触；效果由浓度、时间、温度、有机物、物品结构和操作共同决定。</p><p class="source">教材第35–37页</p>
+            </article><article class="knowledge searchable" data-search="清洁、消毒与灭菌：对象—风险—方法—监测 器械处理按风险分层 进入人体组织、无菌器官或接触破损黏膜的物品，应达到与风险相匹配的消毒或灭菌水平；选择方法还要考虑耐热、耐湿及材质。">
+              <div class="khead"><span class="kid">M2-K6</span><h4>器械处理按风险分层</h4><button class="mastery" data-key="M2-K6" aria-pressed="false">□ 已掌握</button></div>
+              <p>进入人体组织、无菌器官或接触破损黏膜的物品，应达到与风险相匹配的消毒或灭菌水平；选择方法还要考虑耐热、耐湿及材质。</p><p class="source">教材第43–45页</p>
+            </article><article class="knowledge searchable" data-search="清洁、消毒与灭菌：对象—风险—方法—监测 流程方向 复用器械处理强调污染物品由污到洁的单向流程；消毒供应中心空气流向则强调由洁到污，污染区相对负压、检查包装及灭菌区相对正压。">
+              <div class="khead"><span class="kid">M2-K7</span><h4>流程方向</h4><button class="mastery" data-key="M2-K7" aria-pressed="false">□ 已掌握</button></div>
+              <p>复用器械处理强调污染物品由污到洁的单向流程；消毒供应中心空气流向则强调由洁到污，污染区相对负压、检查包装及灭菌区相对正压。</p><p class="source">教材第44页</p>
+            </article><article class="knowledge searchable" data-search="清洁、消毒与灭菌：对象—风险—方法—监测 追溯与发放 包装、标识、灭菌、储存、发放和记录构成追溯链。包装潮湿、破损、指示异常或超过有效期时不能按无菌物品发放。">
+              <div class="khead"><span class="kid">M2-K8</span><h4>追溯与发放</h4><button class="mastery" data-key="M2-K8" aria-pressed="false">□ 已掌握</button></div>
+              <p>包装、标识、灭菌、储存、发放和记录构成追溯链。包装潮湿、破损、指示异常或超过有效期时不能按无菌物品发放。</p><p class="source">教材第44–45页</p>
+            </article></div>
+        </section><section class="module searchable" id="M3" data-search="手卫生：时机优先，方法与污染状态匹配 能在临床情境中选择洗手、卫生手消毒或外科手消毒，并解释选择依据。">
+          <div class="module-title"><span>M3</span><div><h3>手卫生：时机优先，方法与污染状态匹配</h3><p>能在临床情境中选择洗手、卫生手消毒或外科手消毒，并解释选择依据。</p></div></div>
+          <div class="knowledge-grid"><article class="knowledge searchable" data-search="手卫生：时机优先，方法与污染状态匹配 三种手卫生 手卫生包括洗手、卫生手消毒和外科手消毒。洗手以皂液和流动水去除污垢及部分微生物；卫生手消毒用于减少手部暂居菌；外科手消毒还要求最大限度减少常居菌并抑制再生。">
+              <div class="khead"><span class="kid">M3-K1</span><h4>三种手卫生</h4><button class="mastery" data-key="M3-K1" aria-pressed="false">□ 已掌握</button></div>
+              <p>手卫生包括洗手、卫生手消毒和外科手消毒。洗手以皂液和流动水去除污垢及部分微生物；卫生手消毒用于减少手部暂居菌；外科手消毒还要求最大限度减少常居菌并抑制再生。</p><p class="source">教材第46、49–50页</p>
+            </article><article class="knowledge searchable" data-search="手卫生：时机优先，方法与污染状态匹配 五个时刻 接触患者前、清洁/无菌操作前、可能接触体液后、接触患者后、接触患者周围环境后。‘戴了手套’不会取消这些时机。">
+              <div class="khead"><span class="kid">M3-K2</span><h4>五个时刻</h4><button class="mastery" data-key="M3-K2" aria-pressed="false">□ 已掌握</button></div>
+              <p>接触患者前、清洁/无菌操作前、可能接触体液后、接触患者后、接触患者周围环境后。‘戴了手套’不会取消这些时机。</p><p class="source">教材第46、49页</p>
+            </article><article class="knowledge searchable" data-search="手卫生：时机优先，方法与污染状态匹配 暂居菌与常居菌 暂居菌较易通过常规手卫生清除，是交叉传播控制重点；常居菌稳定定植，外科手消毒重点是尽量减少并抑制其快速再生。">
+              <div class="khead"><span class="kid">M3-K3</span><h4>暂居菌与常居菌</h4><button class="mastery" data-key="M3-K3" aria-pressed="false">□ 已掌握</button></div>
+              <p>暂居菌较易通过常规手卫生清除，是交叉传播控制重点；常居菌稳定定植，外科手消毒重点是尽量减少并抑制其快速再生。</p><p class="source">教材第47、50页</p>
+            </article><article class="knowledge searchable" data-search="手卫生：时机优先，方法与污染状态匹配 何时必须洗手 手部有血液、体液等肉眼可见污染，或可能接触艰难梭菌、肠道病毒等对速干手消毒剂不敏感的病原体时，应使用流动水和洗手液洗手。">
+              <div class="khead"><span class="kid">M3-K4</span><h4>何时必须洗手</h4><button class="mastery" data-key="M3-K4" aria-pressed="false">□ 已掌握</button></div>
+              <p>手部有血液、体液等肉眼可见污染，或可能接触艰难梭菌、肠道病毒等对速干手消毒剂不敏感的病原体时，应使用流动水和洗手液洗手。</p><p class="source">教材第49页</p>
+            </article><article class="knowledge searchable" data-search="手卫生：时机优先，方法与污染状态匹配 揉搓要点 揉搓覆盖掌、背、指缝、指背、拇指、指尖等部位，教材要求揉搓至少15秒；冲洗时防止已清洁部位再污染。">
+              <div class="khead"><span class="kid">M3-K5</span><h4>揉搓要点</h4><button class="mastery" data-key="M3-K5" aria-pressed="false">□ 已掌握</button></div>
+              <p>揉搓覆盖掌、背、指缝、指背、拇指、指尖等部位，教材要求揉搓至少15秒；冲洗时防止已清洁部位再污染。</p><p class="source">教材第48–49页</p>
+            </article><article class="knowledge searchable" data-search="手卫生：时机优先，方法与污染状态匹配 外科手消毒 核心目标是清除污物和暂居菌，最大限度减少常居菌并抑制再生；不同患者手术之间、手套破损或手被污染时需重新进行。具体产品用量和时间按说明与机构规范执行。">
+              <div class="khead"><span class="kid">M3-K6</span><h4>外科手消毒</h4><button class="mastery" data-key="M3-K6" aria-pressed="false">□ 已掌握</button></div>
+              <p>核心目标是清除污物和暂居菌，最大限度减少常居菌并抑制再生；不同患者手术之间、手套破损或手被污染时需重新进行。具体产品用量和时间按说明与机构规范执行。</p><p class="source">教材第50–51页</p>
+            </article><article class="knowledge searchable" data-search="手卫生：时机优先，方法与污染状态匹配 依从率 手卫生依从率＝实际执行手卫生的时机数÷应执行手卫生的时机数×100%。既要看是否执行，也要观察方法是否正确。">
+              <div class="khead"><span class="kid">M3-K7</span><h4>依从率</h4><button class="mastery" data-key="M3-K7" aria-pressed="false">□ 已掌握</button></div>
+              <p>手卫生依从率＝实际执行手卫生的时机数÷应执行手卫生的时机数×100%。既要看是否执行，也要观察方法是否正确。</p><p class="source">教材第50页</p>
+            </article></div>
+        </section><section class="module searchable" id="M4" data-search="无菌技术：划清边界，防止跨越与回流 能围绕无菌区、接触面、时间和物品流向判断操作是否污染。">
+          <div class="module-title"><span>M4</span><div><h3>无菌技术：划清边界，防止跨越与回流</h3><p>能围绕无菌区、接触面、时间和物品流向判断操作是否污染。</p></div></div>
+          <div class="knowledge-grid"><article class="knowledge searchable" data-search="无菌技术：划清边界，防止跨越与回流 四个概念 无菌区与无菌物品都以‘已灭菌且未被污染’为前提；虽经灭菌但后来被污染，仍属于非无菌区或非无菌物品。">
+              <div class="khead"><span class="kid">M4-K1</span><h4>四个概念</h4><button class="mastery" data-key="M4-K1" aria-pressed="false">□ 已掌握</button></div>
+              <p>无菌区与无菌物品都以‘已灭菌且未被污染’为前提；虽经灭菌但后来被污染，仍属于非无菌区或非无菌物品。</p><p class="source">教材第52页</p>
+            </article><article class="knowledge searchable" data-search="无菌技术：划清边界，防止跨越与回流 操作原则 环境清洁、人员准备、无菌物品有序管理、面向无菌区、手臂保持在腰部或操作台面以上、避免跨越和谈笑咳嗽；可疑污染即按污染处理，一套物品供一位患者使用。">
+              <div class="khead"><span class="kid">M4-K2</span><h4>操作原则</h4><button class="mastery" data-key="M4-K2" aria-pressed="false">□ 已掌握</button></div>
+              <p>环境清洁、人员准备、无菌物品有序管理、面向无菌区、手臂保持在腰部或操作台面以上、避免跨越和谈笑咳嗽；可疑污染即按污染处理，一套物品供一位患者使用。</p><p class="source">教材第52页</p>
+            </article><article class="knowledge searchable" data-search="无菌技术：划清边界，防止跨越与回流 持物钳 取放时钳端闭合并避免触及容器口；使用时钳端向下、在视线内就地使用。教材的干式保存无菌持物钳开包后4小时更换。">
+              <div class="khead"><span class="kid">M4-K3</span><h4>持物钳</h4><button class="mastery" data-key="M4-K3" aria-pressed="false">□ 已掌握</button></div>
+              <p>取放时钳端闭合并避免触及容器口；使用时钳端向下、在视线内就地使用。教材的干式保存无菌持物钳开包后4小时更换。</p><p class="source">教材第53页</p>
+            </article><article class="knowledge searchable" data-search="无菌技术：划清边界，防止跨越与回流 无菌容器与无菌包 容器盖内面向上，手不触及内面和边缘；取出的物品不得放回。教材写明无菌容器初次使用后不超过24小时，部分取用后的无菌包按原折痕包好并标记，限24小时内使用。">
+              <div class="khead"><span class="kid">M4-K4</span><h4>无菌容器与无菌包</h4><button class="mastery" data-key="M4-K4" aria-pressed="false">□ 已掌握</button></div>
+              <p>容器盖内面向上，手不触及内面和边缘；取出的物品不得放回。教材写明无菌容器初次使用后不超过24小时，部分取用后的无菌包按原折痕包好并标记，限24小时内使用。</p><p class="source">教材第54、56页</p>
+            </article><article class="knowledge searchable" data-search="无菌技术：划清边界，防止跨越与回流 无菌盘 治疗巾内面构成无菌区，放置物品后覆盖并记录铺盘时间；教材规定铺好的无菌盘尽早使用且不超过4小时。">
+              <div class="khead"><span class="kid">M4-K5</span><h4>无菌盘</h4><button class="mastery" data-key="M4-K5" aria-pressed="false">□ 已掌握</button></div>
+              <p>治疗巾内面构成无菌区，放置物品后覆盖并记录铺盘时间；教材规定铺好的无菌盘尽早使用且不超过4小时。</p><p class="source">教材第56–57页</p>
+            </article><article class="knowledge searchable" data-search="无菌技术：划清边界，防止跨越与回流 倒取无菌溶液 核对名称、浓度、有效期及容器完整性；倒液时瓶签向掌心、避免瓶口接触容器，已倒出的液体不得倒回。教材对开启后余液的用途有附加限制，不能只背‘24小时’。">
+              <div class="khead"><span class="kid">M4-K6</span><h4>倒取无菌溶液</h4><button class="mastery" data-key="M4-K6" aria-pressed="false">□ 已掌握</button></div>
+              <p>核对名称、浓度、有效期及容器完整性；倒液时瓶签向掌心、避免瓶口接触容器，已倒出的液体不得倒回。教材对开启后余液的用途有附加限制，不能只背‘24小时’。</p><p class="source">教材第58页</p>
+            </article><article class="knowledge searchable" data-search="无菌技术：划清边界，防止跨越与回流 无菌手套 未戴手套的手只能接触手套内面，戴好手套的手只能接触手套外面；破损或可疑污染立即更换。脱手套后仍需洗手。">
+              <div class="khead"><span class="kid">M4-K7</span><h4>无菌手套</h4><button class="mastery" data-key="M4-K7" aria-pressed="false">□ 已掌握</button></div>
+              <p>未戴手套的手只能接触手套内面，戴好手套的手只能接触手套外面；破损或可疑污染立即更换。脱手套后仍需洗手。</p><p class="source">教材第58–60页</p>
+            </article></div>
+        </section><section class="module searchable" id="M5" data-search="隔离技术：标准预防打底，按传播途径加层 能区分三区两通道、三类传播隔离与保护性隔离，并按预期暴露选择防护用品。">
+          <div class="module-title"><span>M5</span><div><h3>隔离技术：标准预防打底，按传播途径加层</h3><p>能区分三区两通道、三类传播隔离与保护性隔离，并按预期暴露选择防护用品。</p></div></div>
+          <div class="knowledge-grid"><article class="knowledge searchable" data-search="隔离技术：标准预防打底，按传播途径加层 三区两通道 清洁区、潜在污染区、污染区按受污染风险划分；医务人员通道与患者通道分设，缓冲间位于区域之间，两侧门不应同时开启。">
+              <div class="khead"><span class="kid">M5-K1</span><h4>三区两通道</h4><button class="mastery" data-key="M5-K1" aria-pressed="false">□ 已掌握</button></div>
+              <p>清洁区、潜在污染区、污染区按受污染风险划分；医务人员通道与患者通道分设，缓冲间位于区域之间，两侧门不应同时开启。</p><p class="source">教材第61–62页</p>
+            </article><article class="knowledge searchable" data-search="隔离技术：标准预防打底，按传播途径加层 标准预防 把所有患者的血液、体液、分泌物（汗液除外）、非完整皮肤和黏膜视为可能含感染因子；措施包括手卫生、按预期暴露选用个人防护用品、安全注射以及污染物品和器械处理。">
+              <div class="khead"><span class="kid">M5-K2</span><h4>标准预防</h4><button class="mastery" data-key="M5-K2" aria-pressed="false">□ 已掌握</button></div>
+              <p>把所有患者的血液、体液、分泌物（汗液除外）、非完整皮肤和黏膜视为可能含感染因子；措施包括手卫生、按预期暴露选用个人防护用品、安全注射以及污染物品和器械处理。</p><p class="source">教材第63页</p>
+            </article><article class="knowledge searchable" data-search="隔离技术：标准预防打底，按传播途径加层 传播途径隔离 接触、空气、飞沫等隔离是在标准预防基础上的附加措施；同一疾病存在多种传播途径时，应叠加相应措施。教材隔离标志：接触蓝色、空气黄色、飞沫粉色。">
+              <div class="khead"><span class="kid">M5-K3</span><h4>传播途径隔离</h4><button class="mastery" data-key="M5-K3" aria-pressed="false">□ 已掌握</button></div>
+              <p>接触、空气、飞沫等隔离是在标准预防基础上的附加措施；同一疾病存在多种传播途径时，应叠加相应措施。教材隔离标志：接触蓝色、空气黄色、飞沫粉色。</p><p class="source">教材第63–65页</p>
+            </article><article class="knowledge searchable" data-search="隔离技术：标准预防打底，按传播途径加层 空气与飞沫 教材隔离章节把肺结核、水痘列为空气传播隔离；空气传播强调单间或同病原安置、关闭通向走廊门窗、负压病房等。飞沫传播强调距离、通风、患者口罩和近距离防护。">
+              <div class="khead"><span class="kid">M5-K4</span><h4>空气与飞沫</h4><button class="mastery" data-key="M5-K4" aria-pressed="false">□ 已掌握</button></div>
+              <p>教材隔离章节把肺结核、水痘列为空气传播隔离；空气传播强调单间或同病原安置、关闭通向走廊门窗、负压病房等。飞沫传播强调距离、通风、患者口罩和近距离防护。</p><p class="source">教材第64–65页</p>
+            </article><article class="knowledge searchable" data-search="隔离技术：标准预防打底，按传播途径加层 保护性隔离 对象是抵抗力低下或极易感染者，目标是保护患者；病室采用正压通风并限制未经处理的物品和有呼吸道症状人员进入。">
+              <div class="khead"><span class="kid">M5-K5</span><h4>保护性隔离</h4><button class="mastery" data-key="M5-K5" aria-pressed="false">□ 已掌握</button></div>
+              <p>对象是抵抗力低下或极易感染者，目标是保护患者；病室采用正压通风并限制未经处理的物品和有呼吸道症状人员进入。</p><p class="source">教材第65–66页</p>
+            </article><article class="knowledge searchable" data-search="隔离技术：标准预防打底，按传播途径加层 口罩与呼吸防护 一般诊疗、飞沫暴露与空气传播场景使用的口罩类型不同；医用防护口罩佩戴后需做密合性检查，摘除时避免触碰污染面。">
+              <div class="khead"><span class="kid">M5-K6</span><h4>口罩与呼吸防护</h4><button class="mastery" data-key="M5-K6" aria-pressed="false">□ 已掌握</button></div>
+              <p>一般诊疗、飞沫暴露与空气传播场景使用的口罩类型不同；医用防护口罩佩戴后需做密合性检查，摘除时避免触碰污染面。</p><p class="source">教材第66–68页</p>
+            </article><article class="knowledge searchable" data-search="隔离技术：标准预防打底，按传播途径加层 隔离衣与防护服 是否使用取决于隔离类型与预期暴露。穿脱过程中要识别清洁面与污染面，避免手和工作服接触污染外表；潮湿、破损或污染时及时更换。">
+              <div class="khead"><span class="kid">M5-K7</span><h4>隔离衣与防护服</h4><button class="mastery" data-key="M5-K7" aria-pressed="false">□ 已掌握</button></div>
+              <p>是否使用取决于隔离类型与预期暴露。穿脱过程中要识别清洁面与污染面，避免手和工作服接触污染外表；潮湿、破损或污染时及时更换。</p><p class="source">教材第68–74页</p>
+            </article></div>
+        </section></section>
+
+<section class="block" id="tiers"><div class="section-head"><div><h2>02｜真题覆盖频次与背诵梯队</h2><p>高频先形成完整答案，中频精准记忆，低频保留底层规则。</p></div><span class="badge">历年真题归纳</span></div><div class="encourage"><b>先把最常考的内容拿稳。</b><span>从高频开始并不代表放弃低频，而是先建立确定感，再一步步扩大你的得分范围。</span></div></div>
+  <p class="method"><b>学习顺序：</b>高频内容先形成完整答案，中频内容第二轮强化，低频内容掌握底层规则。低频知识也可能出现在病例综合题中。</p>
+  <div class="legend"><span class="tier high">高频：先背熟</span><span class="tier mid">中频：第二轮</span><span class="tier low">低频：保底</span></div>
+  <div class="table-wrap"><table><thead><tr><th>梯队</th><th>主题</th><th>院校覆盖</th><th>必须背到什么程度</th></tr></thead><tbody><tr data-tier="高" class="searchable" data-search="清洁、消毒、灭菌概念与方法选择 三层级定义；风险等级；耐热/耐湿；方法选择；监测不能互相替代">
+          <td><span class="tier high">高频</span></td><td><strong>清洁、消毒、灭菌概念与方法选择</strong></td>
+          <td>74所</td><td>三层级定义；风险等级；耐热/耐湿；方法选择；监测不能互相替代</td>
+        </tr><tr data-tier="高" class="searchable" data-search="无菌技术原则 环境、人员、物品；空间边界、接触面、流向与可疑污染">
+          <td><span class="tier high">高频</span></td><td><strong>无菌技术原则</strong></td>
+          <td>42所</td><td>环境、人员、物品；空间边界、接触面、流向与可疑污染</td>
+        </tr><tr data-tier="高" class="searchable" data-search="隔离与个人防护用品 标准预防打底；按传播途径加层；保护方向；PPE按预期暴露选择">
+          <td><span class="tier high">高频</span></td><td><strong>隔离与个人防护用品</strong></td>
+          <td>42所</td><td>标准预防打底；按传播途径加层；保护方向；PPE按预期暴露选择</td>
+        </tr><tr data-tier="高" class="searchable" data-search="医院感染定义与判断 获得地点、潜伏期、时间线、新病原体/新部位；感染不等于定植">
+          <td><span class="tier high">高频</span></td><td><strong>医院感染定义与判断</strong></td>
+          <td>38所</td><td>获得地点、潜伏期、时间线、新病原体/新部位；感染不等于定植</td>
+        </tr><tr data-tier="高" class="searchable" data-search="感染链与传播途径 感染源—传播途径—易感人群；措施要能对应具体环节">
+          <td><span class="tier high">高频</span></td><td><strong>感染链与传播途径</strong></td>
+          <td>35所</td><td>感染源—传播途径—易感人群；措施要能对应具体环节</td>
+        </tr><tr data-tier="中" class="searchable" data-search="手卫生与手消毒 五个时刻；何时必须洗手；15秒；手套不能替代手卫生">
+          <td><span class="tier mid">中频</span></td><td><strong>手卫生与手消毒</strong></td>
+          <td>28所</td><td>五个时刻；何时必须洗手；15秒；手套不能替代手卫生</td>
+        </tr><tr data-tier="中" class="searchable" data-search="无菌物品时效 对象与时间绑定：4小时、24小时、包装与储存条件">
+          <td><span class="tier mid">中频</span></td><td><strong>无菌物品时效</strong></td>
+          <td>25所</td><td>对象与时间绑定：4小时、24小时、包装与储存条件</td>
+        </tr><tr data-tier="低" class="searchable" data-search="无菌持物钳 钳端闭合向下、就地使用、不可触及容器口、干式4小时">
+          <td><span class="tier low">低频</span></td><td><strong>无菌持物钳</strong></td>
+          <td>12所</td><td>钳端闭合向下、就地使用、不可触及容器口、干式4小时</td>
+        </tr><tr data-tier="低" class="searchable" data-search="标准预防 所有患者与医务人员；血液、体液、分泌物、非完整皮肤和黏膜；常嵌入综合题">
+          <td><span class="tier low">低频</span></td><td><strong>标准预防</strong></td>
+          <td>12所</td><td>所有患者与医务人员；血液、体液、分泌物、非完整皮肤和黏膜；常嵌入综合题</td>
+        </tr><tr data-tier="低" class="searchable" data-search="无菌手套 未戴手只能碰内面；戴好后只碰外面；破损即更换；脱后手卫生">
+          <td><span class="tier low">低频</span></td><td><strong>无菌手套</strong></td>
+          <td>8所</td><td>未戴手只能碰内面；戴好后只碰外面；破损即更换；脱后手卫生</td>
+        </tr></tbody></table></div>
+  <p class="source">说明：低频不等于不重要。例如“标准预防”常被嵌入隔离、PPE或病例综合题，单独出现次数会被低估。</p>
+</section>
+
+<section class="block" id="paths"><div class="section-head"><div><h2>03｜理解后再背：5条作答路径</h2><p>先按因果链想清楚，再用一句骨架把答案提出来。</p></div><span class="badge">知其然，也知其所以然</span></div><div class="encourage"><b>能讲清逻辑，就是在真正掌握。</b><span>暂时背不顺没有关系，先沿着判断路径说一遍，理解会帮助记忆慢慢变牢。</span></div></div><div class="paths"><article class="path-card searchable" data-search="医院感染 判边界 → 找病原体来源 → 拆感染链 → 把措施放到对应环节 先判是不是，再看从哪来；抓源、断路、护易感。">
+          <h3>医院感染</h3><p><b>理解链：</b>判边界 → 找病原体来源 → 拆感染链 → 把措施放到对应环节</p>
+          <p class="chant"><b>最小背诵骨架：</b>先判是不是，再看从哪来；抓源、断路、护易感。</p><p><b>真题常见问法：</b>定义辨析、是否属于院感、感染源/途径、病例防控</p>
+        </article><article class="path-card searchable" data-search="清洁·消毒·灭菌 看物品用在哪里 → 定风险等级 → 看材质耐受 → 选方法 → 用监测证明过程 先看用在哪，再定杀到哪；再看耐什么，最后证实到没到。">
+          <h3>清洁·消毒·灭菌</h3><p><b>理解链：</b>看物品用在哪里 → 定风险等级 → 看材质耐受 → 选方法 → 用监测证明过程</p>
+          <p class="chant"><b>最小背诵骨架：</b>先看用在哪，再定杀到哪；再看耐什么，最后证实到没到。</p><p><b>真题常见问法：</b>概念比较、方法选择、不适用物品、监测意义</p>
+        </article><article class="path-card searchable" data-search="手卫生 先认时机 → 看有无可见污染/特殊病原体 → 选洗手或手消毒 → 覆盖部位与时间 → 判断手套关系 先找时机，再看污染；方法匹配，手套不替。">
+          <h3>手卫生</h3><p><b>理解链：</b>先认时机 → 看有无可见污染/特殊病原体 → 选洗手或手消毒 → 覆盖部位与时间 → 判断手套关系</p>
+          <p class="chant"><b>最小背诵骨架：</b>先找时机，再看污染；方法匹配，手套不替。</p><p><b>真题常见问法：</b>五个时刻、洗手指征、外科手消毒、菌落标准</p>
+        </article><article class="path-card searchable" data-search="无菌技术 先划无菌/非无菌 → 查空间 → 查接触面 → 查流向 → 查时效 不跨、不碰、不回流、不过时；可疑即污染。">
+          <h3>无菌技术</h3><p><b>理解链：</b>先划无菌/非无菌 → 查空间 → 查接触面 → 查流向 → 查时效</p>
+          <p class="chant"><b>最小背诵骨架：</b>不跨、不碰、不回流、不过时；可疑即污染。</p><p><b>真题常见问法：</b>原则纠错、持物钳、无菌盘、倒液、戴手套、4h/24h</p>
+        </article><article class="path-card searchable" data-search="隔离技术 所有人先做标准预防 → 明确传播途径 → 追加隔离 → 判断保护方向 → 按预期暴露选PPE 人人标准预防；知道途径再加层；负压护外界，正压护患者。">
+          <h3>隔离技术</h3><p><b>理解链：</b>所有人先做标准预防 → 明确传播途径 → 追加隔离 → 判断保护方向 → 按预期暴露选PPE</p>
+          <p class="chant"><b>最小背诵骨架：</b>人人标准预防；知道途径再加层；负压护外界，正压护患者。</p><p><b>真题常见问法：</b>三区两通道、三类传播隔离、保护性隔离、PPE选择</p>
+        </article></div></section>
+
+<section class="block" id="numbers"><div class="section-head"><div><h2>04｜基护必背数据表</h2><p>把数字、对象、条件和易错提醒放在同一行。</p></div><span class="badge">16组数据</span></div><div class="encourage"><b>数字多，记混很正常。</b><span>一次只记一组，把数字和对象、条件放在一起。今天比昨天少混淆一组，就是有效学习。</span></div></div>
+  <div class="table-wrap"><table><thead><tr><th>对象</th><th>必背数据</th><th>理解与陷阱</th><th>教材依据</th></tr></thead><tbody><tr class="searchable" data-search="手卫生揉搓 ≥15秒 洗手与卫生手消毒均需覆盖各部位并达到教材时间要求。">
+          <td><strong>手卫生揉搓</strong></td><td class="number">≥15秒</td><td>洗手与卫生手消毒均需覆盖各部位并达到教材时间要求。</td><td>教材第48–49页</td>
+        </tr><tr class="searchable" data-search="卫生手消毒监测 ≤10 CFU/cm² 按第7版教材考试口径记忆，与外科手消毒的5成组对比。">
+          <td><strong>卫生手消毒监测</strong></td><td class="number">≤10 CFU/cm²</td><td>按第7版教材考试口径记忆，与外科手消毒的5成组对比。</td><td>教材第46页</td>
+        </tr><tr class="searchable" data-search="外科手消毒监测 ≤5 CFU/cm² 与卫生手消毒的10形成对比记忆。">
+          <td><strong>外科手消毒监测</strong></td><td class="number">≤5 CFU/cm²</td><td>与卫生手消毒的10形成对比记忆。</td><td>教材第46页</td>
+        </tr><tr class="searchable" data-search="无菌物品储存环境 温度＜24℃；相对湿度＜70%；换气4–10次/h 数值与储存有效期绑定，不能脱离环境条件背。">
+          <td><strong>无菌物品储存环境</strong></td><td class="number">温度＜24℃；相对湿度＜70%；换气4–10次/h</td><td>数值与储存有效期绑定，不能脱离环境条件背。</td><td>教材第52页</td>
+        </tr><tr class="searchable" data-search="无菌物品存放距离 离地≥20cm；距顶＞50cm；距墙＞5cm 三组距离按“地—顶—墙”排序记忆。">
+          <td><strong>无菌物品存放距离</strong></td><td class="number">离地≥20cm；距顶＞50cm；距墙＞5cm</td><td>三组距离按“地—顶—墙”排序记忆。</td><td>教材第52页</td>
+        </tr><tr class="searchable" data-search="纺织品包装无菌物品 条件达标14天；未达标7天 先判断储存条件，再判断有效期。">
+          <td><strong>纺织品包装无菌物品</strong></td><td class="number">条件达标14天；未达标7天</td><td>先判断储存条件，再判断有效期。</td><td>教材第52页</td>
+        </tr><tr class="searchable" data-search="一次性纸袋包装 30天 与180天包装材料成组对比。">
+          <td><strong>一次性纸袋包装</strong></td><td class="number">30天</td><td>与180天包装材料成组对比。</td><td>教材第52页</td>
+        </tr><tr class="searchable" data-search="皱纹纸/纸塑袋/无纺布/硬质容器 180天 材料组合题常把30天与180天混换。">
+          <td><strong>皱纹纸/纸塑袋/无纺布/硬质容器</strong></td><td class="number">180天</td><td>材料组合题常把30天与180天混换。</td><td>教材第52页</td>
+        </tr><tr class="searchable" data-search="干式无菌持物钳 4小时 与无菌盘同属4小时组。">
+          <td><strong>干式无菌持物钳</strong></td><td class="number">4小时</td><td>与无菌盘同属4小时组。</td><td>教材第53页</td>
+        </tr><tr class="searchable" data-search="首次开启的无菌容器 ≤24小时 容器盖内面向上，取出物不得放回。">
+          <td><strong>首次开启的无菌容器</strong></td><td class="number">≤24小时</td><td>容器盖内面向上，取出物不得放回。</td><td>教材第54页</td>
+        </tr><tr class="searchable" data-search="部分取用后重新包好的无菌包 ≤24小时 按原折痕包好并注明开包日期、时间。">
+          <td><strong>部分取用后重新包好的无菌包</strong></td><td class="number">≤24小时</td><td>按原折痕包好并注明开包日期、时间。</td><td>教材第56页</td>
+        </tr><tr class="searchable" data-search="铺好的无菌盘 ≤4小时 应尽早使用；4小时是上限。">
+          <td><strong>铺好的无菌盘</strong></td><td class="number">≤4小时</td><td>应尽早使用；4小时是上限。</td><td>教材第57页</td>
+        </tr><tr class="searchable" data-search="开启后的无菌溶液 教材出现24小时信息，但有用途限制 剩余液仅限清洁操作；一次性瓶余液不宜保留。不能背成“所有开瓶溶液24小时内均可用于无菌操作”。">
+          <td><strong>开启后的无菌溶液</strong></td><td class="number">教材出现24小时信息，但有用途限制</td><td>剩余液仅限清洁操作；一次性瓶余液不宜保留。不能背成“所有开瓶溶液24小时内均可用于无菌操作”。</td><td>教材第58页</td>
+        </tr><tr class="searchable" data-search="空气传播负压病室 病室−30Pa；缓冲间−15Pa；换气≥6次/h 按“病室—缓冲间—换气次数”成组记忆。">
+          <td><strong>空气传播负压病室</strong></td><td class="number">病室−30Pa；缓冲间−15Pa；换气≥6次/h</td><td>按“病室—缓冲间—换气次数”成组记忆。</td><td>教材第61–62页</td>
+        </tr><tr class="searchable" data-search="床间距 同病原≥1.1m；普通病房同病原＞1m；急诊留观≥1.2m 先辨场景再选数值，避免把三个距离混背。">
+          <td><strong>床间距</strong></td><td class="number">同病原≥1.1m；普通病房同病原＞1m；急诊留观≥1.2m</td><td>先辨场景再选数值，避免把三个距离混背。</td><td>教材第61–62页</td>
+        </tr><tr class="searchable" data-search="院感时间陷阱 无明确潜伏期时，入院≥48小时可作为一项判定线索 不是所有医院感染的通用定义，仍需结合潜伏期、诊断标准及原感染变化。">
+          <td><strong>院感时间陷阱</strong></td><td class="number">无明确潜伏期时，入院≥48小时可作为一项判定线索</td><td>不是所有医院感染的通用定义，仍需结合潜伏期、诊断标准及原感染变化。</td><td>教材第25页</td>
+        </tr></tbody></table></div>
+</section>
+
+<section class="block" id="questions"><div class="section-head"><div><h2>05｜第一轮：10道原创“为什么题”</h2><p>先独立作答，再展开答案。目标是能解释判断依据，而不是只猜选项。</p></div><span class="badge">理解检验</span></div><div class="encourage"><b>做错题不是退步，而是把模糊处照亮。</b><span>先写出自己的理由，再看“为什么”。你正在练习的，是考场上独立判断的能力。</span></div></div><div class="question-list"><article class="question searchable" data-origin="original" data-q="1" data-search="原创·单项选择 患者入院时无感染表现，住院期间接受侵入性操作，出院后在合理潜伏期内出现与本次住院相关的新感染。最恰当的判断是：A. 出院后发病一定不是医院感染；B. 可能属于医院感染，应结合潜伏期和诊断标准判断；C. 只要超过48小时就是医院感染；D. 只有医务人员感染才算医院感染。">
+      <div class="qmeta"><span class="qnum">01</span><span>原创·单项选择</span><button class="attempt" data-key="q1" aria-pressed="false">□ 已作答</button></div>
+      <h3>患者入院时无感染表现，住院期间接受侵入性操作，出院后在合理潜伏期内出现与本次住院相关的新感染。最恰当的判断是：A. 出院后发病一定不是医院感染；B. 可能属于医院感染，应结合潜伏期和诊断标准判断；C. 只要超过48小时就是医院感染；D. 只有医务人员感染才算医院感染。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>B</p><p><b>为什么：</b>医院感染可以在出院后发病；‘48小时’只适用于无明确潜伏期时的一个判断条件，不能取代完整诊断。</p><p class="source"><b>教材依据：</b>教材第25页</p>
+      </div>
+    </article><article class="question searchable" data-origin="original" data-q="2" data-search="原创·多项选择 关于医院感染链，下列哪些说法正确？A. 包括感染源、传播途径和易感人群；B. 医务人员的手可成为间接接触传播媒介；C. 只要消灭感染源即可保证不再发生感染；D. 控制措施应说明作用于感染链的哪个环节。">
+      <div class="qmeta"><span class="qnum">02</span><span>原创·多项选择</span><button class="attempt" data-key="q2" aria-pressed="false">□ 已作答</button></div>
+      <h3>关于医院感染链，下列哪些说法正确？A. 包括感染源、传播途径和易感人群；B. 医务人员的手可成为间接接触传播媒介；C. 只要消灭感染源即可保证不再发生感染；D. 控制措施应说明作用于感染链的哪个环节。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>A、B、D</p><p><b>为什么：</b>感染发生是多环节共同作用，单一措施不能保证完全阻断。</p><p class="source"><b>教材依据：</b>教材第27–28页</p>
+      </div>
+    </article><article class="question searchable" data-origin="original" data-q="3" data-search="原创·单项选择 关于清洁、消毒和灭菌，下列正确的是：A. 看不见污渍即可视为灭菌；B. 清洁通常是消毒或灭菌前的重要步骤；C. 化学指示物变色即可证明所有微生物已被杀灭；D. 油脂和粉剂首选压力蒸汽灭菌。">
+      <div class="qmeta"><span class="qnum">03</span><span>原创·单项选择</span><button class="attempt" data-key="q3" aria-pressed="false">□ 已作答</button></div>
+      <h3>关于清洁、消毒和灭菌，下列正确的是：A. 看不见污渍即可视为灭菌；B. 清洁通常是消毒或灭菌前的重要步骤；C. 化学指示物变色即可证明所有微生物已被杀灭；D. 油脂和粉剂首选压力蒸汽灭菌。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>B</p><p><b>为什么：</b>清洁去除有机物并为后续处理创造条件；无菌保证不能只靠外观或单一化学指示。</p><p class="source"><b>教材依据：</b>教材第30–32页</p>
+      </div>
+    </article><article class="question searchable" data-origin="original" data-q="4" data-search="原创·多项选择 下列哪些情况应优先用流动水和洗手液洗手？A. 手部有肉眼可见血液；B. 可能接触艰难梭菌；C. 手部无可见污染，普通接触患者前；D. 可能接触对速干手消毒剂不敏感的肠道病毒。">
+      <div class="qmeta"><span class="qnum">04</span><span>原创·多项选择</span><button class="attempt" data-key="q4" aria-pressed="false">□ 已作答</button></div>
+      <h3>下列哪些情况应优先用流动水和洗手液洗手？A. 手部有肉眼可见血液；B. 可能接触艰难梭菌；C. 手部无可见污染，普通接触患者前；D. 可能接触对速干手消毒剂不敏感的肠道病毒。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>A、B、D</p><p><b>为什么：</b>可见污染及部分对速干手消毒剂不敏感的病原体，需要机械冲洗与洗手液。</p><p class="source"><b>教材依据：</b>教材第49页</p>
+      </div>
+    </article><article class="question searchable" data-origin="original" data-q="5" data-search="原创·单项选择 铺好的无菌盘在08:00完成并记录，12:30尚未使用，正确处理是：A. 继续使用；B. 重新铺设；C. 只需在表面喷消毒剂；D. 盖上无菌巾后可延长到24小时。">
+      <div class="qmeta"><span class="qnum">05</span><span>原创·单项选择</span><button class="attempt" data-key="q5" aria-pressed="false">□ 已作答</button></div>
+      <h3>铺好的无菌盘在08:00完成并记录，12:30尚未使用，正确处理是：A. 继续使用；B. 重新铺设；C. 只需在表面喷消毒剂；D. 盖上无菌巾后可延长到24小时。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>B</p><p><b>为什么：</b>教材规定无菌盘尽早使用且不超过4小时，08:00至12:30已超时。</p><p class="source"><b>教材依据：</b>教材第57页</p>
+      </div>
+    </article><article class="question searchable" data-origin="original" data-q="6" data-search="原创·病例分析 护士从无菌溶液瓶中倒出过量液体，瓶口触到接收容器边缘，又将剩余液体倒回原瓶。请指出至少3处风险，并给出改法。">
+      <div class="qmeta"><span class="qnum">06</span><span>原创·病例分析</span><button class="attempt" data-key="q6" aria-pressed="false">□ 已作答</button></div>
+      <h3>护士从无菌溶液瓶中倒出过量液体，瓶口触到接收容器边缘，又将剩余液体倒回原瓶。请指出至少3处风险，并给出改法。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>风险：瓶口接触容器造成污染；已倒出的液体倒回污染余液；倒液量控制不当。改法：倒液时瓶签向掌心，瓶口与容器保持适当距离；先以少量溶液冲洗瓶口并从原处倒出；倒出的液体不回瓶；开启后的余液按教材规定的对象和用途处理。</p><p><b>为什么：</b>重点考查‘接触面’和‘回流’两条无菌边界。</p><p class="source"><b>教材依据：</b>教材第58页</p>
+      </div>
+    </article><article class="question searchable" data-origin="original" data-q="7" data-search="原创·病例分析 一名护士戴手套完成吸痰后，未摘手套直接调节另一位患者的输液泵，随后摘手套但未洗手。请按感染链指出问题和纠正措施。">
+      <div class="qmeta"><span class="qnum">07</span><span>原创·病例分析</span><button class="attempt" data-key="q7" aria-pressed="false">□ 已作答</button></div>
+      <h3>一名护士戴手套完成吸痰后，未摘手套直接调节另一位患者的输液泵，随后摘手套但未洗手。请按感染链指出问题和纠正措施。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>问题：污染手套把第一位患者/环境的病原体带到另一位患者及设备，形成间接接触传播；摘手套后未手卫生。纠正：不同患者之间更换手套；完成污染操作后摘手套并立即手卫生；按接触患者、体液暴露和患者周围环境后的时机执行。</p><p><b>为什么：</b>手套是屏障，不会自动切断传播；不当使用反而成为传播媒介。</p><p class="source"><b>教材依据：</b>教材第27、46、49、60页</p>
+      </div>
+    </article><article class="question searchable" data-origin="original" data-q="8" data-search="原创·比较简答 比较标准预防、基于传播途径的隔离和保护性隔离：适用对象、核心目标和措施逻辑分别是什么？">
+      <div class="qmeta"><span class="qnum">08</span><span>原创·比较简答</span><button class="attempt" data-key="q8" aria-pressed="false">□ 已作答</button></div>
+      <h3>比较标准预防、基于传播途径的隔离和保护性隔离：适用对象、核心目标和措施逻辑分别是什么？</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>标准预防用于所有患者和医务人员，按预期暴露采取手卫生、PPE、安全注射及污染物处理；传播途径隔离用于已知或疑似经接触/空气/飞沫等传播的感染，在标准预防上追加相应措施；保护性隔离用于免疫低下等易感患者，重点阻止外界病原体进入，常涉及正压、限制人员和物品。</p><p><b>为什么：</b>三者不是互相替代，而是对象与保护方向不同。</p><p class="source"><b>教材依据：</b>教材第63–66页</p>
+      </div>
+    </article><article class="question searchable" data-origin="original" data-q="9" data-search="原创·情境决策 病区收治疑似肺结核患者。请用‘患者安置—患者转运—医务人员防护—环境管理’四栏给出隔离要点。">
+      <div class="qmeta"><span class="qnum">09</span><span>原创·情境决策</span><button class="attempt" data-key="q9" aria-pressed="false">□ 已作答</button></div>
+      <h3>病区收治疑似肺结核患者。请用‘患者安置—患者转运—医务人员防护—环境管理’四栏给出隔离要点。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>患者安置：优先单间、关闭通向走廊的门窗，有条件使用负压病室；转运：限制不必要转运，病情允许时患者戴外科口罩；医务人员防护：进入时戴医用防护口罩，可能喷溅时加护目镜/面罩和防护服，接触体液时戴手套并手卫生；环境管理：加强通风和空气消毒，规范处理口鼻分泌物及污染物。</p><p><b>为什么：</b>教材隔离章节将肺结核列入空气传播隔离，本题据此完成判断。</p><p class="source"><b>教材依据：</b>教材第64–65页</p>
+      </div>
+    </article><article class="question searchable" data-origin="original" data-q="10" data-search="原创·综合纠错 学生把‘无菌容器、部分取用后的无菌包、无菌盘、干式无菌持物钳、开启的无菌溶液’全部背成24小时。请逐项纠正，并指出最容易被过度简化的一项。">
+      <div class="qmeta"><span class="qnum">10</span><span>原创·综合纠错</span><button class="attempt" data-key="q10" aria-pressed="false">□ 已作答</button></div>
+      <h3>学生把‘无菌容器、部分取用后的无菌包、无菌盘、干式无菌持物钳、开启的无菌溶液’全部背成24小时。请逐项纠正，并指出最容易被过度简化的一项。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>无菌容器初次使用后不超过24小时；部分取用后的无菌包按原折痕包好并标记，限24小时；铺好的无菌盘和干式无菌持物钳均为4小时；开启无菌溶液教材写有24小时信息，但同时限定余液用途，一次性溶液未用完不宜保留，最不能简单归入‘24小时无菌有效期’。</p><p><b>为什么：</b>时间必须与具体对象、开启方式和用途绑定记忆。</p><p class="source"><b>教材依据：</b>教材第53–58页</p>
+      </div>
+    </article></div></section>
+
+<section class="block" id="exam"><div class="section-head"><div><h2>06｜第二轮：10道真题＋解析</h2><p>每道题都给出判断逻辑，并回扣第7版教材页码。</p></div><span class="badge">真题迁移</span></div><div class="encourage"><b>真题不是用来评价你聪不聪明。</b><span>它只负责告诉你：哪些已经掌握，哪些值得再看一遍。每一次订正都在缩小未知范围。</span></div></div>
+  <div class="encourage"><b>走到真题这一步，你已经完成了最难的知识整理。</b><span>把真题当作一次定位：答对时确认方法，答错时找到下一次进步的具体位置。先说出判断依据，再查看解析。</span></div><div class="question-list"><article class="question searchable" data-origin="exam" data-q="11" data-search="复旦大学 2015 · 完整版原题（节选） · 源PDF第1页 油剂、粉剂的消毒宜选择：A. 干烤法；B. 压力蒸汽灭菌法；C. 低温蒸汽消毒法；D. 流通蒸汽消毒法；E. 电离辐射灭菌法。">
+      <div class="qmeta"><span class="qnum">11</span><span>复旦大学 2015</span><button class="attempt" data-key="q11" aria-pressed="false">□ 已作答</button></div>
+      <h3>油剂、粉剂的消毒宜选择：A. 干烤法；B. 压力蒸汽灭菌法；C. 低温蒸汽消毒法；D. 流通蒸汽消毒法；E. 电离辐射灭菌法。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>A</p><p><b>为什么：</b>油剂和粉剂不适合压力蒸汽灭菌；题目先考材质是否耐湿，再考方法。做题时不要见到“灭菌”就机械选压力蒸汽。</p><p class="source"><b>教材依据：</b>教材第31–33页</p>
+      </div>
+    </article><article class="question searchable" data-origin="exam" data-q="12" data-search="暨南大学 2023 · 完整版原题 · 源PDF第6页 护士为患者换药需铺无菌盘，其铺好的无菌盘有效期为：A.2小时；B.3小时；C.4小时；D.5小时；E.6小时。">
+      <div class="qmeta"><span class="qnum">12</span><span>暨南大学 2023</span><button class="attempt" data-key="q12" aria-pressed="false">□ 已作答</button></div>
+      <h3>护士为患者换药需铺无菌盘，其铺好的无菌盘有效期为：A.2小时；B.3小时；C.4小时；D.5小时；E.6小时。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>C</p><p><b>为什么：</b>无菌盘属于“4小时组”，且应尽早使用。要把时间和对象绑定，不要孤立背数字。</p><p class="source"><b>教材依据：</b>教材第56–57页</p>
+      </div>
+    </article><article class="question searchable" data-origin="exam" data-q="13" data-search="武汉科技大学 2019 · 完整版原题 · 源PDF第8页 下列哪项不符合无菌技术操作原则？A.操作前半小时停止清扫；B.无菌包潮湿不能再用；C.从无菌容器取出的无菌物品未用完，应立即放回；D.无菌与非无菌物品分开；E.手臂保持在腰部以上。">
+      <div class="qmeta"><span class="qnum">13</span><span>武汉科技大学 2019</span><button class="attempt" data-key="q13" aria-pressed="false">□ 已作答</button></div>
+      <h3>下列哪项不符合无菌技术操作原则？A.操作前半小时停止清扫；B.无菌包潮湿不能再用；C.从无菌容器取出的无菌物品未用完，应立即放回；D.无菌与非无菌物品分开；E.手臂保持在腰部以上。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>C</p><p><b>为什么：</b>无菌物品一旦离开容器，其外界接触状态已不能被确认；放回会把风险带回整个容器。这里考的是“禁止回流”。</p><p class="source"><b>教材依据：</b>教材第52–54页</p>
+      </div>
+    </article><article class="question searchable" data-origin="exam" data-q="14" data-search="扬州大学 2023 · 完整版原题 · 源PDF第2页 不适合使用压力蒸汽灭菌的物品是：A.油剂；B.搪瓷物品；C.玻璃器皿；D.金属制品；E.纤维织物。">
+      <div class="qmeta"><span class="qnum">14</span><span>扬州大学 2023</span><button class="attempt" data-key="q14" aria-pressed="false">□ 已作答</button></div>
+      <h3>不适合使用压力蒸汽灭菌的物品是：A.油剂；B.搪瓷物品；C.玻璃器皿；D.金属制品；E.纤维织物。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>A</p><p><b>为什么：</b>这题与复旦题共同证明“油剂/粉剂—不耐湿处理—干热思路”是稳定考法。先判断物品特性，再选方法。</p><p class="source"><b>教材依据：</b>教材第31–33页</p>
+      </div>
+    </article><article class="question searchable" data-origin="exam" data-q="15" data-search="扬州大学 2023 · 完整版原题 · 源PDF第2页 戴无菌手套，下列描述正确的是：A.戴前先检查手套号码；B.戴前不必洗手；C.未戴手套的手可触及外面；D.已戴手套的手可触及另一手套内面；E.戴好后两手置于胸部以上。">
+      <div class="qmeta"><span class="qnum">15</span><span>扬州大学 2023</span><button class="attempt" data-key="q15" aria-pressed="false">□ 已作答</button></div>
+      <h3>戴无菌手套，下列描述正确的是：A.戴前先检查手套号码；B.戴前不必洗手；C.未戴手套的手可触及外面；D.已戴手套的手可触及另一手套内面；E.戴好后两手置于胸部以上。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>A</p><p><b>为什么：</b>未戴手只能接触内面，已戴手只接触外面；戴前要洗手，戴好后手臂保持在腰部或操作台面以上。选项E把“腰部以上”偷换成“胸部以上”。</p><p class="source"><b>教材依据：</b>教材第58–60页</p>
+      </div>
+    </article><article class="question searchable" data-origin="exam" data-q="16" data-search="吉林大学 2017 · 完整版原题 · 源PDF第1页 医院感染中，最重要的感染源是：A.带菌者；B.已感染的患者；C.医疗器械；D.动物感染源。">
+      <div class="qmeta"><span class="qnum">16</span><span>吉林大学 2017</span><button class="attempt" data-key="q16" aria-pressed="false">□ 已作答</button></div>
+      <h3>医院感染中，最重要的感染源是：A.带菌者；B.已感染的患者；C.医疗器械；D.动物感染源。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>B</p><p><b>为什么：</b>感染源判断要先看能持续排出病原体并在医疗环境中形成传播机会的主体。教材把已感染患者列为重要感染源，题目考的是感染链第一环。</p><p class="source"><b>教材依据：</b>教材第27页</p>
+      </div>
+    </article><article class="question searchable" data-origin="exam" data-q="17" data-search="复旦大学 2015 · 完整版原题 · 源PDF第1页 标准预防的对象是：A.传染病区医务人员；B.传染病区所有患者；C.医院所有医务人员；D.医院所有患者；E.医院所有患者和医务人员。">
+      <div class="qmeta"><span class="qnum">17</span><span>复旦大学 2015</span><button class="attempt" data-key="q17" aria-pressed="false">□ 已作答</button></div>
+      <h3>标准预防的对象是：A.传染病区医务人员；B.传染病区所有患者；C.医院所有医务人员；D.医院所有患者；E.医院所有患者和医务人员。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>E</p><p><b>为什么：</b>标准预防的起点是把所有患者相关体液暴露都视为可能有风险，因此对象覆盖所有患者与医务人员；确知传播途径后再追加隔离。</p><p class="source"><b>教材依据：</b>教材第63页</p>
+      </div>
+    </article><article class="question searchable" data-origin="exam" data-q="18" data-search="南京中医药大学 2020 · 回忆版真题（题干信息有限） · 源PDF第2页 简答：洗手的指征。">
+      <div class="qmeta"><span class="qnum">18</span><span>南京中医药大学 2020</span><button class="attempt" data-key="q18" aria-pressed="false">□ 已作答</button></div>
+      <h3>简答：洗手的指征。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>可按教材五个时刻组织：接触患者前；清洁/无菌操作前；可能接触患者体液后；接触患者后；接触患者周围环境后。若手有可见污染或可能接触对速干手消毒剂不敏感的病原体，应以流动水和洗手液洗手。</p><p><b>为什么：</b>不要只背散点。先按“前2后3”回忆五个时刻，再补“何时必须用水洗”这一判断层。</p><p class="source"><b>教材依据：</b>教材第46、49页</p>
+      </div>
+    </article><article class="question searchable" data-origin="exam" data-q="19" data-search="广东药科大学 2023 · 回忆版真题（多版本共同回忆） · 源PDF第1页 简答：倒取无菌溶液的注意事项。">
+      <div class="qmeta"><span class="qnum">19</span><span>广东药科大学 2023</span><button class="attempt" data-key="q19" aria-pressed="false">□ 已作答</button></div>
+      <h3>简答：倒取无菌溶液的注意事项。</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>核对名称、浓度、剂量、有效期和瓶体完整性；开启后先清洁瓶口，瓶签朝掌心；瓶口不触及接收容器，保持适当距离；控制倒出量，已倒液体不倒回；盖塞按无菌面放置；注明开启日期时间，余液按教材规定的对象和用途处理。</p><p><b>为什么：</b>按“核对—开—持—倒—关—标”回答，比逐句死背稳定。核心污染路径是接触与回流。</p><p class="source"><b>教材依据：</b>教材第58页</p>
+      </div>
+    </article><article class="question searchable" data-origin="exam" data-q="20" data-search="暨南大学 2018 · 完整版原题 · 源PDF第7页 论述：保护性隔离的适用范围是什么？如何进行保护性隔离？（5+15分）">
+      <div class="qmeta"><span class="qnum">20</span><span>暨南大学 2018</span><button class="attempt" data-key="q20" aria-pressed="false">□ 已作答</button></div>
+      <h3>论述：保护性隔离的适用范围是什么？如何进行保护性隔离？（5+15分）</h3>
+      <button class="reveal" aria-expanded="false">查看答案与为什么</button>
+      <div class="answer" hidden><p><b>答案：</b>适用于抵抗力低下或极易感染者。作答可分：单间或同类患者安置；病室保持正压并加强环境管理；严格手卫生；按风险使用口罩、帽子、隔离衣等；限制探视及有感染症状人员进入；进入物品先清洁/消毒；患者合理饮食、口腔和皮肤护理并监测感染征象。作答时按“人—环境—物品—操作—监测”展开。</p><p><b>为什么：</b>先写保护方向：防止外界病原体进入患者。再从人、环境、物品、操作、监测五方面展开，答案才有逻辑。</p><p class="source"><b>教材依据：</b>教材第65–66页</p>
+      </div>
+    </article></div>
+</section>
+
+</main>
+<footer>《基础护理学》第7版第三章学生学习包 · 学习进度仅保存在当前浏览器</footer>
+</div>
+<script>
+document.querySelectorAll('.reveal').forEach(b=>b.onclick=()=>{const a=b.nextElementSibling,open=!a.hidden;a.hidden=open;b.textContent=open?'查看答案与为什么':'收起答案';b.setAttribute('aria-expanded',String(!open));});
+const checks=[...document.querySelectorAll('.mastery,.attempt')];
+function refresh(){let n=0;checks.forEach(b=>{const done=localStorage.getItem('ch3-'+b.dataset.key)==='1';b.classList.toggle('done',done);b.setAttribute('aria-pressed',String(done));b.textContent=(done?'✓ ':'□ ')+(b.classList.contains('mastery')?'已掌握':'已作答');if(done)n++;});document.getElementById('progressText').textContent=n+'/'+checks.length;document.getElementById('progressBar').style.width=(n/checks.length*100)+'%';}
+checks.forEach(b=>b.onclick=()=>{const k='ch3-'+b.dataset.key;localStorage.setItem(k,localStorage.getItem(k)==='1'?'0':'1');refresh();});refresh();
+const search=document.getElementById('search');search.oninput=()=>{const q=search.value.trim().toLowerCase();document.querySelectorAll('.searchable').forEach(el=>el.classList.toggle('hidden-by-search',q&&!el.dataset.search.toLowerCase().includes(q)));};
+document.getElementById('printBtn').onclick=()=>window.print();
+</script>
+</body></html>
