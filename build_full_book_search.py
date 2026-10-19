@@ -218,7 +218,7 @@ PET_JS = r'''(() => {
   ];
   const style = document.createElement('style');
   style.textContent = `
-    .study-pet{position:fixed;right:18px;top:18px;z-index:60;display:flex;align-items:flex-start;gap:6px;filter:drop-shadow(0 10px 14px #4c357028)}
+    .study-pet{position:fixed!important;right:18px!important;top:18px!important;bottom:auto!important;left:auto!important;z-index:9999;display:flex;align-items:flex-start;gap:6px;filter:drop-shadow(0 10px 14px #4c357028)}
     .study-pet-character{width:112px;height:112px;border:0;padding:0;background:transparent;cursor:pointer;transform-origin:50% 100%;animation:pet-bob 3.6s ease-in-out infinite;image-rendering:pixelated}
     .study-pet-character img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none}
     .study-pet-bubble{position:relative;max-width:244px;margin-top:28px;padding:11px 32px 11px 13px;border:1px solid #d9cdf1;border-radius:15px 4px 15px 15px;background:#fff;color:#302742;box-shadow:0 10px 28px #60479322;font-size:14px;line-height:1.55;animation:bubble-in .28s ease-out}
@@ -228,7 +228,7 @@ PET_JS = r'''(() => {
     .study-pet:hover .study-pet-hint{opacity:1;transform:translateY(-2px)}
     @keyframes pet-bob{0%,100%{transform:translateY(0) rotate(-1deg)}45%{transform:translateY(-7px) rotate(1deg)}52%{transform:translateY(-7px) rotate(1deg) scaleY(.97)}58%{transform:translateY(-7px) rotate(1deg) scaleY(1)}}
     @keyframes bubble-in{from{opacity:0;transform:translateY(7px) scale(.96)}to{opacity:1;transform:none}}
-    @media(max-width:680px){.study-pet{right:8px;top:8px}.study-pet-character{width:82px;height:82px}.study-pet-bubble{max-width:min(220px,calc(100vw - 112px));margin-top:18px;padding:9px 29px 9px 11px;font-size:12px}.study-pet-hint{top:76px}}
+    @media(max-width:680px){.study-pet{right:8px!important;top:8px!important;bottom:auto!important}.study-pet-character{width:82px;height:82px}.study-pet-bubble{max-width:min(220px,calc(100vw - 112px));margin-top:18px;padding:9px 29px 9px 11px;font-size:12px}.study-pet-hint{top:76px}}
     @media(prefers-reduced-motion:reduce){.study-pet-character,.study-pet-bubble{animation:none}}
   `;
   document.head.appendChild(style);
@@ -237,6 +237,15 @@ PET_JS = r'''(() => {
   pet.setAttribute('aria-label', '学习陪伴宠物');
   pet.innerHTML = `<div class="study-pet-bubble"><span></span><button class="study-pet-close" aria-label="暂时收起宠物提示">×</button></div><button class="study-pet-character" aria-label="让学习宠物换一句话"><img src="${petImage}" alt="紫色像素学习宠物"></button><small class="study-pet-hint">点我换一句</small>`;
   document.body.appendChild(pet);
+  const compact = window.matchMedia('(max-width:680px)').matches;
+  Object.assign(pet.style, {
+    position: 'fixed',
+    right: compact ? '8px' : '18px',
+    top: compact ? '8px' : '18px',
+    bottom: 'auto',
+    left: 'auto',
+    zIndex: '9999'
+  });
   const bubble = pet.querySelector('.study-pet-bubble');
   const text = bubble.querySelector('span');
   let last = -1;
@@ -372,4 +381,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
