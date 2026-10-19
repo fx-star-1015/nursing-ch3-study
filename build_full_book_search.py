@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import html
 import json
 import re
@@ -196,8 +197,7 @@ SEARCH_JS = r'''(() => {
 
 PET_JS = r'''(() => {
   if (document.querySelector('.study-pet')) return;
-  const scriptUrl = document.currentScript?.src || new URL('study-pet.js', document.baseURI).href;
-  const petImage = new URL('assets/study-pet-v1.png', scriptUrl).href;
+  const petImage = '__PET_IMAGE_URL__';
   const lines = [
     '今天不求看得快，只求真正会一道。',
     '先抓决定性线索，再看选项挖了什么坑。',
@@ -260,6 +260,11 @@ PET_JS = r'''(() => {
 '''
 
 
+def inline_pet_js() -> str:
+    image = base64.b64encode((ROOT / "assets" / "study-pet-v1.png").read_bytes()).decode("ascii")
+    return PET_JS.replace("__PET_IMAGE_URL__", f"data:image/png;base64,{image}")
+
+
 def ensure_script_and_input(path: Path, *, root: str) -> None:
     source = path.read_text(encoding="utf-8")
     if "data-full-book-search" not in source:
@@ -284,8 +289,12 @@ def ensure_script_and_input(path: Path, *, root: str) -> None:
     )
     if "full-book-search.js" not in source:
         source = source.replace("</body>", f'<script src="{root}full-book-search.js"></script></body>')
-    if "study-pet.js" not in source:
-        source = source.replace("</body>", f'<script src="{root}study-pet.js"></script></body>')
+    source = re.sub(r'<script src="[^"]*study-pet\.js"></script>', '', source)
+    pet_tag = f'<script data-study-pet>{inline_pet_js()}</script>'
+    if "data-study-pet" in source:
+        source = re.sub(r'<script data-study-pet>.*?</script>', pet_tag, source, count=1, flags=re.S)
+    else:
+        source = source.replace("</body>", f'{pet_tag}</body>')
     path.write_text(source, encoding="utf-8")
 
 
@@ -304,8 +313,12 @@ def update_root_index() -> None:
     source = source.replace("9个系统、110个独立学习章节", "9个系统、87个独立学习章节")
     if "full-book-search.js" not in source:
         source = source.replace("</body>", '<script src="full-book-search.js"></script></body>')
-    if "study-pet.js" not in source:
-        source = source.replace("</body>", '<script src="study-pet.js"></script></body>')
+    source = re.sub(r'<script src="[^"]*study-pet\.js"></script>', '', source)
+    pet_tag = f'<script data-study-pet>{inline_pet_js()}</script>'
+    if "data-study-pet" in source:
+        source = re.sub(r'<script data-study-pet>.*?</script>', pet_tag, source, count=1, flags=re.S)
+    else:
+        source = source.replace("</body>", f'{pet_tag}</body>')
     path.write_text(source, encoding="utf-8")
 
 
@@ -342,7 +355,11 @@ def main() -> None:
     if old_monolith.exists():
         old_monolith.unlink()
     (ROOT / "full-book-search.js").write_text(SEARCH_JS.strip() + "\n", encoding="utf-8")
-    (ROOT / "study-pet.js").write_text(PET_JS.strip() + "\n", encoding="utf-8")
+    external_pet = PET_JS.replace(
+        "'__PET_IMAGE_URL__'",
+        "new URL('assets/study-pet-v1.png', document.currentScript.src).href",
+    )
+    (ROOT / "study-pet.js").write_text(external_pet.strip() + "\n", encoding="utf-8")
     update_root_index()
     for name in ("medical", "surgical", "fundamentals", "introduction"):
         ensure_script_and_input(ROOT / name / "index.html", root="../")

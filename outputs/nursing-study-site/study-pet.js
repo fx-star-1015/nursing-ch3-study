@@ -1,7 +1,6 @@
 (() => {
   if (document.querySelector('.study-pet')) return;
-  const scriptUrl = document.currentScript?.src || new URL('study-pet.js', document.baseURI).href;
-  const petImage = new URL('assets/study-pet-v1.png', scriptUrl).href;
+  const petImage = new URL('assets/study-pet-v1.png', document.currentScript.src).href;
   const lines = [
     '今天不求看得快，只求真正会一道。',
     '先抓决定性线索，再看选项挖了什么坑。',
