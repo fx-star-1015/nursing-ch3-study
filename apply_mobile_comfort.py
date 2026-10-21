@@ -11,6 +11,21 @@ body{overflow-x:hidden}
 img,svg,video,canvas{max-width:100%;height:auto}
 button,a,input,textarea,select{touch-action:manipulation}
 
+/* One note, three moments: outline before questions, repair after questions,
+   and a fuller chapter notebook at the end. */
+.flow-note{margin:17px 0;padding:18px;border:1px solid #d9ccef;border-radius:18px;background:linear-gradient(145deg,#fff,#faf7ff);box-shadow:0 10px 24px rgba(82,55,130,.07);scroll-margin-top:82px}
+.flow-note-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:11px}
+.flow-note-head h2,.flow-note-head h3{margin:0;color:#4f367d;font-size:20px;line-height:1.4}
+.flow-note-head p{margin:4px 0 0;color:#6e6781;line-height:1.65}
+.flow-note-tag{flex:0 0 auto;padding:4px 9px;border-radius:99px;background:#eee7ff;color:#7151b7;font-size:12px;font-weight:900}
+.pre-quiz-area{width:100%;min-height:126px;resize:vertical;padding:13px 14px;border:1px solid #d8cdef;border-radius:13px;background:#fff;color:#29243a;font:inherit;line-height:1.7}
+.flow-note-status{margin-top:7px;color:#277b66;font-size:12px;font-weight:800}
+.post-quiz-note{display:flex;justify-content:space-between;align-items:center;gap:16px;background:#f1faf7;border-color:#bfe2d8}
+.post-quiz-note h3{margin:0 0 4px;color:#315e53;font-size:18px}
+.post-quiz-note p{margin:0;color:#466b62}
+.note-jumps{display:flex;flex-wrap:wrap;gap:8px;flex:0 0 auto}
+.note-jump{display:inline-flex;align-items:center;min-height:38px;padding:7px 11px;border:1px solid #addacc;border-radius:10px;background:#fff;color:#277b66;text-decoration:none;font-weight:900;white-space:nowrap}
+
 @media(max-width:760px){
   body{font-size:15px!important;line-height:1.72!important}
   .shell,.wrap,.container{width:100%!important;max-width:none!important;padding:8px!important}
@@ -54,6 +69,13 @@ button,a,input,textarea,select{touch-action:manipulation}
   .recall-item summary{font-size:15px!important;line-height:1.5!important}
   .application-card{padding:13px!important}
   .notes-area,textarea{min-height:150px!important;font-size:16px!important}
+  .flow-note{padding:13px;margin:11px 0;border-radius:15px}
+  .flow-note-head{display:block}
+  .flow-note-tag{display:inline-flex;margin-top:7px}
+  .pre-quiz-area{min-height:132px!important}
+  .post-quiz-note{display:block}
+  .note-jumps{margin-top:11px}
+  .note-jump{white-space:normal}
 
   .table-wrap{display:block!important;max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-inline:contain!important}
   table{font-size:13px!important}
@@ -87,10 +109,78 @@ button,a,input,textarea,select{touch-action:manipulation}
 '''
 
 
+STUDY_FLOW_JS = r'''(() => {
+  const run = () => {
+    const practice = document.getElementById('practice');
+    const notes = document.getElementById('notes');
+    if (!practice || document.getElementById('pre-quiz-note')) return;
+
+    const pageKey = document.body.dataset.key || location.pathname;
+    const storageKey = `${pageKey}-pre-quiz-note`;
+    const pre = document.createElement('section');
+    pre.id = 'pre-quiz-note';
+    pre.className = 'flow-note pre-quiz-note';
+    pre.innerHTML = `
+      <div class="flow-note-head">
+        <div>
+          <h2>做题前｜先写5行极简笔记</h2>
+          <p>只写：主题或疾病、决定性线索、关键数值或条件、护理优先级、最易混点。不求完整，先暴露自己真正记住了什么。</p>
+        </div>
+        <span class="flow-note-tag">答题前 2—3 分钟</span>
+      </div>
+      <textarea class="pre-quiz-area" id="preQuizNotes" rows="5" aria-label="做题前极简笔记" placeholder="1. 主题/疾病：\n2. 决定性线索：\n3. 关键数值或条件：\n4. 护理优先级：\n5. 最易混点："></textarea>
+      <div class="flow-note-status" id="preQuizNoteStatus">内容保存在当前设备</div>`;
+    practice.parentNode.insertBefore(pre, practice);
+
+    const area = pre.querySelector('#preQuizNotes');
+    const status = pre.querySelector('#preQuizNoteStatus');
+    try { area.value = localStorage.getItem(storageKey) || ''; } catch (_) {}
+    let timer;
+    area.addEventListener('input', () => {
+      try { localStorage.setItem(storageKey, area.value); } catch (_) {}
+      status.textContent = '已自动保存';
+      clearTimeout(timer);
+      timer = setTimeout(() => status.textContent = '内容保存在当前设备', 1400);
+    });
+
+    const post = document.createElement('aside');
+    post.className = 'flow-note post-quiz-note';
+    post.id = 'post-quiz-note';
+    post.innerHTML = `
+      <div>
+        <h3>做题后｜只补暴露出来的缺口</h3>
+        <p>补上漏掉的鉴别线索、错因和关键数值/条件；已经会的内容不再抄一遍。</p>
+      </div>
+      <div class="note-jumps">
+        <a class="note-jump" href="#pre-quiz-note">回到原笔记修改</a>
+        ${notes ? '<a class="note-jump" href="#notes">去章节详细笔记</a>' : ''}
+      </div>`;
+    const truth = document.getElementById('truth');
+    const anchor = truth || practice;
+    anchor.insertAdjacentElement('afterend', post);
+
+    if (notes) {
+      const heading = notes.querySelector('h2');
+      if (heading) {
+        const prefix = heading.textContent.match(/^\s*(\d+[A-Z]?\s*[｜|]\s*)/);
+        heading.textContent = `${prefix ? prefix[1] : ''}章节补充笔记｜详细整理`;
+      }
+      const paragraph = notes.querySelector('.section-head p') || notes.querySelector('p');
+      if (paragraph) paragraph.textContent = '收纳老师强调、错题归因、跨章节联系和需要长期保留的内容；先回看做题前笔记，只补新增认识。';
+    }
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+})();
+'''
+
+
 def inject(root: Path) -> tuple[int, int]:
     root = root.resolve()
     css_path = root / "mobile-comfort.css"
+    js_path = root / "study-flow.js"
     css_path.write_text(MOBILE_CSS, encoding="utf-8")
+    js_path.write_text(STUDY_FLOW_JS, encoding="utf-8")
     changed = 0
     total = 0
     for path in root.rglob("*.html"):
@@ -106,6 +196,12 @@ def inject(root: Path) -> tuple[int, int]:
             if "</head>" not in text:
                 raise ValueError(f"Missing </head>: {path}")
             text = text.replace("</head>", marker + "</head>", 1)
+        if "study-flow.js" not in text:
+            src = Path(os.path.relpath(js_path, path.parent)).as_posix()
+            marker = f'<script src="{src}"></script>'
+            if "</body>" not in text:
+                raise ValueError(f"Missing </body>: {path}")
+            text = text.replace("</body>", marker + "</body>", 1)
         original = path.read_text(encoding="utf-8")
         if text != original:
             path.write_text(text, encoding="utf-8")
@@ -123,5 +219,5 @@ def inject(root: Path) -> tuple[int, int]:
 if __name__ == "__main__":
     target = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("outputs/nursing-study-site")
     total, changed = inject(target)
-    print(f"mobile stylesheet linked: {total} pages; changed: {changed}; root: {target.resolve()}")
+    print(f"mobile stylesheet and study flow linked: {total} pages; changed: {changed}; root: {target.resolve()}")
 

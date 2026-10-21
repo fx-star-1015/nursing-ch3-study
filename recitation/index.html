@@ -32,5 +32,5 @@ document.getElementById('guide').onclick=()=>{loadSheet('pages/page-02.webp','20
 document.getElementById('fullscreen').onclick=()=>{if(sheet.requestFullscreen)sheet.requestFullscreen();else window.open(sheet.src,'_blank')};
 document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(state.day-1);if(e.key==='ArrowRight')show(state.day+1)});
 const q=new URLSearchParams(location.search).get('day');show(q||state.day||1);progress();
-</script></body></html>
+</script><script src="../study-flow.js"></script></body></html>
 

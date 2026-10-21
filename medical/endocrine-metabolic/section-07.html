@@ -74,5 +74,5 @@ function setMode(mode){document.body.dataset.mode=mode;localStorage.setItem(MODE
 document.querySelectorAll('.mode-btn').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));setMode(localStorage.getItem(MODE_KEY)||'learn');
 const progressObserver=new MutationObserver(()=>{const t=document.getElementById('progressText')?.textContent;if(t)document.getElementById('heroProgress').textContent=t});progressObserver.observe(document.getElementById('progressText'),{childList:true,subtree:true});document.getElementById('heroProgress').textContent=document.getElementById('progressText').textContent;
 const notes=document.getElementById('studentNotes');const noteStatus=document.getElementById('noteStatus');if(notes){notes.value=localStorage.getItem(KEY+'-notes')||'';notes.addEventListener('input',()=>{localStorage.setItem(KEY+'-notes',notes.value);noteStatus.textContent='已自动保存';clearTimeout(window.noteTimer);window.noteTimer=setTimeout(()=>noteStatus.textContent='继续补充本章遗漏、错题原因或自己的记忆线索',1600)})}
-</script></body></html>
+</script><script src="../../study-flow.js"></script></body></html>
 
