@@ -18,6 +18,7 @@ button,a,input,textarea,select{touch-action:manipulation}
 .post-quiz-note p{margin:0;color:#466b62}
 .note-jumps{display:flex;flex-wrap:wrap;gap:8px;flex:0 0 auto}
 .note-jump{display:inline-flex;align-items:center;min-height:38px;padding:7px 11px;border:1px solid #addacc;border-radius:10px;background:#fff;color:#277b66;text-decoration:none;font-weight:900;white-space:nowrap}
+.table-context-badge{display:inline-flex;margin-left:7px;padding:3px 8px;border-radius:99px;background:#eee7ff;color:#7151b7;font-size:12px;font-weight:900;line-height:1.4;vertical-align:middle;white-space:nowrap}
 
 @media(max-width:760px){
   body{font-size:15px!important;line-height:1.72!important}
@@ -69,6 +70,7 @@ button,a,input,textarea,select{touch-action:manipulation}
   .post-quiz-note{display:block}
   .note-jumps{margin-top:11px}
   .note-jump{white-space:normal}
+  .table-context-badge{margin:5px 5px 0 0;font-size:11px;white-space:normal}
 
   .table-wrap{display:block!important;max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-inline:contain!important}
   table{font-size:13px!important}

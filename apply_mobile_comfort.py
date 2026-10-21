@@ -25,6 +25,7 @@ button,a,input,textarea,select{touch-action:manipulation}
 .post-quiz-note p{margin:0;color:#466b62}
 .note-jumps{display:flex;flex-wrap:wrap;gap:8px;flex:0 0 auto}
 .note-jump{display:inline-flex;align-items:center;min-height:38px;padding:7px 11px;border:1px solid #addacc;border-radius:10px;background:#fff;color:#277b66;text-decoration:none;font-weight:900;white-space:nowrap}
+.table-context-badge{display:inline-flex;margin-left:7px;padding:3px 8px;border-radius:99px;background:#eee7ff;color:#7151b7;font-size:12px;font-weight:900;line-height:1.4;vertical-align:middle;white-space:nowrap}
 
 @media(max-width:760px){
   body{font-size:15px!important;line-height:1.72!important}
@@ -76,6 +77,7 @@ button,a,input,textarea,select{touch-action:manipulation}
   .post-quiz-note{display:block}
   .note-jumps{margin-top:11px}
   .note-jump{white-space:normal}
+  .table-context-badge{margin:5px 5px 0 0;font-size:11px;white-space:normal}
 
   .table-wrap{display:block!important;max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-inline:contain!important}
   table{font-size:13px!important}
@@ -110,7 +112,44 @@ button,a,input,textarea,select{touch-action:manipulation}
 
 
 STUDY_FLOW_JS = r'''(() => {
+  const cleanRepeatedTableColumns = () => {
+    const compact = value => (value || '').replace(/\s+/g, ' ').trim();
+    const sourceHeaders = new Set(['来源', '教材依据', '出处', '页码']);
+    const removableHeaders = new Set(['使用边界', '护理监测与边界', '说明', '备注', '提示']);
+
+    document.querySelectorAll('table').forEach(table => {
+      if (table.dataset.compactChecked === 'true') return;
+      table.dataset.compactChecked = 'true';
+      const headers = [...table.querySelectorAll('thead th')];
+      const rows = [...table.querySelectorAll('tbody tr')];
+      if (!headers.length || rows.length < 2) return;
+
+      for (let index = headers.length - 1; index >= 0; index -= 1) {
+        const header = compact(headers[index].textContent);
+        if (!sourceHeaders.has(header) && !removableHeaders.has(header)) continue;
+        const cells = rows.map(row => row.cells[index]).filter(Boolean);
+        if (cells.length !== rows.length) continue;
+        const values = cells.map(cell => compact(cell.textContent));
+        if (!values[0] || new Set(values).size !== 1) continue;
+
+        if (sourceHeaders.has(header)) {
+          const block = table.closest('article') || table.closest('section');
+          const heading = block && block.querySelector('h3, h2');
+          if (heading && !compact(heading.textContent).includes(values[0])) {
+            const badge = document.createElement('small');
+            badge.className = 'table-context-badge';
+            badge.textContent = values[0];
+            heading.appendChild(badge);
+          }
+        }
+        headers[index].remove();
+        cells.forEach(cell => cell.remove());
+      }
+    });
+  };
+
   const run = () => {
+    cleanRepeatedTableColumns();
     const practice = document.getElementById('practice');
     const notes = document.getElementById('notes');
     if (!practice || document.getElementById('pre-quiz-note')) return;

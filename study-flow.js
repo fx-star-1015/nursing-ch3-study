@@ -1,5 +1,42 @@
 (() => {
+  const cleanRepeatedTableColumns = () => {
+    const compact = value => (value || '').replace(/\s+/g, ' ').trim();
+    const sourceHeaders = new Set(['来源', '教材依据', '出处', '页码']);
+    const removableHeaders = new Set(['使用边界', '护理监测与边界', '说明', '备注', '提示']);
+
+    document.querySelectorAll('table').forEach(table => {
+      if (table.dataset.compactChecked === 'true') return;
+      table.dataset.compactChecked = 'true';
+      const headers = [...table.querySelectorAll('thead th')];
+      const rows = [...table.querySelectorAll('tbody tr')];
+      if (!headers.length || rows.length < 2) return;
+
+      for (let index = headers.length - 1; index >= 0; index -= 1) {
+        const header = compact(headers[index].textContent);
+        if (!sourceHeaders.has(header) && !removableHeaders.has(header)) continue;
+        const cells = rows.map(row => row.cells[index]).filter(Boolean);
+        if (cells.length !== rows.length) continue;
+        const values = cells.map(cell => compact(cell.textContent));
+        if (!values[0] || new Set(values).size !== 1) continue;
+
+        if (sourceHeaders.has(header)) {
+          const block = table.closest('article') || table.closest('section');
+          const heading = block && block.querySelector('h3, h2');
+          if (heading && !compact(heading.textContent).includes(values[0])) {
+            const badge = document.createElement('small');
+            badge.className = 'table-context-badge';
+            badge.textContent = values[0];
+            heading.appendChild(badge);
+          }
+        }
+        headers[index].remove();
+        cells.forEach(cell => cell.remove());
+      }
+    });
+  };
+
   const run = () => {
+    cleanRepeatedTableColumns();
     const practice = document.getElementById('practice');
     const notes = document.getElementById('notes');
     if (!practice || document.getElementById('pre-quiz-note')) return;
