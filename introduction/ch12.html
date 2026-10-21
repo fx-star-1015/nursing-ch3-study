@@ -20,7 +20,7 @@
 .story-step h3{margin:9px 0 7px;font-size:17px}.story-step p{margin:0;color:#494255}
 .story-callback{margin:14px 0 0;padding:14px 16px;border-radius:13px;background:#eee6ff;color:#493771;font-weight:800}
 @media(max-width:860px){.story-steps{grid-template-columns:1fr}}
-</style></head><body data-key="nursing-introduction-12-v2"><div class="shell">
+</style><link rel="stylesheet" href="../mobile-comfort.css"></head><body data-key="nursing-introduction-12-v2"><div class="shell">
     <header class="hero"><div class="eyebrow">ICE冰冰高分学姐团 · INTRODUCTION TO NURSING · CHAPTER 12</div><h1>临终关怀</h1><p>控制症状、尊重选择、维护尊严并支持家属；悲伤与丧失不能被催促或机械分期。</p><div class="stats"><div class="stat"><b>⭐ 核心掌握</b><span>本章重要程度</span></div><div class="stat"><b>40—60分钟</b><span>预计学习时间</span></div><div class="stat"><b>13题</b><span>原创10＋真题3</span></div><div class="stat"><b id="heroProgress">自动保存</b><span>完成进度</span></div></div></header>
     <div class="modebar" aria-label="学习模式"><span>学习模式</span><button class="mode-btn active" data-mode="learn" aria-pressed="true">初学模式</button><button class="mode-btn" data-mode="review" aria-pressed="false">复习模式</button><button class="mode-btn" data-mode="exam" aria-pressed="false">考前模式</button></div>
     
@@ -73,3 +73,4 @@ document.querySelectorAll('.mode-btn').forEach(b=>b.onclick=()=>setMode(b.datase
 const progressObserver=new MutationObserver(()=>{const t=document.getElementById('progressText')?.textContent;if(t)document.getElementById('heroProgress').textContent=t});progressObserver.observe(document.getElementById('progressText'),{childList:true,subtree:true});document.getElementById('heroProgress').textContent=document.getElementById('progressText').textContent;
 const notes=document.getElementById('studentNotes');const noteStatus=document.getElementById('noteStatus');if(notes){notes.value=localStorage.getItem(KEY+'-notes')||'';notes.addEventListener('input',()=>{localStorage.setItem(KEY+'-notes',notes.value);noteStatus.textContent='已自动保存';clearTimeout(window.noteTimer);window.noteTimer=setTimeout(()=>noteStatus.textContent='继续补充本章遗漏、错题原因或自己的记忆线索',1600)})}
 </script></body></html>
+
