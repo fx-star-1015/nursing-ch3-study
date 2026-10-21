@@ -26,6 +26,22 @@ button,a,input,textarea,select{touch-action:manipulation}
 .note-jumps{display:flex;flex-wrap:wrap;gap:8px;flex:0 0 auto}
 .note-jump{display:inline-flex;align-items:center;min-height:38px;padding:7px 11px;border:1px solid #addacc;border-radius:10px;background:#fff;color:#277b66;text-decoration:none;font-weight:900;white-space:nowrap}
 .table-context-badge{display:inline-flex;margin-left:7px;padding:3px 8px;border-radius:99px;background:#eee7ff;color:#7151b7;font-size:12px;font-weight:900;line-height:1.4;vertical-align:middle;white-space:nowrap}
+.learning-path{margin:15px 0 18px;padding:18px;border:1px solid #d9ccef;border-radius:19px;background:linear-gradient(145deg,#fff,#f7f2ff);box-shadow:0 10px 28px rgba(82,55,130,.08)}
+.learning-path-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:12px}
+.learning-path-head h2{margin:0;color:#3f2d64;font-size:21px;line-height:1.35}
+.learning-path-head p{margin:4px 0 0;color:#6e6781;font-size:13px}
+.learning-path-progress{flex:0 0 auto;padding:5px 10px;border-radius:99px;background:#eee7ff;color:#7151b7;font-size:12px;font-weight:900}
+.learning-steps{display:grid;grid-template-columns:repeat(7,minmax(132px,1fr));gap:8px;list-style:none;margin:0;padding:0;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin}
+.learning-step{position:relative;display:flex;flex-direction:column;min-width:0;border:1px solid #ded4f0;border-radius:14px;background:#fff;overflow:hidden;transition:.18s ease}
+.learning-step.done{border-color:#9fd2c5;background:#f2fbf8}
+.learning-step.done .step-number{background:#277b66}
+.step-link{display:block;flex:1;padding:11px 10px 8px;color:#29243a;text-decoration:none}
+.step-number{display:grid;place-items:center;width:26px;height:26px;margin-bottom:7px;border-radius:50%;background:#7151b7;color:#fff;font-size:12px;font-weight:900}
+.step-link b{display:block;color:#49356f;font-size:14px;line-height:1.4}
+.step-link span{display:block;margin-top:5px;color:#6e6781;font-size:11px;line-height:1.55}
+.step-link small{display:block;margin-top:6px;color:#7151b7;font-size:10px;line-height:1.45}
+.step-check{margin:0 9px 9px;padding:5px 7px;border:1px solid #ded4f0;border-radius:8px;background:#faf8ff;color:#7151b7;font-family:inherit;font-size:11px;font-weight:800;line-height:1.35;cursor:pointer}
+.learning-step.done .step-check{border-color:#9fd2c5;background:#fff;color:#277b66}
 
 @media(max-width:760px){
   body{font-size:15px!important;line-height:1.72!important}
@@ -78,6 +94,11 @@ button,a,input,textarea,select{touch-action:manipulation}
   .note-jumps{margin-top:11px}
   .note-jump{white-space:normal}
   .table-context-badge{margin:5px 5px 0 0;font-size:11px;white-space:normal}
+  .learning-path{padding:13px;margin:10px 0 13px;border-radius:16px}
+  .learning-path-head{display:block}
+  .learning-path-progress{display:inline-flex;margin-top:7px}
+  .learning-steps{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(210px,78vw);padding-bottom:5px;scroll-snap-type:x proximity}
+  .learning-step{scroll-snap-align:start}
 
   .table-wrap{display:block!important;max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-inline:contain!important}
   table{font-size:13px!important}
@@ -148,6 +169,90 @@ STUDY_FLOW_JS = r'''(() => {
     });
   };
 
+  const buildLearningPath = pageKey => {
+    if (document.getElementById('learning-path')) return;
+    const main = document.querySelector('main');
+    if (!main) return;
+    const pick = (...selectors) => selectors.map(selector => document.querySelector(selector)).find(Boolean);
+    const read = pick('#read');
+    const handout = pick('#memory', '#knowledge', '#clinical-data', '#clues');
+    const preNote = pick('#pre-quiz-note', '#notes');
+    const practice = pick('#practice');
+    const review = pick('#post-quiz-note', '#plan');
+    const recite = pick('#recitation', '#oral');
+    const linkage = pick('#intro', '#notes');
+    if (![read, handout, preNote, practice, review, recite, linkage].every(Boolean)) return;
+
+    const targetTitle = target => {
+      const heading = target.querySelector('.section-head h2, h2, h3');
+      return heading ? heading.textContent.replace(/\s+/g, ' ').trim() : '';
+    };
+    const steps = [
+      ['对照书本', '先看教材原文范围，圈出对象、条件、数值和页码。', read],
+      ['对照内部讲义', '补充老师强调、命题线索和容易混淆的区别。', handout],
+      ['写极简笔记', '先凭记忆写5行，故意留下还不会的空白。', preNote],
+      ['独立做题', '先判断再看解析，每题说出决定性线索。', practice],
+      ['错题复盘', '只补遗漏线索、错因和需要修正的数值条件。', review],
+      ['输出背诵', '脱稿说出鉴别、数值条件和完整判断链。', recite],
+      ['联动迁移', document.getElementById('intro') ? '把本章放回患者故事和护理学导论中解释。' : '连接导论、其他疾病或临床情境，写进详细笔记。', linkage],
+    ];
+    const path = document.createElement('section');
+    path.id = 'learning-path';
+    path.className = 'learning-path';
+    path.innerHTML = '<div class="learning-path-head"><div><h2>本章怎么学｜7步学习路径</h2><p>按顺序完成一次；复习时可直接从薄弱步骤进入。</p></div><span class="learning-path-progress" id="learningPathProgress">0/7 已完成</span></div><ol class="learning-steps"></ol>';
+    const list = path.querySelector('.learning-steps');
+    steps.forEach((step, index) => {
+      const [label, action, target] = step;
+      const item = document.createElement('li');
+      item.className = 'learning-step';
+      item.dataset.step = String(index + 1);
+      const link = document.createElement('a');
+      link.className = 'step-link';
+      link.href = `#${target.id}`;
+      const number = document.createElement('span');
+      number.className = 'step-number';
+      number.textContent = String(index + 1);
+      const title = document.createElement('b');
+      title.textContent = label;
+      const detail = document.createElement('span');
+      detail.textContent = action;
+      const mapped = document.createElement('small');
+      mapped.textContent = `对应：${targetTitle(target) || label}`;
+      link.append(number, title, detail, mapped);
+      const check = document.createElement('button');
+      check.type = 'button';
+      check.className = 'step-check';
+      check.textContent = '○ 标记完成';
+      check.setAttribute('aria-pressed', 'false');
+      item.append(link, check);
+      list.appendChild(item);
+    });
+    main.insertBefore(path, main.firstElementChild);
+
+    const storageKey = `${pageKey}-learning-path`;
+    let progress = {};
+    try { progress = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch (_) {}
+    const updatePath = () => {
+      let completed = 0;
+      path.querySelectorAll('.learning-step').forEach(item => {
+        const done = Boolean(progress[item.dataset.step]);
+        item.classList.toggle('done', done);
+        const button = item.querySelector('.step-check');
+        button.textContent = done ? '✓ 已完成' : '○ 标记完成';
+        button.setAttribute('aria-pressed', done ? 'true' : 'false');
+        if (done) completed += 1;
+      });
+      path.querySelector('#learningPathProgress').textContent = `${completed}/7 已完成`;
+    };
+    path.querySelectorAll('.step-check').forEach(button => button.addEventListener('click', () => {
+      const step = button.closest('.learning-step').dataset.step;
+      progress[step] = !progress[step];
+      try { localStorage.setItem(storageKey, JSON.stringify(progress)); } catch (_) {}
+      updatePath();
+    }));
+    updatePath();
+  };
+
   const run = () => {
     cleanRepeatedTableColumns();
     const practice = document.getElementById('practice');
@@ -207,6 +312,7 @@ STUDY_FLOW_JS = r'''(() => {
       const paragraph = notes.querySelector('.section-head p') || notes.querySelector('p');
       if (paragraph) paragraph.textContent = '收纳老师强调、错题归因、跨章节联系和需要长期保留的内容；先回看做题前笔记，只补新增认识。';
     }
+    buildLearningPath(pageKey);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
   else run();
