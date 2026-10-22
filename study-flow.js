@@ -1,4 +1,48 @@
 (() => {
+  const applyFocusPalette = () => {
+    if (document.body.dataset.focusPalette === 'ready') return;
+    document.body.dataset.focusPalette = 'ready';
+    const pickSection = pattern => [...document.querySelectorAll('section')].find(section => pattern.test(section.querySelector('h2')?.textContent || ''));
+    const core = pickSection(/核心知识卡/);
+    if (core) {
+      const head = core.querySelector('.section-head');
+      if (head && !core.querySelector('.focus-legend')) {
+        const legend = document.createElement('div');
+        legend.className = 'focus-legend';
+        legend.setAttribute('aria-label', '重点颜色说明');
+        legend.innerHTML = '<span class="direct"><i></i>黄｜直击考点</span><span class="major"><i></i>绿｜大题考点</span><span class="support"><i></i>紫｜辅助理解</span>';
+        head.insertAdjacentElement('afterend', legend);
+      }
+      const cards = core.querySelectorAll('article, .memory, .knowledge, .core-card');
+      const directPattern = /(首选|金标准|最常见|典型|禁忌|必须|立即|优先|第一|阈值|界值|剂量|浓度|速度|温度|时间|深度|高度|范围|比例|分级|诊断依据|决定性线索|定义|概念|分类|构成|特点|特征|层次|要素|代表人物|理论核心|基本需要|顺序|阶段)|\d+(?:\.\d+)?\s*(?:%|ml|mL|L|cm|mm|mmHg|kPa|g|mg|μg|h|min|小时|分钟|天|周|℃|次)/i;
+      const majorPattern = /(护理|治疗|处理|管理|观察|监测|用药|健康教育|并发症|措施|原则|评估|抢救|术前|术后|管路|安全|复查)/;
+      [...new Set(cards)].forEach(card => {
+        if (card.closest('article') && card !== card.closest('article')) return;
+        const title = card.querySelector('h3, h4')?.textContent || '';
+        const body = [...card.querySelectorAll('p')].filter(item => !item.classList.contains('source')).slice(0, 2).map(item => item.textContent || '').join(' ');
+        const sample = `${title} ${body}`;
+        let type = 'support';
+        let label = '辅助理解';
+        if (directPattern.test(sample)) { type = 'direct'; label = '直击考点'; }
+        else if (majorPattern.test(sample)) { type = 'major'; label = '大题考点'; }
+        card.classList.add('focus-card', `focus-${type}`);
+        if (!card.querySelector(':scope > .focus-chip')) {
+          const chip = document.createElement('span');
+          chip.className = `focus-chip ${type}`;
+          chip.textContent = label;
+          card.insertAdjacentElement('afterbegin', chip);
+        }
+      });
+    }
+
+    const zones = [
+      ['#clues, #numbers, #compare, #truth, #exam', 'focus-direct-zone'],
+      ['#clinical-data, #practice, #original, #recitation, #oral', 'focus-major-zone'],
+      ['#read, #logic, #intro, #story', 'focus-support-zone'],
+    ];
+    zones.forEach(([selectors, className]) => document.querySelectorAll(selectors).forEach(section => section.classList.add('focus-zone', className)));
+  };
+
   const addChapterPageRange = () => {
     if (document.querySelector('.chapter-page-range')) return;
     const sections = [...document.querySelectorAll('section')];
@@ -258,6 +302,7 @@
   };
 
   const run = () => {
+    applyFocusPalette();
     addChapterPageRange();
     cleanRepeatedTableColumns();
     const practice = document.getElementById('practice') || document.getElementById('original') || document.getElementById('exam');

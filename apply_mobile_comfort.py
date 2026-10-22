@@ -11,6 +11,37 @@ body{overflow-x:hidden}
 img,svg,video,canvas{max-width:100%;height:auto}
 button,a,input,textarea,select{touch-action:manipulation}
 
+/* Focus palette from the printed study books:
+   yellow = direct exam point, green = long-answer point,
+   lavender = supporting understanding. */
+:root{--study-navy:#243b53;--focus-yellow:#fff1a8;--focus-yellow-line:#e5c94f;--focus-green:#e6f1dc;--focus-green-line:#9bc183;--focus-purple:#eee8ff;--focus-purple-line:#b9a4df}
+body{background-image:radial-gradient(circle at 96% 3%,rgba(255,241,168,.32),transparent 24%),radial-gradient(circle at 3% 38%,rgba(230,241,220,.28),transparent 25%)!important}
+.focus-legend{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 3px;color:#52616b;font-size:12px;font-weight:800}
+.focus-legend span,.focus-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border:1px solid transparent;border-radius:99px;line-height:1.35}
+.focus-legend i{width:9px;height:9px;border-radius:3px}
+.focus-legend .direct,.focus-chip.direct{background:var(--focus-yellow);border-color:#ead46f;color:#735c00}
+.focus-legend .major,.focus-chip.major{background:var(--focus-green);border-color:#b8d5a7;color:#3f6b35}
+.focus-legend .support,.focus-chip.support{background:var(--focus-purple);border-color:#d5c7ef;color:#67508f}
+.focus-legend .direct i{background:var(--focus-yellow-line)}
+.focus-legend .major i{background:var(--focus-green-line)}
+.focus-legend .support i{background:var(--focus-purple-line)}
+.focus-chip{margin:0 0 8px;font-size:11px;font-weight:900}
+.focus-card{position:relative;box-shadow:inset 0 4px 0 var(--focus-line),0 8px 20px rgba(36,59,83,.055)!important}
+.focus-card.focus-direct{--focus-line:var(--focus-yellow-line);background:linear-gradient(150deg,rgba(255,241,168,.28),#fff 36%)!important}
+.focus-card.focus-major{--focus-line:var(--focus-green-line);background:linear-gradient(150deg,rgba(230,241,220,.42),#fff 36%)!important}
+.focus-card.focus-support{--focus-line:var(--focus-purple-line);background:linear-gradient(150deg,rgba(238,232,255,.46),#fff 36%)!important}
+.focus-zone{--zone-bg:var(--focus-purple);--zone-line:var(--focus-purple-line)}
+.focus-zone.focus-direct-zone{--zone-bg:var(--focus-yellow);--zone-line:var(--focus-yellow-line)}
+.focus-zone.focus-major-zone{--zone-bg:var(--focus-green);--zone-line:var(--focus-green-line)}
+.focus-zone.focus-support-zone{--zone-bg:var(--focus-purple);--zone-line:var(--focus-purple-line)}
+.focus-zone>.section-head{border-bottom-color:var(--zone-line)!important}
+.focus-zone>.section-head h2{color:var(--study-navy)!important}
+.focus-zone>.section-head h2:before{content:"";display:inline-block;width:8px;height:24px;margin-right:9px;border-radius:5px;background:var(--zone-line);vertical-align:-4px}
+.focus-zone .table-wrap thead th,.focus-zone table thead th{background:var(--zone-bg)!important;color:var(--study-navy)!important}
+.focus-direct-zone .answer,.focus-direct-zone .formula,.focus-direct-zone .exam-use{border-left-color:var(--focus-yellow-line)!important;background:rgba(255,241,168,.28)!important}
+.focus-major-zone .answer,.focus-major-zone .skeleton,.focus-major-zone .exam-use{border-left-color:var(--focus-green-line)!important;background:rgba(230,241,220,.36)!important}
+.focus-support-zone .logic,.focus-support-zone .bridge{border-left-color:var(--focus-purple-line)!important;background:rgba(238,232,255,.48)!important}
+
 /* One note, three moments: outline before questions, repair after questions,
    and a fuller chapter notebook at the end. */
 .flow-note{margin:17px 0;padding:18px;border:1px solid #d9ccef;border-radius:18px;background:linear-gradient(145deg,#fff,#faf7ff);box-shadow:0 10px 24px rgba(82,55,130,.07);scroll-margin-top:82px}
@@ -110,6 +141,9 @@ button,a,input,textarea,select{touch-action:manipulation}
   .learning-path-progress{display:inline-flex;margin-top:7px}
   .learning-steps{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(210px,78vw);padding-bottom:5px;scroll-snap-type:x proximity}
   .learning-step{scroll-snap-align:start}
+  .focus-legend{gap:5px;margin-top:10px}
+  .focus-legend span,.focus-chip{padding:4px 7px;font-size:10px}
+  .focus-zone>.section-head h2:before{height:20px;vertical-align:-3px}
   .mood-diary{padding:12px;margin:12px 0 3px}
   .mood-diary-row{display:grid;grid-template-columns:auto 1fr;gap:7px}
   .mood-diary-input{grid-column:1/-1;width:100%;font-size:16px}
@@ -149,6 +183,50 @@ button,a,input,textarea,select{touch-action:manipulation}
 
 
 STUDY_FLOW_JS = r'''(() => {
+  const applyFocusPalette = () => {
+    if (document.body.dataset.focusPalette === 'ready') return;
+    document.body.dataset.focusPalette = 'ready';
+    const pickSection = pattern => [...document.querySelectorAll('section')].find(section => pattern.test(section.querySelector('h2')?.textContent || ''));
+    const core = pickSection(/核心知识卡/);
+    if (core) {
+      const head = core.querySelector('.section-head');
+      if (head && !core.querySelector('.focus-legend')) {
+        const legend = document.createElement('div');
+        legend.className = 'focus-legend';
+        legend.setAttribute('aria-label', '重点颜色说明');
+        legend.innerHTML = '<span class="direct"><i></i>黄｜直击考点</span><span class="major"><i></i>绿｜大题考点</span><span class="support"><i></i>紫｜辅助理解</span>';
+        head.insertAdjacentElement('afterend', legend);
+      }
+      const cards = core.querySelectorAll('article, .memory, .knowledge, .core-card');
+      const directPattern = /(首选|金标准|最常见|典型|禁忌|必须|立即|优先|第一|阈值|界值|剂量|浓度|速度|温度|时间|深度|高度|范围|比例|分级|诊断依据|决定性线索|定义|概念|分类|构成|特点|特征|层次|要素|代表人物|理论核心|基本需要|顺序|阶段)|\d+(?:\.\d+)?\s*(?:%|ml|mL|L|cm|mm|mmHg|kPa|g|mg|μg|h|min|小时|分钟|天|周|℃|次)/i;
+      const majorPattern = /(护理|治疗|处理|管理|观察|监测|用药|健康教育|并发症|措施|原则|评估|抢救|术前|术后|管路|安全|复查)/;
+      [...new Set(cards)].forEach(card => {
+        if (card.closest('article') && card !== card.closest('article')) return;
+        const title = card.querySelector('h3, h4')?.textContent || '';
+        const body = [...card.querySelectorAll('p')].filter(item => !item.classList.contains('source')).slice(0, 2).map(item => item.textContent || '').join(' ');
+        const sample = `${title} ${body}`;
+        let type = 'support';
+        let label = '辅助理解';
+        if (directPattern.test(sample)) { type = 'direct'; label = '直击考点'; }
+        else if (majorPattern.test(sample)) { type = 'major'; label = '大题考点'; }
+        card.classList.add('focus-card', `focus-${type}`);
+        if (!card.querySelector(':scope > .focus-chip')) {
+          const chip = document.createElement('span');
+          chip.className = `focus-chip ${type}`;
+          chip.textContent = label;
+          card.insertAdjacentElement('afterbegin', chip);
+        }
+      });
+    }
+
+    const zones = [
+      ['#clues, #numbers, #compare, #truth, #exam', 'focus-direct-zone'],
+      ['#clinical-data, #practice, #original, #recitation, #oral', 'focus-major-zone'],
+      ['#read, #logic, #intro, #story', 'focus-support-zone'],
+    ];
+    zones.forEach(([selectors, className]) => document.querySelectorAll(selectors).forEach(section => section.classList.add('focus-zone', className)));
+  };
+
   const addChapterPageRange = () => {
     if (document.querySelector('.chapter-page-range')) return;
     const sections = [...document.querySelectorAll('section')];
@@ -408,6 +486,7 @@ STUDY_FLOW_JS = r'''(() => {
   };
 
   const run = () => {
+    applyFocusPalette();
     addChapterPageRange();
     cleanRepeatedTableColumns();
     const practice = document.getElementById('practice') || document.getElementById('original') || document.getElementById('exam');
