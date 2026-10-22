@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 import sys
 from pathlib import Path
 
@@ -88,6 +89,26 @@ body{background-image:radial-gradient(circle at 96% 3%,rgba(255,241,168,.32),tra
 .mood-quote-text{flex:1}
 .mood-refresh{flex:0 0 auto;padding:4px 8px;border:1px solid #d8cdef;border-radius:9px;background:#fff;color:#7151b7;font-family:inherit;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
 
+/* The same original study pet appears inside the purple hero at every level. */
+.study-pet{z-index:45;display:flex;align-items:flex-start;gap:6px;filter:drop-shadow(0 10px 14px rgba(76,53,112,.16))}
+.study-pet-host{position:relative!important;padding-right:min(390px,36%)!important;min-height:190px}
+.study-pet--hero{position:absolute;right:18px;top:18px}
+.study-pet--floating{position:fixed;right:18px;top:18px;z-index:9999}
+.study-pet-character{width:112px;height:112px;flex:0 0 auto;border:0;padding:0;background:transparent;cursor:pointer;transform-origin:50% 100%;animation:pet-bob 3.6s ease-in-out infinite;image-rendering:pixelated}
+.study-pet-character img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.study-pet-bubble{position:relative;max-width:244px;margin-top:28px;padding:11px 32px 11px 13px;border:1px solid #d9cdf1;border-radius:15px 4px 15px 15px;background:#fff;color:#302742;box-shadow:0 10px 28px rgba(96,71,147,.13);font-size:14px;line-height:1.55;animation:bubble-in .28s ease-out}
+.study-pet-bubble::after{content:"";position:absolute;right:-8px;top:12px;width:15px;height:15px;background:#fff;border-right:1px solid #d9cdf1;border-bottom:1px solid #d9cdf1;transform:rotate(-45deg)}
+.study-pet-close{position:absolute;top:3px;right:5px;width:25px;height:25px;border:0;background:transparent;color:#8a7b9c;font-size:18px;line-height:1;cursor:pointer}
+.study-pet-hint{position:absolute;right:15px;top:105px;padding:2px 7px;border-radius:99px;background:#fff;color:#7151b7;font-size:10px;font-weight:800;opacity:0;transition:.2s;pointer-events:none}
+.study-pet:hover .study-pet-hint,.study-pet-character:focus-visible~.study-pet-hint{opacity:1;transform:translateY(-2px)}
+@keyframes pet-bob{0%,100%{transform:translateY(0) rotate(-1deg)}45%{transform:translateY(-7px) rotate(1deg)}52%{transform:translateY(-7px) rotate(1deg) scaleY(.97)}58%{transform:translateY(-7px) rotate(1deg) scaleY(1)}}
+@keyframes bubble-in{from{opacity:0;transform:translateY(7px) scale(.96)}to{opacity:1;transform:none}}
+
+@media(max-width:900px){
+  .study-pet-host{padding-right:20px!important;min-height:0}
+  .study-pet--hero{position:relative;right:auto;top:auto;width:max-content;max-width:100%;margin:16px -4px -8px auto}
+}
+
 @media(max-width:760px){
   body{font-size:15px!important;line-height:1.72!important}
   .shell,.wrap,.container{width:100%!important;max-width:none!important;padding:8px!important}
@@ -157,6 +178,10 @@ body{background-image:radial-gradient(circle at 96% 3%,rgba(255,241,168,.32),tra
   .mood-diary-input{grid-column:1/-1;width:100%;font-size:16px}
   .mood-diary-status{justify-self:end}
   .mood-quote{align-items:flex-start}
+  .study-pet--floating{right:8px;top:8px}
+  .study-pet-character{width:82px;height:82px}
+  .study-pet-bubble{max-width:min(220px,calc(100vw - 112px));margin-top:18px;padding:9px 29px 9px 11px;font-size:12px}
+  .study-pet-hint{right:9px;top:76px}
 
   .table-wrap{display:block!important;max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-inline:contain!important}
   table{font-size:13px!important}
@@ -183,6 +208,8 @@ body{background-image:radial-gradient(circle at 96% 3%,rgba(255,241,168,.32),tra
   .brandline{padding:10px!important;font-size:13px!important}
 }
 
+@media(prefers-reduced-motion:reduce){.study-pet-character,.study-pet-bubble{animation:none}}
+
 @media(max-width:390px){
   .hero h1{font-size:25px!important}
   .toolbar input,#search{flex-basis:165px!important;min-width:165px!important}
@@ -191,6 +218,60 @@ body{background-image:radial-gradient(circle at 96% 3%,rgba(255,241,168,.32),tra
 
 
 STUDY_FLOW_JS = r'''(() => {
+  const buildStudyPet = () => {
+    if (document.querySelector('.study-pet')) return;
+    const lines = [
+      '先把年龄、时间和症状圈出来，再判断它到底在考什么。',
+      '今天不用清空所有任务，真正拿下一页就很棒。',
+      '暂时不会很正常，能说出“为什么”就是进步。',
+      '别急着背答案，先把决定判断的那条线索说出来。',
+      '这题又来装熟人了，看看它悄悄换了哪个条件。',
+      '错题不是在嘲笑你，它是在考前替你排雷。',
+      '数值别单独背：对象、条件和单位要一起带走。',
+      '看累了就眨眨眼，我替你守住这一页。',
+      '再做三题，就允许你理直气壮地休息五分钟。',
+      '护理措施先排生命与安全，再处理舒适和长期问题。',
+      '选项都像对的？回到病人此刻最急的问题。',
+      '你不是记不住，只是还没把知识放进逻辑链。',
+      '今天多会一个考点，考场上就多一分底气。'
+    ];
+    const sharedScript = [...document.scripts].find(script => /(?:^|\/)study-flow\.js(?:\?|$)/.test(script.src));
+    const petImage = sharedScript ? new URL('study-pet.png', sharedScript.src).href : 'study-pet.png';
+    const hero = document.querySelector('.hero');
+    const pet = document.createElement('aside');
+    pet.className = hero ? 'study-pet study-pet--hero' : 'study-pet study-pet--floating';
+    pet.setAttribute('aria-label', '学习小宠物');
+    pet.innerHTML = `<div class="study-pet-bubble" aria-live="polite"><span></span><button class="study-pet-close" type="button" aria-label="暂时收起宠物提示">×</button></div><button class="study-pet-character" type="button" aria-label="让学习宠物换一句话"><img src="${petImage}" alt="紫色像素学习宠物"></button><small class="study-pet-hint">点我换一句</small>`;
+    if (hero) {
+      hero.classList.add('study-pet-host');
+      hero.appendChild(pet);
+    } else {
+      document.body.appendChild(pet);
+    }
+
+    const bubble = pet.querySelector('.study-pet-bubble');
+    const text = bubble.querySelector('span');
+    let last = -1;
+    try { last = Number(sessionStorage.getItem('study-pet-last-line')); } catch (_) {}
+    const speak = () => {
+      let next;
+      do next = Math.floor(Math.random() * lines.length); while (next === last && lines.length > 1);
+      last = next;
+      try { sessionStorage.setItem('study-pet-last-line', String(next)); } catch (_) {}
+      text.textContent = lines[next];
+      bubble.hidden = false;
+      bubble.style.animation = 'none';
+      void bubble.offsetWidth;
+      bubble.style.animation = '';
+    };
+    pet.querySelector('.study-pet-character').addEventListener('click', speak);
+    pet.querySelector('.study-pet-close').addEventListener('click', event => {
+      event.stopPropagation();
+      bubble.hidden = true;
+    });
+    speak();
+  };
+
   const simplifyFundamentalsRecitation = () => {
     if (!/\/fundamentals\//.test(location.pathname)) return;
     const section = document.getElementById('recitation');
@@ -515,6 +596,7 @@ STUDY_FLOW_JS = r'''(() => {
   };
 
   const run = () => {
+    buildStudyPet();
     simplifyFundamentalsRecitation();
     applyFocusPalette();
     addChapterPageRange();
@@ -594,8 +676,12 @@ def inject(root: Path) -> tuple[int, int]:
     root = root.resolve()
     css_path = root / "mobile-comfort.css"
     js_path = root / "study-flow.js"
+    pet_path = root / "study-pet.png"
     css_path.write_text(MOBILE_CSS, encoding="utf-8")
     js_path.write_text(STUDY_FLOW_JS, encoding="utf-8")
+    pet_source = Path(__file__).with_name("study-pet.png").resolve()
+    if pet_source != pet_path.resolve():
+        shutil.copyfile(pet_source, pet_path)
     changed = 0
     total = 0
     for path in root.rglob("*.html"):
@@ -635,4 +721,3 @@ if __name__ == "__main__":
     target = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("outputs/nursing-study-site")
     total, changed = inject(target)
     print(f"mobile stylesheet and study flow linked: {total} pages; changed: {changed}; root: {target.resolve()}")
-

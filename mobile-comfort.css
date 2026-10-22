@@ -81,6 +81,26 @@ body{background-image:radial-gradient(circle at 96% 3%,rgba(255,241,168,.32),tra
 .mood-quote-text{flex:1}
 .mood-refresh{flex:0 0 auto;padding:4px 8px;border:1px solid #d8cdef;border-radius:9px;background:#fff;color:#7151b7;font-family:inherit;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
 
+/* The same original study pet appears inside the purple hero at every level. */
+.study-pet{z-index:45;display:flex;align-items:flex-start;gap:6px;filter:drop-shadow(0 10px 14px rgba(76,53,112,.16))}
+.study-pet-host{position:relative!important;padding-right:min(390px,36%)!important;min-height:190px}
+.study-pet--hero{position:absolute;right:18px;top:18px}
+.study-pet--floating{position:fixed;right:18px;top:18px;z-index:9999}
+.study-pet-character{width:112px;height:112px;flex:0 0 auto;border:0;padding:0;background:transparent;cursor:pointer;transform-origin:50% 100%;animation:pet-bob 3.6s ease-in-out infinite;image-rendering:pixelated}
+.study-pet-character img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.study-pet-bubble{position:relative;max-width:244px;margin-top:28px;padding:11px 32px 11px 13px;border:1px solid #d9cdf1;border-radius:15px 4px 15px 15px;background:#fff;color:#302742;box-shadow:0 10px 28px rgba(96,71,147,.13);font-size:14px;line-height:1.55;animation:bubble-in .28s ease-out}
+.study-pet-bubble::after{content:"";position:absolute;right:-8px;top:12px;width:15px;height:15px;background:#fff;border-right:1px solid #d9cdf1;border-bottom:1px solid #d9cdf1;transform:rotate(-45deg)}
+.study-pet-close{position:absolute;top:3px;right:5px;width:25px;height:25px;border:0;background:transparent;color:#8a7b9c;font-size:18px;line-height:1;cursor:pointer}
+.study-pet-hint{position:absolute;right:15px;top:105px;padding:2px 7px;border-radius:99px;background:#fff;color:#7151b7;font-size:10px;font-weight:800;opacity:0;transition:.2s;pointer-events:none}
+.study-pet:hover .study-pet-hint,.study-pet-character:focus-visible~.study-pet-hint{opacity:1;transform:translateY(-2px)}
+@keyframes pet-bob{0%,100%{transform:translateY(0) rotate(-1deg)}45%{transform:translateY(-7px) rotate(1deg)}52%{transform:translateY(-7px) rotate(1deg) scaleY(.97)}58%{transform:translateY(-7px) rotate(1deg) scaleY(1)}}
+@keyframes bubble-in{from{opacity:0;transform:translateY(7px) scale(.96)}to{opacity:1;transform:none}}
+
+@media(max-width:900px){
+  .study-pet-host{padding-right:20px!important;min-height:0}
+  .study-pet--hero{position:relative;right:auto;top:auto;width:max-content;max-width:100%;margin:16px -4px -8px auto}
+}
+
 @media(max-width:760px){
   body{font-size:15px!important;line-height:1.72!important}
   .shell,.wrap,.container{width:100%!important;max-width:none!important;padding:8px!important}
@@ -150,6 +170,10 @@ body{background-image:radial-gradient(circle at 96% 3%,rgba(255,241,168,.32),tra
   .mood-diary-input{grid-column:1/-1;width:100%;font-size:16px}
   .mood-diary-status{justify-self:end}
   .mood-quote{align-items:flex-start}
+  .study-pet--floating{right:8px;top:8px}
+  .study-pet-character{width:82px;height:82px}
+  .study-pet-bubble{max-width:min(220px,calc(100vw - 112px));margin-top:18px;padding:9px 29px 9px 11px;font-size:12px}
+  .study-pet-hint{right:9px;top:76px}
 
   .table-wrap{display:block!important;max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-inline:contain!important}
   table{font-size:13px!important}
@@ -176,8 +200,9 @@ body{background-image:radial-gradient(circle at 96% 3%,rgba(255,241,168,.32),tra
   .brandline{padding:10px!important;font-size:13px!important}
 }
 
+@media(prefers-reduced-motion:reduce){.study-pet-character,.study-pet-bubble{animation:none}}
+
 @media(max-width:390px){
   .hero h1{font-size:25px!important}
   .toolbar input,#search{flex-basis:165px!important;min-width:165px!important}
 }
-

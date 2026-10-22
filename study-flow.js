@@ -1,4 +1,58 @@
 (() => {
+  const buildStudyPet = () => {
+    if (document.querySelector('.study-pet')) return;
+    const lines = [
+      '先把年龄、时间和症状圈出来，再判断它到底在考什么。',
+      '今天不用清空所有任务，真正拿下一页就很棒。',
+      '暂时不会很正常，能说出“为什么”就是进步。',
+      '别急着背答案，先把决定判断的那条线索说出来。',
+      '这题又来装熟人了，看看它悄悄换了哪个条件。',
+      '错题不是在嘲笑你，它是在考前替你排雷。',
+      '数值别单独背：对象、条件和单位要一起带走。',
+      '看累了就眨眨眼，我替你守住这一页。',
+      '再做三题，就允许你理直气壮地休息五分钟。',
+      '护理措施先排生命与安全，再处理舒适和长期问题。',
+      '选项都像对的？回到病人此刻最急的问题。',
+      '你不是记不住，只是还没把知识放进逻辑链。',
+      '今天多会一个考点，考场上就多一分底气。'
+    ];
+    const sharedScript = [...document.scripts].find(script => /(?:^|\/)study-flow\.js(?:\?|$)/.test(script.src));
+    const petImage = sharedScript ? new URL('study-pet.png', sharedScript.src).href : 'study-pet.png';
+    const hero = document.querySelector('.hero');
+    const pet = document.createElement('aside');
+    pet.className = hero ? 'study-pet study-pet--hero' : 'study-pet study-pet--floating';
+    pet.setAttribute('aria-label', '学习小宠物');
+    pet.innerHTML = `<div class="study-pet-bubble" aria-live="polite"><span></span><button class="study-pet-close" type="button" aria-label="暂时收起宠物提示">×</button></div><button class="study-pet-character" type="button" aria-label="让学习宠物换一句话"><img src="${petImage}" alt="紫色像素学习宠物"></button><small class="study-pet-hint">点我换一句</small>`;
+    if (hero) {
+      hero.classList.add('study-pet-host');
+      hero.appendChild(pet);
+    } else {
+      document.body.appendChild(pet);
+    }
+
+    const bubble = pet.querySelector('.study-pet-bubble');
+    const text = bubble.querySelector('span');
+    let last = -1;
+    try { last = Number(sessionStorage.getItem('study-pet-last-line')); } catch (_) {}
+    const speak = () => {
+      let next;
+      do next = Math.floor(Math.random() * lines.length); while (next === last && lines.length > 1);
+      last = next;
+      try { sessionStorage.setItem('study-pet-last-line', String(next)); } catch (_) {}
+      text.textContent = lines[next];
+      bubble.hidden = false;
+      bubble.style.animation = 'none';
+      void bubble.offsetWidth;
+      bubble.style.animation = '';
+    };
+    pet.querySelector('.study-pet-character').addEventListener('click', speak);
+    pet.querySelector('.study-pet-close').addEventListener('click', event => {
+      event.stopPropagation();
+      bubble.hidden = true;
+    });
+    speak();
+  };
+
   const simplifyFundamentalsRecitation = () => {
     if (!/\/fundamentals\//.test(location.pathname)) return;
     const section = document.getElementById('recitation');
@@ -323,6 +377,7 @@
   };
 
   const run = () => {
+    buildStudyPet();
     simplifyFundamentalsRecitation();
     applyFocusPalette();
     addChapterPageRange();
@@ -395,4 +450,3 @@
   };
   run();
 })();
-
