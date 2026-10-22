@@ -1,4 +1,25 @@
 (() => {
+  const simplifyFundamentalsRecitation = () => {
+    if (!/\/fundamentals\//.test(location.pathname)) return;
+    const section = document.getElementById('recitation');
+    if (!section || section.dataset.relatedOnly === 'true') return;
+    const links = [...section.querySelectorAll('.recite-links a, a[href*="/recitation/"]')];
+    if (!links.length) return;
+
+    const compactLinks = document.createElement('div');
+    compactLinks.className = 'recite-links related-recite-links';
+    links.forEach(link => compactLinks.appendChild(link.cloneNode(true)));
+    section.replaceChildren();
+    section.className = 'related-recitation';
+    section.dataset.relatedOnly = 'true';
+    const heading = document.createElement('h2');
+    heading.textContent = '关联带背';
+    section.append(heading, compactLinks);
+
+    const toolbarLink = document.querySelector('.toolbar a[href="#recitation"]');
+    if (toolbarLink) toolbarLink.textContent = '关联带背';
+  };
+
   const applyFocusPalette = () => {
     if (document.body.dataset.focusPalette === 'ready') return;
     document.body.dataset.focusPalette = 'ready';
@@ -302,6 +323,7 @@
   };
 
   const run = () => {
+    simplifyFundamentalsRecitation();
     applyFocusPalette();
     addChapterPageRange();
     cleanRepeatedTableColumns();

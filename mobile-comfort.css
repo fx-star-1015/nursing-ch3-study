@@ -23,6 +23,10 @@ body{background-image:radial-gradient(circle at 96% 3%,rgba(255,241,168,.32),tra
 .focus-card.focus-direct{--focus-line:var(--focus-yellow-line);background:linear-gradient(150deg,rgba(255,241,168,.28),#fff 36%)!important}
 .focus-card.focus-major{--focus-line:var(--focus-green-line);background:linear-gradient(150deg,rgba(230,241,220,.42),#fff 36%)!important}
 .focus-card.focus-support{--focus-line:var(--focus-purple-line);background:linear-gradient(150deg,rgba(238,232,255,.46),#fff 36%)!important}
+.related-recitation{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important;padding:18px 20px!important;background:#fff!important}
+.related-recitation h2{margin:0!important;font-size:20px!important;color:var(--study-navy)!important;white-space:nowrap!important}
+.related-recite-links{display:flex!important;flex-wrap:wrap!important;justify-content:flex-end!important;gap:8px!important;margin:0!important}
+.related-recite-links a{display:inline-flex!important;align-items:center!important;min-height:40px!important;padding:9px 14px!important;border-radius:10px!important;background:var(--purple,#7045bd)!important;color:#fff!important;font-weight:800!important;text-decoration:none!important}
 .focus-zone{--zone-bg:var(--focus-purple);--zone-line:var(--focus-purple-line)}
 .focus-zone.focus-direct-zone{--zone-bg:var(--focus-yellow);--zone-line:var(--focus-yellow-line)}
 .focus-zone.focus-major-zone{--zone-bg:var(--focus-green);--zone-line:var(--focus-green-line)}
@@ -137,6 +141,10 @@ body{background-image:radial-gradient(circle at 96% 3%,rgba(255,241,168,.32),tra
   .focus-legend{gap:5px;margin-top:10px}
   .focus-legend span,.focus-chip{padding:4px 7px;font-size:10px}
   .focus-zone>.section-head h2:before{height:20px;vertical-align:-3px}
+  .related-recitation{display:block!important;padding:14px!important}
+  .related-recitation h2{font-size:18px!important;margin-bottom:10px!important}
+  .related-recite-links{justify-content:flex-start!important}
+  .related-recite-links a{width:100%!important;justify-content:center!important;white-space:normal!important;text-align:center!important}
   .mood-diary{padding:12px;margin:12px 0 3px}
   .mood-diary-row{display:grid;grid-template-columns:auto 1fr;gap:7px}
   .mood-diary-input{grid-column:1/-1;width:100%;font-size:16px}
