@@ -21,10 +21,11 @@
     board.querySelectorAll('.match-right').forEach(btn=>btn.onclick=()=>{if(!active||btn.classList.contains('matched'))return;const ok=active.dataset.match===btn.dataset.match;record(ok);if(ok){active.classList.add('matched');active.classList.remove('selected');btn.classList.add('matched');matched.add(btn.dataset.match);active=null;fb.className='practice-feedback feedback ok';fb.textContent=`已连对 ${matched.size}/${board.querySelectorAll('.match-left').length} 组。`;if(matched.size===board.querySelectorAll('.match-left').length){state.done[id]=true;save();update()}}else{btn.classList.add('wrong');setTimeout(()=>btn.classList.remove('wrong'),450);fb.className='practice-feedback feedback no';fb.textContent='这组不匹配，再看病情、能力或安全条件。'}});
   });
   document.querySelectorAll('.sort-board').forEach((board,si)=>{
-    board.addEventListener('click',e=>{const b=e.target.closest('[data-move]');if(!b)return;const row=b.closest('.sort-row');if(b.dataset.move==='up'&&row.previousElementSibling)board.insertBefore(row,row.previousElementSibling);if(b.dataset.move==='down'&&row.nextElementSibling)board.insertBefore(row.nextElementSibling,row)});
+    board.addEventListener('click',e=>{const b=e.target.closest('[data-move]');if(!b)return;const row=b.closest('.sort-row');if(b.dataset.move==='up'&&row.previousElementSibling)board.insertBefore(row,row.previousElementSibling);if(b.dataset.move==='down'&&row.nextElementSibling)board.insertBefore(row.nextElementSibling,row);[...board.children].forEach((item,index)=>item.firstElementChild.textContent=String(index+1))});
     const section=board.closest('[data-activity]'),btn=section.querySelector('.check-btn'),fb=section.querySelector('.practice-feedback'),id=board.dataset.id||`s${si}`;
     btn.onclick=()=>{const actual=[...board.children].map(x=>x.dataset.order).join(''),ok=actual===board.dataset.answer;record(ok);fb.className=`practice-feedback feedback ${ok?'ok':'no'}`;fb.textContent=ok?board.dataset.ok:board.dataset.no;if(ok){state.done[id]=true;save();update()}};
   });
   update();
 })();
+
 
