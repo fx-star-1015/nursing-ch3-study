@@ -1,6 +1,8 @@
 (() => {
   const $ = (s, root=document) => root.querySelector(s);
-  const day = new Date().toLocaleDateString('sv-SE');
+  const nowDate = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const day = `${nowDate.getFullYear()}-${pad(nowDate.getMonth()+1)}-${pad(nowDate.getDate())}`;
   const SETTINGS='nursing-dashboard-settings-v1';
   const DAILY=`nursing-dashboard-day-${day}`;
   let settings={},daily={mood:'',tasks:[]};
@@ -19,14 +21,18 @@
 
   function renderCountdown(){
     const input=$('#examDate'),out=$('#countdownValue'),sub=$('#countdownSub');
+    input.min=day;
     input.value=settings.examDate||'';
-    if(!settings.examDate){out.textContent='—';sub.textContent='设置考试日期后自动计算';return}
-    const target=new Date(settings.examDate+'T00:00:00');
-    const today=new Date(day+'T00:00:00');
-    const diff=Math.ceil((target-today)/86400000);
-    if(diff>0){out.textContent=diff;sub.textContent='天后考试'}
-    else if(diff===0){out.textContent='今天';sub.textContent='稳住节奏，按计划完成'}
-    else{out.textContent='—';sub.textContent='考试日期已过，请重新设置'}
+    if(!settings.examDate){out.textContent='待设置';sub.textContent='选择考试日期后开始倒计时';return}
+    const parts=settings.examDate.split('-').map(Number);
+    const valid=parts.length===3&&parts.every(Number.isFinite);
+    if(!valid){out.textContent='待设置';sub.textContent='请重新选择考试日期';return}
+    const target=Date.UTC(parts[0],parts[1]-1,parts[2]);
+    const today=Date.UTC(nowDate.getFullYear(),nowDate.getMonth(),nowDate.getDate());
+    const diff=Math.round((target-today)/86400000);
+    if(diff>0){out.textContent=`${diff} 天`;sub.textContent='保持节奏，按计划完成'}
+    else if(diff===0){out.textContent='今天';sub.textContent='稳住节奏，完成今天的任务'}
+    else{out.textContent='已过期';sub.textContent='请选择今天之后的日期'}
   }
   function renderStats(){
     const s=stats(),seconds=Number(s.seconds||0),minutes=Math.floor(seconds/60);
