@@ -1,27 +1,36 @@
 (() => {
   if (window.__nursingStudyTimer) return;
   window.__nursingStudyTimer = true;
-  const dayKey = () => `nursing-study-stats-${new Date().toLocaleDateString('sv-SE')}`;
+  const dayKey = stamp => {const d=new Date(stamp),pad=n=>String(n).padStart(2,'0');return `nursing-study-stats-${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;};
+  const owner=`${Date.now()}-${Math.random().toString(36).slice(2)}`,leaseKey='nursing-study-timer-owner-v2';
   let lastActivity = Date.now();
   let lastTick = Date.now();
-  const markActive = () => { lastActivity = Date.now(); };
-  ['pointerdown','keydown','scroll','touchstart'].forEach(event =>
-    window.addEventListener(event, markActive, {passive:true})
-  );
+  let visible=document.visibilityState==='visible';
+  const claim=now=>{try{const lease=JSON.parse(localStorage.getItem(leaseKey)||'{}');if(lease.owner&&lease.owner!==owner&&lease.expiresAt>now)return false;localStorage.setItem(leaseKey,JSON.stringify({owner,expiresAt:now+3500}));return true;}catch(_){return true;}};
+  const release=()=>{try{if(JSON.parse(localStorage.getItem(leaseKey)||'{}').owner===owner)localStorage.removeItem(leaseKey);}catch(_){}};
+  const accumulate=(start,end)=>{
+    while(start<end){
+      const date=new Date(start),boundary=new Date(date.getFullYear(),date.getMonth(),date.getDate()+1).getTime(),stop=Math.min(end,boundary);
+      try{const key=dayKey(start),data=JSON.parse(localStorage.getItem(key)||'{}'),ms=Number(data.millisecondsRemainder||0)+stop-start;data.seconds=Number(data.seconds||0)+Math.floor(ms/1000);data.millisecondsRemainder=ms%1000;localStorage.setItem(key,JSON.stringify(data));}catch(_){}
+      start=stop;
+    }
+    window.dispatchEvent(new Event('nursing-study-stats-update'));
+  };
   const tick = () => {
     const now = Date.now();
-    const elapsed = Math.max(0, Math.min(20, Math.round((now - lastTick) / 1000)));
+    const start=lastTick;
     lastTick = now;
-    if (document.visibilityState !== 'visible' || now - lastActivity > 300000 || elapsed < 1) return;
-    try {
-      const key = dayKey();
-      const data = JSON.parse(localStorage.getItem(key) || '{}');
-      data.seconds = Number(data.seconds || 0) + elapsed;
-      localStorage.setItem(key, JSON.stringify(data));
-    } catch (e) {}
+    if(!visible||now-lastActivity>120000||now<=start||now-start>5000){release();return;}
+    if(!claim(now))return;
+    accumulate(start,now);
   };
-  document.addEventListener('visibilitychange', () => { lastTick = Date.now(); markActive(); });
-  setInterval(tick, 15000);
+  const markActive=()=>{if(Date.now()-lastActivity>120000)lastTick=Date.now();lastActivity=Date.now();};
+  ['pointerdown','keydown','scroll','touchstart','focus'].forEach(event=>window.addEventListener(event,markActive,{passive:true}));
+  document.addEventListener('visibilitychange',()=>{tick();visible=document.visibilityState==='visible';lastTick=Date.now();if(visible)markActive();else release();});
+  addEventListener('pagehide',()=>{tick();visible=false;release();});
+  addEventListener('pageshow',()=>{visible=document.visibilityState==='visible';lastTick=Date.now();markActive();});
+  window.NursingStudyTimer={flush:tick};
+  setInterval(tick,1000);
 })();
 
 (() => {
@@ -525,3 +534,4 @@
   };
   run();
 })();
+

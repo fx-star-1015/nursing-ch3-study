@@ -1,4 +1,5 @@
 (() => {
+ function renderProgress(){
   const $=s=>document.querySelector(s);
   const pad=n=>String(n).padStart(2,'0');
   const keyOf=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
@@ -21,7 +22,7 @@
   const minutes=Math.floor(totals.seconds/60);
   $('#totalDone').textContent=`${totals.done} 项`;
   $('#totalAttempts').textContent=`${totals.attempts} 次互动判断`;
-  $('#totalTime').textContent=minutes<60?`${minutes} 分钟`:`${Math.floor(minutes/60)} 小时 ${minutes%60} 分`;
+  $('#totalTime').textContent=totals.seconds<60?`${Math.floor(totals.seconds)} 秒`:minutes<60?`${minutes} 分钟`:`${Math.floor(minutes/60)} 小时 ${minutes%60} 分`;
   $('#studyDays').textContent=`${totals.studyDays} 天`;
   const score=totals.attempts?Math.round(totals.correct/totals.attempts*100):null;
   $('#totalAccuracy').textContent=score===null?'—':`${score}%`;
@@ -42,11 +43,23 @@
   }
   $('#calendar').innerHTML=calendar.join('');
 
-  const moods=Object.keys(dailyByDay).sort().reverse().filter(day=>dailyByDay[day].mood).slice(0,20);
-  $('#moodWall').innerHTML=moods.length?moods.map(day=>{const mood=dailyByDay[day].mood;return `<article class="note"><span class="mood-glyph">${moodArt[mood]||''}</span><b>${mood}</b><time>${day}</time></article>`}).join(''):'<p class="empty">从首页记录今日心情后，便利贴会出现在这里。</p>';
+  const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const moods=Object.keys(dailyByDay).sort().reverse().filter(day=>{const d=dailyByDay[day];return d.mood||d.moodMessage||d.joy;}).slice(0,20);
+  const notes=moods.flatMap(day=>{
+    const d=dailyByDay[day],result=[];
+    if(d.mood||d.moodMessage)result.push(`<article class="note">${d.mood?`<span class="mood-glyph">${moodArt[d.mood]||''}</span>`:''}<b>${esc(d.mood||'心情小记')}</b>${d.moodMessage?`<p class="sticky-words">${esc(d.moodMessage)}</p>`:''}<time>${day}</time></article>`);
+    if(d.joy)result.push(`<article class="note joy-note"><span class="sticky-label">今日小确幸</span><p class="sticky-words">${esc(d.joy)}</p><time>${day}</time></article>`);
+    return result;
+  });
+  $('#moodWall').innerHTML=notes.length?notes.join(''):'<p class="empty">在首页留下一句话或一件小确幸，它会出现在这里。</p>';
 
   const scored=Object.keys(statsByDay).sort().reverse().filter(day=>Number(statsByDay[day].attempts||0)>0).slice(0,14);
   $('#accuracyList').innerHTML=scored.length?scored.map(day=>{const s=statsByDay[day],rate=Math.round(Number(s.correct||0)/Number(s.attempts||0)*100),tone=rate>=60?'good':'low';return `<div class="accuracy-row ${tone}"><time>${day.slice(5).replace('-','/')}</time><div class="track"><div class="fill" style="width:${rate}%"></div></div><b>${rate}%</b></div>`}).join(''):'<p class="empty">完成互动题后，这里会出现每天的正确率。</p>';
+ }
+ renderProgress();
+ addEventListener('storage',renderProgress);addEventListener('focus',renderProgress);addEventListener('pageshow',renderProgress);
+ document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')renderProgress();});
+ setInterval(renderProgress,5000);
 })();
 
 
