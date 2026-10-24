@@ -182,7 +182,7 @@
     const existing=$('#practice');
     if(existing){
       const h=$('h2',existing);if(h)h.textContent='用互动检验并强化学习';
-      if(!existing.querySelector('[data-chapter-lab]')){const a=document.createElement('a');a.className='learn-primary';a.dataset.chapterLab='';a.href=chapter.lab;a.textContent='本章综合实验室 →';(existing.querySelector('.lab-links,.cta-actions,.actions')||existing).append(a);}
+      if(!existing.querySelector('[data-chapter-lab]')){const a=document.createElement('a');a.className='learn-primary';a.dataset.chapterLab='';a.href=chapter.lab;a.textContent='进入本章实验室 →';(existing.querySelector('.lab-links,.cta-actions,.actions')||existing).append(a);}
     }else{
       const section=document.createElement('section');section.id='practice';section.className='learn-bridge';section.innerHTML=`<h2>用互动检验并强化学习</h2><div class="learn-actions"><a href="${chapter.lab}" class="learn-primary">进入本章实验室 →</a><a href="#exam" class="learn-primary">刷题训练</a><a href="progress.html" class="learn-primary">学习台</a></div>`;
       ($('#compare')||$('#numbers')||core)?.after(section);
