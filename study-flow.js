@@ -25,6 +25,31 @@
 })();
 
 (() => {
+  const buildIceBrand = () => {
+    if (document.querySelector('.ice-brand')) return;
+    const sharedScript = [...document.scripts].find(script => /(?:^|\/)study-flow\.js(?:\?|$)/.test(script.src));
+    const homeUrl = sharedScript ? new URL('fundamentals/index.html', sharedScript.src).href : 'index.html';
+    if (!document.getElementById('ice-brand-style')) {
+      const style = document.createElement('style');
+      style.id = 'ice-brand-style';
+      style.textContent = `
+        .ice-brand{position:fixed;left:16px;top:16px;z-index:9998;display:inline-flex;align-items:baseline;gap:4px;padding:8px 12px;border:1px solid rgba(113,73,184,.22);border-radius:999px;background:rgba(255,253,250,.9);box-shadow:0 8px 24px rgba(77,48,111,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#6944ad!important;text-decoration:none!important;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;font-size:13px!important;line-height:1!important;letter-spacing:.01em;white-space:nowrap;transition:transform .2s ease,box-shadow .2s ease}
+        .ice-brand strong{font-size:14px;font-weight:900;color:#5d399f}
+        .ice-brand span{font-weight:760;color:#756385}
+        .ice-brand:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(77,48,111,.16)}
+        .ice-brand:focus-visible{outline:3px solid rgba(113,73,184,.28);outline-offset:3px}
+        @media(max-width:680px){.ice-brand{left:10px;top:auto;bottom:10px;padding:7px 10px;font-size:11px!important}.ice-brand strong{font-size:12px}}
+      `;
+      document.head.appendChild(style);
+    }
+    const brand = document.createElement('a');
+    brand.className = 'ice-brand';
+    brand.href = homeUrl;
+    brand.setAttribute('aria-label', 'ice冰冰·高分学姐团，返回学习主页');
+    brand.innerHTML = '<strong>ice冰冰</strong><span>· 高分学姐团</span>';
+    document.body.appendChild(brand);
+  };
+
   const buildStudyPet = () => {
     if (document.body?.hasAttribute('data-hide-study-pet')) return;
     if (document.querySelector('.study-pet')) return;
@@ -425,6 +450,7 @@
   };
 
   const run = () => {
+    buildIceBrand();
     buildStudyPet();
     simplifyFundamentalsRecitation();
     applyFocusPalette();
