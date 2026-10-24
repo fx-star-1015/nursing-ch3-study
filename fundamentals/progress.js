@@ -49,3 +49,4 @@
   $('#accuracyList').innerHTML=scored.length?scored.map(day=>{const s=statsByDay[day],rate=Math.round(Number(s.correct||0)/Number(s.attempts||0)*100),tone=rate>=60?'good':'low';return `<div class="accuracy-row ${tone}"><time>${day.slice(5).replace('-','/')}</time><div class="track"><div class="fill" style="width:${rate}%"></div></div><b>${rate}%</b></div>`}).join(''):'<p class="empty">完成互动题后，这里会出现每天的正确率。</p>';
 })();
 
+

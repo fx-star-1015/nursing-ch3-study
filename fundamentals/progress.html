@@ -19,8 +19,8 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;background-ima
 @media(max-width:850px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.mood-wall{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){body{font-size:16px}.wrap{width:min(100% - 20px,1120px);padding-top:16px}.hero,.section{padding:19px;border-radius:20px}.summary{gap:9px}.stat{padding:15px}.stat b{font-size:1.45rem}.section-head{display:block}.section-head p{margin-top:5px}.weekdays,.calendar{gap:4px}.day{min-height:57px;padding:6px;border-radius:10px}.day b{margin-top:6px;font-size:.7rem}.day small{display:none}.mood-wall{grid-template-columns:1fr 1fr}.accuracy-row{grid-template-columns:68px 1fr 53px;gap:8px}}
 </style>
-</head>
-<body>
+<link rel="stylesheet" href="learning.css"></head>
+<body data-learning-dashboard>
 <main class="wrap">
 <div class="topbar"><a class="back" href="index.html">← 回到全书学习中心</a><span id="todayLabel" class="date"></span></div>
 <header class="hero"><span class="eyebrow">LEARNING JOURNAL</span><h1>我的学习素养</h1><p>把每天一点点的学习，慢慢连成一条看得见的路。</p></header>
@@ -35,5 +35,6 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;background-ima
 <section class="section"><div class="section-head"><h2>最近正确率</h2><p>60%及以上显示绿色，低于60%显示红色。</p></div><div id="accuracyList" class="accuracy-list"></div><div class="tip">红色不是失败提示，只是在提醒：这一类题值得回到教材和互动页再练一次。</div></section>
 </main>
 <script src="progress.js"></script><script src="../study-flow.js"></script>
-</body></html>
+<script src="learning-core.js"></script><script src="learning-data.js"></script><script src="learning-ui.js"></script></body></html>
+
 

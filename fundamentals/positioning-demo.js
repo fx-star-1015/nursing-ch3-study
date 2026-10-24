@@ -4,7 +4,8 @@ let state={done:{},wrong:{},practice:{}};
 try{state={...state,...JSON.parse(localStorage.getItem(KEY)||'{}')};state.practice=state.practice||{}}catch(e){}
 const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
 const todayStatsKey=()=>`nursing-study-stats-${new Date().toLocaleDateString('sv-SE')}`;
-function recordAttempt(ok){
+function recordAttempt(ok,id,title){
+  if(window.NursingLearning){window.NursingLearning.record(`ch04-position-${id}`,ok,{kind:"objective",chapter:"ch04",title:title||"卧位判断",url:`positioning-demo.html#scene-${id}`});return;}
   try{
     const key=todayStatsKey(),stats=JSON.parse(localStorage.getItem(key)||'{}');
     stats.attempts=Number(stats.attempts||0)+1;
@@ -33,7 +34,7 @@ document.querySelectorAll('[data-scene]').forEach(scene=>{
   scene.querySelectorAll('.choice').forEach(btn=>btn.onclick=()=>{
     scene.querySelectorAll('.choice').forEach(x=>x.classList.remove('correct','wrong'));
     const ok=btn.dataset.pick===correct[id];
-    recordAttempt(ok);
+    recordAttempt(ok,id,scene.querySelector("h2")?.textContent);
     if(ok){
       btn.classList.add('correct');fb.className='feedback ok';
       fb.textContent='判断正确。现在用同一考点的题目马上验证。';
@@ -48,7 +49,7 @@ document.querySelectorAll('[data-scene]').forEach(scene=>{
   scene.querySelectorAll('.option').forEach(btn=>btn.onclick=()=>{
     scene.querySelectorAll('.option').forEach(x=>x.classList.remove('correct','wrong'));
     const ok=btn.dataset.answer==='0';btn.classList.add(ok?'correct':'wrong');
-    recordAttempt(ok);
+    recordAttempt(ok,id,scene.querySelector("h2")?.textContent);
     if(!ok)state.wrong[id]=true;else state.done[id]=true;
     embed.querySelector('.explain').classList.add('show');save();update();
   });
@@ -64,6 +65,7 @@ orderList.addEventListener('click',e=>{
 document.getElementById('checkOrder').onclick=()=>{
   const values=[...orderList.children].map(x=>x.dataset.step).join('');
   const fb=document.getElementById('orderFeedback');
+  if(window.NursingLearning)window.NursingLearning.record('ch04-position-order',values==='1234',{kind:'objective',chapter:'ch04',title:'卧位判断顺序',url:'positioning-demo.html#practice'});
   if(values==='1234'){
     fb.className='practice-feedback ok';fb.textContent='顺序正确：先抓病情，再定目标，随后排禁忌，最后核对安全。';
     state.practice.order=true;
@@ -80,6 +82,7 @@ document.querySelectorAll('.match-clue').forEach(btn=>btn.onclick=()=>{
 document.querySelectorAll('.match-target').forEach(btn=>btn.onclick=()=>{
   if(!activeClue||btn.classList.contains('matched'))return;
   const fb=document.getElementById('matchFeedback');
+  if(window.NursingLearning)window.NursingLearning.record(`ch04-position-match-${activeClue.dataset.match}`,activeClue.dataset.match===btn.dataset.match,{kind:'objective',chapter:'ch04',title:activeClue.textContent,url:'positioning-demo.html#practice'});
   if(activeClue.dataset.match===btn.dataset.match){
     activeClue.classList.add('matched');btn.classList.add('matched');
     matched.add(btn.dataset.match);activeClue=null;
@@ -131,4 +134,5 @@ document.getElementById('reset').onclick=()=>{
   if(confirm('清除这个 DEMO 的学习记录？')){localStorage.removeItem(KEY);location.reload()}
 };
 update();
+
 

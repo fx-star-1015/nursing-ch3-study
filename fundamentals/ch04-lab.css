@@ -8,3 +8,4 @@
 @media(max-width:720px){body{font-size:16px}.wrap{width:min(100% - 18px,1100px)}.hero{grid-template-columns:1fr}.hero,.section{padding:19px;border-radius:20px}.hero-art{min-height:210px}.hero-art img{min-height:190px;max-height:300px}.quiz-grid,.match-board{grid-template-columns:1fr}.section-head{display:block}.section-head .tag{display:inline-block;margin-top:8px}.footer-nav{flex-direction:column}.footer-nav a{justify-content:center}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.progress-bar{transition:none}}
 
+
