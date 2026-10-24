@@ -91,7 +91,7 @@
       `;
       document.head.appendChild(style);
     }
-    const hero = document.querySelector('.hero');
+    const hero = document.body.hasAttribute('data-pet-floating') ? null : document.querySelector('.hero');
     const pet = document.createElement('aside');
     pet.className = hero ? 'study-pet study-pet--hero' : 'study-pet study-pet--floating';
     pet.setAttribute('aria-label', '学习小宠物');
