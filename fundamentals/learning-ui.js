@@ -104,7 +104,7 @@
       $('.learn-save-reason',detail).onclick=()=>{
         const text=draft.value.trim();if(!text){draft.focus();return;}
         const title=$('#noteTitle'),body=$('#noteBody');
-        if(title&&body){title.value=q.topic||'刷题错因';body.value=`题目：${q.title}\n正确答案：${q.answer.replace(/^(正确答案|答案)[：:]\s*/,'')}\n我的理由：${text}\n来源：${q.paper}\n${q.source}`;location.hash='notes';body.focus();}
+        if(title&&body){title.value=q.topic||'刷题错因';body.value=`题目：${q.title}\n正确答案：${q.answer.replace(/^(正确答案|答案)[：:]\s*/,'')}\n我的理由：${text}\n来源：${q.paper}\n${q.source}`;safeSet(`nursing-note-origin-${chapter.id}`,card.id);location.hash='notes';body.focus();}
       };
       const valid=q.correct.length>0&&q.correct.every(letter=>q.options.some(o=>new RegExp(`^${letter}[.．、\\s]`).test(o)));
       const block=document.createElement('div');block.className='learn-question-control';
@@ -155,6 +155,23 @@
     const para=$('#exam .section-head p');if(para)para.textContent='先独立作答，再核对答案、条件与教材依据。';
     const badge=$('#exam .section-head .level, #exam .section-head .badge');if(badge)badge.textContent='10题 · 先答后看';
   }
+  function addNoteReturn() {
+    const add=$('#addNote');if(!add||$('#returnToQuestion'))return;
+    const group=document.createElement('div');group.className='learn-note-actions';
+    add.before(group);group.append(add);
+    const back=document.createElement('button');back.id='returnToQuestion';back.type='button';back.textContent='回到做题';back.setAttribute('aria-label','回到刚才的题目');group.append(back);
+    $('#exam')?.addEventListener('click',event=>{const card=event.target.closest('.question');if(card?.id)safeSet(`nursing-note-origin-${chapter.id}`,card.id);});
+    back.onclick=()=>{
+      const id=safeGet(`nursing-note-origin-${chapter.id}`);
+      const card=/^exam-\d+$/.test(id)?document.getElementById(id):null;
+      const target=card||all('#exam .question').find(q=>$('.learn-submit:not(:disabled)',q))||$('#exam');
+      if(!target)return;
+      location.hash=target.id;
+      target.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+      const focus=$('.learn-retry:not([hidden]):not(:disabled), .learn-question-options input:not(:disabled), summary',target);
+      focus?.focus({preventScroll:true});
+    };
+  }
   function enhanceChapter() {
     document.body.classList.add('learn-ui');
     const core=$('#core');if(core){
@@ -171,7 +188,7 @@
       ($('#compare')||$('#numbers')||core)?.after(section);
     }
     const toolbar=$('.toolbar');if(toolbar&&!toolbar.querySelector('a[href="progress.html"]'))toolbar.insertAdjacentHTML('beforeend','<a href="#practice">互动练习</a><a href="progress.html">学习台</a>');
-    enhanceQuestions();
+    enhanceQuestions();addNoteReturn();
     all('.question .qnum').forEach((el,i)=>el.textContent=String(i+1));
   }
   function download(name,text) {
