@@ -1,4 +1,30 @@
 (() => {
+  if (window.__nursingStudyTimer) return;
+  window.__nursingStudyTimer = true;
+  const dayKey = () => `nursing-study-stats-${new Date().toLocaleDateString('sv-SE')}`;
+  let lastActivity = Date.now();
+  let lastTick = Date.now();
+  const markActive = () => { lastActivity = Date.now(); };
+  ['pointerdown','keydown','scroll','touchstart'].forEach(event =>
+    window.addEventListener(event, markActive, {passive:true})
+  );
+  const tick = () => {
+    const now = Date.now();
+    const elapsed = Math.max(0, Math.min(20, Math.round((now - lastTick) / 1000)));
+    lastTick = now;
+    if (document.visibilityState !== 'visible' || now - lastActivity > 300000 || elapsed < 1) return;
+    try {
+      const key = dayKey();
+      const data = JSON.parse(localStorage.getItem(key) || '{}');
+      data.seconds = Number(data.seconds || 0) + elapsed;
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (e) {}
+  };
+  document.addEventListener('visibilitychange', () => { lastTick = Date.now(); markActive(); });
+  setInterval(tick, 15000);
+})();
+
+(() => {
   const buildStudyPet = () => {
     if (document.querySelector('.study-pet')) return;
     const lines = [
