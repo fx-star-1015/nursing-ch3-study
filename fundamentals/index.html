@@ -12,7 +12,7 @@ body{font-size:17px}
 .daily-head h2,.task-head h3{margin:0;color:var(--ink);line-height:1.25}
 .daily-head h2{font-size:1.75rem}
 .daily-head p{margin:7px 0 0;color:var(--muted)}
-.dash-progress{flex:none;padding:8px 13px;border-radius:999px;background:var(--lav);color:var(--p);font-size:.9rem;font-weight:850}
+.daily-actions{display:flex;align-items:center;gap:9px;flex:none}.progress-link{min-height:40px;display:inline-flex;align-items:center;padding:0 13px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--p);font-size:.9rem;font-weight:850;text-decoration:none}.progress-link:hover{background:var(--lav)}.dash-progress{flex:none;padding:8px 13px;border-radius:999px;background:var(--lav);color:var(--p);font-size:.9rem;font-weight:850}
 .metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:22px}
 .metric{min-height:178px;padding:19px;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#fff 0%,var(--lav2) 100%)}
 .metric>span{color:var(--muted);font-size:.88rem;font-weight:800}
@@ -42,10 +42,10 @@ body{font-size:17px}
 .task-add button{min-width:78px;min-height:46px;border:0;border-radius:13px;background:var(--p);color:#fff;font:inherit;font-weight:850;cursor:pointer}
 .daily-dashboard button:focus-visible,.daily-dashboard input:focus-visible{outline:3px solid rgba(112,72,183,.24);outline-offset:2px}
 @media(max-width:900px){.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.daily-dashboard{padding:18px;border-radius:21px}.daily-head{display:block}.dash-progress{display:inline-block;margin-top:12px}.metric-grid{grid-template-columns:1fr}.metric{min-height:154px}.task-head{display:block}.task-head span{display:block;margin-top:4px}.task-add{align-items:stretch}.task-add button{min-width:72px}}
+@media(max-width:560px){.daily-actions{margin-top:12px;justify-content:space-between}.daily-dashboard{padding:18px;border-radius:21px}.daily-head{display:block}.dash-progress{display:inline-block;margin-top:12px}.metric-grid{grid-template-columns:1fr}.metric{min-height:154px}.task-head{display:block}.task-head span{display:block;margin-top:4px}.task-add{align-items:stretch}.task-add button{min-width:72px}}
 @media(prefers-reduced-motion:reduce){.moods button{transition:none}}
 </style></head><body><div class="wrap"><header class="hero index-hero"><div class="eyebrow">ICE冰冰高分学姐团 · FUNDAMENTALS OF NURSING</div><h1>基础护理学｜全书学习中心</h1><p>教材是主线，这里负责帮你抓住高频重点、数值、概念和易混点，再用互动练习检验掌握。</p></header><section class="daily-dashboard" aria-labelledby="dailyTitle">
-<div class="daily-head"><div><span class="dash-eyebrow">TODAY</span><h2 id="dailyTitle">今日学习台</h2><p>先看今天，再选一个章节开始。</p></div><span id="taskProgress" class="dash-progress">0/3 完成</span></div>
+<div class="daily-head"><div><span class="dash-eyebrow">TODAY</span><h2 id="dailyTitle">今日学习台</h2><p>先看今天，再选一个章节开始。</p></div><div class="daily-actions"><a class="progress-link" href="progress.html">学习趋势 →</a><span id="taskProgress" class="dash-progress">0/3 完成</span></div></div>
 <div class="metric-grid">
 <article class="metric countdown-card"><span>考研倒计时</span><b id="countdownValue">—</b><small id="countdownSub">设置考试日期后自动计算</small><label>考试日期<input id="examDate" type="date" aria-label="考研日期"></label></article>
 <article class="metric"><span>今日复习用时</span><b id="timeValue">0 分钟</b><small>学习页面有操作时自动累计</small></article>
