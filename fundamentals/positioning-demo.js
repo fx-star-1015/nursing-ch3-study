@@ -3,6 +3,15 @@ const correct={anesthesia:'anesthesia',shock:'shock',semi:'semi',sitting:'sittin
 let state={done:{},wrong:{},practice:{}};
 try{state={...state,...JSON.parse(localStorage.getItem(KEY)||'{}')};state.practice=state.practice||{}}catch(e){}
 const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
+const todayStatsKey=()=>`nursing-study-stats-${new Date().toLocaleDateString('sv-SE')}`;
+function recordAttempt(ok){
+  try{
+    const key=todayStatsKey(),stats=JSON.parse(localStorage.getItem(key)||'{}');
+    stats.attempts=Number(stats.attempts||0)+1;
+    stats.correct=Number(stats.correct||0)+(ok?1:0);
+    localStorage.setItem(key,JSON.stringify(stats));
+  }catch(e){}
+}
 
 function update(){
   const sceneDone=Object.keys(state.done).filter(k=>state.done[k]).length;
@@ -23,7 +32,9 @@ document.querySelectorAll('[data-scene]').forEach(scene=>{
   if(state.done[id])embed.classList.add('open');
   scene.querySelectorAll('.choice').forEach(btn=>btn.onclick=()=>{
     scene.querySelectorAll('.choice').forEach(x=>x.classList.remove('correct','wrong'));
-    if(btn.dataset.pick===correct[id]){
+    const ok=btn.dataset.pick===correct[id];
+    recordAttempt(ok);
+    if(ok){
       btn.classList.add('correct');fb.className='feedback ok';
       fb.textContent='判断正确。现在用同一考点的题目马上验证。';
       embed.classList.add('open');state.done[id]=true;
@@ -37,6 +48,7 @@ document.querySelectorAll('[data-scene]').forEach(scene=>{
   scene.querySelectorAll('.option').forEach(btn=>btn.onclick=()=>{
     scene.querySelectorAll('.option').forEach(x=>x.classList.remove('correct','wrong'));
     const ok=btn.dataset.answer==='0';btn.classList.add(ok?'correct':'wrong');
+    recordAttempt(ok);
     if(!ok)state.wrong[id]=true;else state.done[id]=true;
     embed.querySelector('.explain').classList.add('show');save();update();
   });
