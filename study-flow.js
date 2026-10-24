@@ -45,6 +45,27 @@
     ];
     const sharedScript = [...document.scripts].find(script => /(?:^|\/)study-flow\.js(?:\?|$)/.test(script.src));
     const petImage = sharedScript ? new URL('study-pet.png', sharedScript.src).href : 'study-pet.png';
+    if (!document.getElementById('study-pet-style')) {
+      const style = document.createElement('style');
+      style.id = 'study-pet-style';
+      style.textContent = `
+        .study-pet{position:fixed!important;right:18px!important;top:18px!important;bottom:auto!important;left:auto!important;z-index:9999;display:flex;align-items:flex-start;gap:6px;filter:drop-shadow(0 10px 14px #4c357028)}
+        .study-pet-host{position:relative!important;padding-right:390px!important;min-height:190px}
+        .study-pet--hero{position:absolute!important;right:18px!important;top:18px!important;bottom:auto!important;left:auto!important}
+        .study-pet-character{width:112px!important;height:112px!important;border:0!important;padding:0!important;background:transparent!important;cursor:pointer;transform-origin:50% 100%;animation:pet-bob 3.6s ease-in-out infinite;image-rendering:pixelated}
+        .study-pet-character img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;user-select:none;-webkit-user-drag:none}
+        .study-pet-bubble{position:relative;max-width:244px;margin-top:28px;padding:11px 32px 11px 13px;border:1px solid #d9cdf1;border-radius:15px 4px 15px 15px;background:#fff;color:#302742;box-shadow:0 10px 28px #60479322;font-size:14px;line-height:1.55;animation:bubble-in .28s ease-out}
+        .study-pet-bubble::after{content:'';position:absolute;right:-8px;top:12px;width:15px;height:15px;background:#fff;border-right:1px solid #d9cdf1;border-bottom:1px solid #d9cdf1;transform:rotate(-45deg)}
+        .study-pet-close{position:absolute!important;top:3px;right:5px;width:25px!important;height:25px!important;border:0!important;padding:0!important;background:transparent!important;color:#8a7b9c;font-size:18px;cursor:pointer}
+        .study-pet-hint{position:absolute;right:15px;top:105px;padding:2px 7px;border-radius:99px;background:#fff;color:#7151b7;font-size:10px;font-weight:800;opacity:0;transition:.2s;pointer-events:none}
+        .study-pet:hover .study-pet-hint{opacity:1;transform:translateY(-2px)}
+        @keyframes pet-bob{0%,100%{transform:translateY(0) rotate(-1deg)}45%{transform:translateY(-7px) rotate(1deg)}52%{transform:translateY(-7px) rotate(1deg) scaleY(.97)}58%{transform:translateY(-7px) rotate(1deg) scaleY(1)}}
+        @keyframes bubble-in{from{opacity:0;transform:translateY(7px) scale(.96)}to{opacity:1;transform:none}}
+        @media(max-width:680px){.study-pet{right:8px!important;top:8px!important}.study-pet-host{padding-right:20px!important;min-height:0}.study-pet--hero{position:relative!important;right:auto!important;top:auto!important;width:max-content;max-width:100%;margin:16px -4px -8px auto}.study-pet-character{width:82px!important;height:82px!important}.study-pet-bubble{max-width:min(220px,calc(100vw - 112px));margin-top:18px;padding:9px 29px 9px 11px;font-size:12px}.study-pet-hint{top:76px}}
+        @media(prefers-reduced-motion:reduce){.study-pet-character,.study-pet-bubble{animation:none}}
+      `;
+      document.head.appendChild(style);
+    }
     const hero = document.querySelector('.hero');
     const pet = document.createElement('aside');
     pet.className = hero ? 'study-pet study-pet--hero' : 'study-pet study-pet--floating';
