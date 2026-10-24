@@ -3,7 +3,7 @@
   const pad=n=>String(n).padStart(2,'0');
   const keyOf=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
   const read=key=>{try{return JSON.parse(localStorage.getItem(key)||'{}')}catch(e){return {}}};
-  const moodEmoji={轻松:'😊',平静:'🙂',疲惫:'😮‍💨',焦虑:'😟',有力量:'💪'};
+  const moodArt={"轻松":"<svg class=\"mood-art\" viewBox=\"0 0 40 40\" aria-hidden=\"true\"><circle cx=\"20\" cy=\"20\" r=\"17\" fill=\"#ffe59b\"/><g fill=\"none\" stroke=\"#4a3d56\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 17q2.5-3 5 0M23 17q2.5-3 5 0\"/><path d=\"M13 23q7 7 14 0\"/></g></svg>","平静":"<svg class=\"mood-art\" viewBox=\"0 0 40 40\" aria-hidden=\"true\"><circle cx=\"20\" cy=\"20\" r=\"17\" fill=\"#dcebf7\"/><g fill=\"none\" stroke=\"#4a3d56\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 17h3M24 17h3\"/><path d=\"M15 24q5 3 10 0\"/></g></svg>","疲惫":"<svg class=\"mood-art\" viewBox=\"0 0 40 40\" aria-hidden=\"true\"><circle cx=\"20\" cy=\"20\" r=\"17\" fill=\"#e8def2\"/><g fill=\"none\" stroke=\"#4a3d56\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 18q2.5 2 5 0M23 18q2.5 2 5 0\"/><path d=\"M16 26h8\"/></g></svg>","焦虑":"<svg class=\"mood-art\" viewBox=\"0 0 40 40\" aria-hidden=\"true\"><circle cx=\"20\" cy=\"20\" r=\"17\" fill=\"#ffd9cc\"/><g fill=\"none\" stroke=\"#4a3d56\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"17\" r=\"1.2\" fill=\"#4a3d56\" stroke=\"none\"/><circle cx=\"25\" cy=\"17\" r=\"1.2\" fill=\"#4a3d56\" stroke=\"none\"/><path d=\"M14 26q3-5 6 0t6 0\"/></g></svg>","有力量":"<svg class=\"mood-art\" viewBox=\"0 0 40 40\" aria-hidden=\"true\"><circle cx=\"20\" cy=\"20\" r=\"17\" fill=\"#d9c5f2\"/><path d=\"M22 8l-9 14h7l-2 10 9-15h-7z\" fill=\"#7048b7\" stroke=\"#4a3d56\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/></svg>"};
   const statsByDay={},dailyByDay={};
   for(let i=0;i<localStorage.length;i++){
     const key=localStorage.key(i)||'';
@@ -43,7 +43,7 @@
   $('#calendar').innerHTML=calendar.join('');
 
   const moods=Object.keys(dailyByDay).sort().reverse().filter(day=>dailyByDay[day].mood).slice(0,20);
-  $('#moodWall').innerHTML=moods.length?moods.map(day=>{const mood=dailyByDay[day].mood;return `<article class="note"><span class="emoji">${moodEmoji[mood]||'🌿'}</span><b>${mood}</b><time>${day}</time></article>`}).join(''):'<p class="empty">从首页记录今日心情后，便利贴会出现在这里。</p>';
+  $('#moodWall').innerHTML=moods.length?moods.map(day=>{const mood=dailyByDay[day].mood;return `<article class="note"><span class="mood-glyph">${moodArt[mood]||''}</span><b>${mood}</b><time>${day}</time></article>`}).join(''):'<p class="empty">从首页记录今日心情后，便利贴会出现在这里。</p>';
 
   const scored=Object.keys(statsByDay).sort().reverse().filter(day=>Number(statsByDay[day].attempts||0)>0).slice(0,14);
   $('#accuracyList').innerHTML=scored.length?scored.map(day=>{const s=statsByDay[day],rate=Math.round(Number(s.correct||0)/Number(s.attempts||0)*100),tone=rate>=60?'good':'low';return `<div class="accuracy-row ${tone}"><time>${day.slice(5).replace('-','/')}</time><div class="track"><div class="fill" style="width:${rate}%"></div></div><b>${rate}%</b></div>`}).join(''):'<p class="empty">完成互动题后，这里会出现每天的正确率。</p>';
