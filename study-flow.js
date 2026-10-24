@@ -412,8 +412,8 @@
     const practice = document.getElementById('practice') || document.getElementById('original') || document.getElementById('exam');
     const notes = document.getElementById('notes');
     if (!practice) return;
-    buildMoodDiary();
     if (document.body.hasAttribute('data-skip-flow-notes')) return;
+    buildMoodDiary();
 
     const pageKey = document.body.dataset.key || location.pathname;
     if (document.getElementById('pre-quiz-note')) {
