@@ -99,7 +99,7 @@
       const oldList=$('.options',card),detail=$('details',card);if(!detail)return;
       const source=$('.source',detail)?.textContent||q.source;
       // Replace unsupported generic rationales with a clearly labelled reference and reasoning task.
-      detail.innerHTML=`<summary>查看参考答案与核对提示</summary><div class="answer"><p class="direct"><b>原题库参考答案：</b>${esc(q.answer.replace(/^(正确答案|答案)[：:]\s*/,''))}</p><p><b>核对提示：</b>先圈出设问中的对象、阶段与否定词，再说明选项成立所需的条件。</p><p class="source">原页面教材定位：${esc(source||'见本章')}。题源标签沿用原题库，未逐题核对原卷。</p><label for="reason-${i}">用一句话写出你排除干扰项的理由</label><textarea id="reason-${i}" class="learn-reason" placeholder="我选择……，因为题干中的……"></textarea><div class="learn-buttons"><button type="button" class="learn-save-reason">保存到本章笔记</button><a href="${chapter.lab}#discriminate">练易混辨析 →</a></div></div>`;
+      detail.innerHTML=`<summary>查看参考答案与核对提示</summary><div class="answer"><p class="direct"><b>参考答案：</b>${esc(q.answer.replace(/^(正确答案|答案)[：:]\s*/,''))}</p><p><b>核对提示：</b>先圈出设问中的对象、阶段与否定词，再说明选项成立所需的条件。</p><p class="source">教材定位：${esc(source||'见本章')}。题源与答案待原卷核实。</p><label for="reason-${i}">用一句话写出你排除干扰项的理由</label><textarea id="reason-${i}" class="learn-reason" placeholder="我选择……，因为题干中的……"></textarea><div class="learn-buttons"><button type="button" class="learn-save-reason">保存到本章笔记</button><a href="${chapter.lab}#discriminate">练易混辨析 →</a></div></div>`;
       const draft=$('textarea',detail),draftKey=`nursing-exam-reason-${q.id}`;draft.value=safeGet(draftKey);draft.oninput=()=>safeSet(draftKey,draft.value);
       $('.learn-save-reason',detail).onclick=()=>{
         const text=draft.value.trim();if(!text){draft.focus();return;}
@@ -112,15 +112,36 @@
         oldList.hidden=true;
         block.innerHTML=`<div class="learn-question-options" role="group" aria-label="${q.correct.length>1?'选择所有正确选项':'选择一个答案'}">${q.options.map((o,j)=>`<label><input type="${q.correct.length>1?'checkbox':'radio'}" name="${q.id}" value="${esc(o.match(/^[A-E]/)?.[0]||String(j))}"><span>${esc(o)}</span></label>`).join('')}</div><fieldset class="learn-confidence"><legend>作答把握</legend><label><input type="radio" name="confidence-${q.id}" value="sure" checked> 比较确定</label> <label><input type="radio" name="confidence-${q.id}" value="unsure"> 不太确定</label></fieldset><div class="learn-buttons"><button class="learn-submit" type="button">提交判断</button><button class="learn-skip" type="button">不会，先学习</button></div><div class="learn-feedback" role="status" hidden></div>`;
         const submit=$('.learn-submit',block),fb=$('.learn-feedback',block);
+        const skipButton=$('.learn-skip',block),retry=document.createElement('button');
+        retry.type='button';retry.className='learn-retry';retry.textContent='重新作答';retry.hidden=true;
+        $('.learn-buttons',block).append(retry);
+        const next=document.createElement('a');next.className='learn-primary learn-next';next.href=i+1<cards.length?`#exam-${i+2}`:`${chapter.lab}`;next.textContent=i+1<cards.length?'下一题 →':'去互动强化 →';next.hidden=true;block.append(next);
+        let submitted=false,exposed=false;
+        retry.onclick=()=>{
+          submitted=false;
+          all('input,button',block).forEach(x=>x.disabled=false);
+          all('.learn-question-options input',block).forEach(x=>x.checked=false);
+          detail.open=false;detail.hidden=true;fb.hidden=true;next.hidden=true;retry.hidden=true;
+          $('.learn-question-options input',block)?.focus();
+        };
         const finish=(skip=false)=>{
+          if(submitted)return;
+          if(skip){
+            const saved=L.review(q.id,{chapter:chapter.id,title:q.title.slice(0,65),url:`${chapter.page}#${card.id}`});
+            exposed=true;detail.hidden=false;detail.open=true;skipButton.disabled=true;
+            result(fb,'已展开解析并加入待复习，不计为答错。看完后点“重新作答”，也可以直接选择答案。');
+            if(!saved)fb.textContent+=' 当前记录未能保存，请导出备份。';
+            retry.textContent='重新作答';retry.hidden=false;next.hidden=false;return;
+          }
           const selected=all('.learn-question-options input:checked',block).map(x=>x.value).sort();
-          if(!skip&&!selected.length){result(fb,'请先选择答案。');return;}
-          const ok=!skip&&selected.join('')===[...q.correct].sort().join(''),confidence=$(`[name="confidence-${q.id}"]:checked`,block)?.value||'unsure';
-          const e=L.record(q.id,ok,{kind:'objective',confidence,chapter:chapter.id,title:q.title.slice(0,65),url:`${chapter.page}#${card.id}`});
-          result(fb,skip?'已记为需要复习。先核对参考答案和教材。':ok?`✓ 与原题库答案一致。${confidence==='unsure'?'把握不足，已加入复习。':'继续检查自己的理由。'}`:'× 与原题库答案不同。核对决定性线索和选项条件。',ok);
+          if(!selected.length){result(fb,'请先选择答案。');return;}
+          const ok=selected.join('')===[...q.correct].sort().join(''),confidence=$(`[name="confidence-${q.id}"]:checked`,block)?.value||'unsure';
+          const e=L.record(q.id,ok,{kind:'objective',confidence,assisted:exposed,chapter:chapter.id,title:q.title.slice(0,65),url:`${chapter.page}#${card.id}`});
+          submitted=true;exposed=true;
+          result(fb,ok?`✓ 回答正确。${confidence==='unsure'?'把握不足，已加入复习。':'再检查一下自己的理由。'}`:'再想一想：留意题干的关键线索和选项的适用条件。',ok);
           if(!e.saved)fb.textContent+=' 当前记录未能保存，请导出备份。';
           all('input,button',block).forEach(x=>x.disabled=true);detail.hidden=false;detail.open=true;
-          const next=document.createElement('a');next.className='learn-primary learn-next';next.href=i+1<cards.length?`#exam-${i+2}`:`${chapter.lab}`;next.textContent=i+1<cards.length?'下一题 →':'去互动强化 →';block.append(next);
+          retry.disabled=false;retry.hidden=false;retry.textContent='再练一次';next.hidden=false;
         };
         submit.onclick=()=>finish(false);$('.learn-skip',block).onclick=()=>finish(true);
         detail.hidden=true;
@@ -159,8 +180,8 @@
   function renderDashboard() {
     const s=L.stats(),section=$('#learning-dashboard'),q=L.queue(),last=L.read().last;if(!section)return;
     const escapeLink=u=>/^(?:ch\d\d-[a-z-]+|positioning-demo|admission-demo|graded-care-demo|transfer-demo)\.html(?:#[\w-]+)?$/.test(u||'')?u:'index.html';
-    const metric=(label,r)=>`<article class="learn-metric ${r.rate===null?'':r.rate>=60?'good':'low'}"><span>${label}</span><b>${r.rate===null?'—':r.rate+'%'}</b><small>${r.attempts?`${r.correct}/${r.attempts} 次与参考答案一致`:'暂无作答'}</small></article>`;
-    section.innerHTML=`<div class="section-head"><div><p class="learn-kicker">继续你的学习节奏</p><h2>今日学习与待复习</h2></div><span class="learn-badge">${esc(L.day())}</span></div>${last?`<p class="learn-resume">上次学习：<a href="${escapeLink(last.url)}">${esc(last.title)} · 继续 →</a></p>`:''}<div class="learn-metrics">${metric('首次作答',s.first)}${metric('当日重复练习',s.repeat)}${metric('隔日复测',s.delayed)}</div><p class="learn-muted">今日客观练习 ${s.unique} 个不同考点 · 自评回忆 ${s.self} 次。历史互动总次数另见原有统计。</p><h3 id="review-queue">待复习 <span class="learn-badge">${q.length}</span></h3>${q.length?`<ul class="learn-review-list">${q.slice(0,8).map(i=>`<li><div><b>${esc(i.title)}</b><small>${i.kind==='self'?'自评回忆':i.lastOk?(i.uncertain?'答对但没把握':'间隔复测'):'上次答错'} · ${esc(i.due)}</small></div><a href="${escapeLink(i.url)}">去复习 →</a></li>`).join('')}</ul>`:'<p class="learn-muted">现在没有到期条目。完成刷题或回忆后，会生成复习安排。</p>'}<details class="learn-muted"><summary>记录与备份</summary><p>记录保存在当前浏览器；不同手机和电脑不会自动同步。可导出、导入学习记录。复习间隔是初始规则，会根据实际使用调整。</p><div class="learn-buttons"><button type="button" id="exportLearning">导出学习记录</button><label class="learn-primary">导入记录<input id="importLearning" type="file" accept=".json,application/json" hidden></label></div><p id="importStatus" role="status"></p></details>`;
+    const metric=(label,r)=>`<article class="learn-metric ${r.rate===null?'':r.rate>=60?'good':'low'}"><span>${label}</span><b>${r.rate===null?'—':r.rate+'%'}</b><small>${r.attempts?`${r.correct}/${r.attempts} 次回答正确`:'暂无作答'}</small></article>`;
+    section.innerHTML=`<div class="section-head"><div><p class="learn-kicker">继续你的学习节奏</p><h2>今日学习与待复习</h2></div><span class="learn-badge">${esc(L.day())}</span></div>${last?`<p class="learn-resume">上次学习：<a href="${escapeLink(last.url)}">${esc(last.title)} · 继续 →</a></p>`:''}<div class="learn-metrics">${metric('首次作答',s.first)}${metric('当日重复练习',s.repeat)}${metric('隔日复测',s.delayed)}</div><p class="learn-muted">今日客观练习 ${s.unique} 个不同考点 · 自评回忆 ${s.self} 次。历史互动总次数另见原有统计。</p><h3 id="review-queue">待复习 <span class="learn-badge">${q.length}</span></h3>${q.length?`<ul class="learn-review-list">${q.slice(0,8).map(i=>`<li><div><b>${esc(i.title)}</b><small>${i.reviewReason||(i.kind==='self'?'自评回忆':i.lastOk?(i.uncertain?'答对但没把握':'间隔复测'):'上次答错')} · ${esc(i.due)}</small></div><a href="${escapeLink(i.url)}">去复习 →</a></li>`).join('')}</ul>`:'<p class="learn-muted">现在没有到期条目。完成刷题或回忆后，会生成复习安排。</p>'}<details class="learn-muted"><summary>记录与备份</summary><p>记录保存在当前浏览器；不同手机和电脑不会自动同步。可导出、导入学习记录。复习间隔是初始规则，会根据实际使用调整。</p><div class="learn-buttons"><button type="button" id="exportLearning">导出学习记录</button><label class="learn-primary">导入记录<input id="importLearning" type="file" accept=".json,application/json" hidden></label></div><p id="importStatus" role="status"></p></details>`;
     $('#exportLearning').onclick=()=>download(`基护学习记录-${L.day()}.json`,L.exportData());
     $('#importLearning').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{L.importData(await file.text());renderDashboard();$('#importStatus').textContent='已合并学习记录。';}catch(err){$('#importStatus').textContent=err.message;}};
   }
