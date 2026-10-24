@@ -104,7 +104,7 @@
       $('.learn-save-reason',detail).onclick=()=>{
         const text=draft.value.trim();if(!text){draft.focus();return;}
         const title=$('#noteTitle'),body=$('#noteBody');
-        if(title&&body){title.value=q.topic||'刷题错因';body.value=`题目：${q.title}\n我的理由：${text}\n来源：${q.paper}\n${q.source}`;location.hash='notes';body.focus();}
+        if(title&&body){title.value=q.topic||'刷题错因';body.value=`题目：${q.title}\n正确答案：${q.answer.replace(/^(正确答案|答案)[：:]\s*/,'')}\n我的理由：${text}\n来源：${q.paper}\n${q.source}`;location.hash='notes';body.focus();}
       };
       const valid=q.correct.length>0&&q.correct.every(letter=>q.options.some(o=>new RegExp(`^${letter}[.．、\\s]`).test(o)));
       const block=document.createElement('div');block.className='learn-question-control';
