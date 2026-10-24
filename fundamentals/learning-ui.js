@@ -194,11 +194,25 @@
   function download(name,text) {
     const a=document.createElement('a'),url=URL.createObjectURL(new Blob([text],{type:'application/json;charset=utf-8'}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
   }
+  let dismissedReviewId=null;
   function renderDashboard() {
     const s=L.stats(),section=$('#learning-dashboard'),q=L.queue(),last=L.read().last;if(!section)return;
     const escapeLink=u=>/^(?:ch\d\d-[a-z-]+|positioning-demo|admission-demo|graded-care-demo|transfer-demo)\.html(?:#[\w-]+)?$/.test(u||'')?u:'index.html';
     const metric=(label,r)=>`<article class="learn-metric ${r.rate===null?'':r.rate>=60?'good':'low'}"><span>${label}</span><b>${r.rate===null?'—':r.rate+'%'}</b><small>${r.attempts?`${r.correct}/${r.attempts} 次回答正确`:'暂无作答'}</small></article>`;
-    section.innerHTML=`<div class="section-head"><div><p class="learn-kicker">继续你的学习节奏</p><h2>今日学习与待复习</h2></div><span class="learn-badge">${esc(L.day())}</span></div>${last?`<p class="learn-resume">上次学习：<a href="${escapeLink(last.url)}">${esc(last.title)} · 继续 →</a></p>`:''}<div class="learn-metrics">${metric('首次作答',s.first)}${metric('当日重复练习',s.repeat)}${metric('隔日复测',s.delayed)}</div><p class="learn-muted">今日客观练习 ${s.unique} 个不同考点 · 自评回忆 ${s.self} 次。历史互动总次数另见原有统计。</p><h3 id="review-queue">待复习 <span class="learn-badge">${q.length}</span></h3>${q.length?`<ul class="learn-review-list">${q.slice(0,8).map(i=>`<li><div><b>${esc(i.title)}</b><small>${i.reviewReason||(i.kind==='self'?'自评回忆':i.lastOk?(i.uncertain?'答对但没把握':'间隔复测'):'上次答错')} · ${esc(i.due)}</small></div><a href="${escapeLink(i.url)}">去复习 →</a></li>`).join('')}</ul>`:'<p class="learn-muted">现在没有到期条目。完成刷题或回忆后，会生成复习安排。</p>'}<details class="learn-muted"><summary>记录与备份</summary><p>记录保存在当前浏览器；不同手机和电脑不会自动同步。可导出、导入学习记录。复习间隔是初始规则，会根据实际使用调整。</p><div class="learn-buttons"><button type="button" id="exportLearning">导出学习记录</button><label class="learn-primary">导入记录<input id="importLearning" type="file" accept=".json,application/json" hidden></label></div><p id="importStatus" role="status"></p></details>`;
+    section.innerHTML=`<div class="section-head"><div><p class="learn-kicker">继续你的学习节奏</p><h2>今日学习与待复习</h2></div><span class="learn-badge">${esc(L.day())}</span></div>${last?`<p class="learn-resume">上次学习：<a href="${escapeLink(last.url)}">${esc(last.title)} · 继续 →</a></p>`:''}<div class="learn-metrics">${metric('首次作答',s.first)}${metric('当日重复练习',s.repeat)}${metric('隔日复测',s.delayed)}</div><p class="learn-muted">今日客观练习 ${s.unique} 个不同考点 · 自评回忆 ${s.self} 次。历史互动总次数另见原有统计。</p><h3 id="review-queue">待复习 <span class="learn-badge">${q.length}</span></h3>${q.length?`<ul class="learn-review-list">${q.slice(0,8).map(i=>`<li><div><b>${esc(i.title)}</b><small>${i.reviewReason||(i.kind==='self'?'自评回忆':i.lastOk?(i.uncertain?'答对但没把握':'间隔复测'):'上次答错')} · ${esc(i.due)}</small></div><div class="learn-review-actions"><a href="${escapeLink(i.url)}">去复习 →</a><button type="button" data-dismiss-review="${esc(i.id)}" aria-label="移出待复习：${esc(i.title)}">移出</button></div></li>`).join('')}</ul>`:'<p class="learn-muted">现在没有到期条目。完成刷题或回忆后，会生成复习安排。</p>'}<details class="learn-muted"><summary>记录与备份</summary><p>记录保存在当前浏览器；不同手机和电脑不会自动同步。可导出、导入学习记录。复习间隔是初始规则，会根据实际使用调整。</p><div class="learn-buttons"><button type="button" id="exportLearning">导出学习记录</button><label class="learn-primary">导入记录<input id="importLearning" type="file" accept=".json,application/json" hidden></label></div><p id="importStatus" role="status"></p></details>`;
+    const notice=document.createElement('p');notice.className='learn-review-notice';notice.setAttribute('role','status');
+    if(dismissedReviewId){
+      notice.append('已移出待复习，答题记录已保留。');
+      const undo=document.createElement('button');undo.type='button';undo.textContent='撤销';
+      undo.onclick=()=>{const id=dismissedReviewId;dismissedReviewId=null;L.dismissReview(id,false);};notice.append(undo);
+    }
+    $('#review-queue').after(notice);
+    all('[data-dismiss-review]',section).forEach(button=>button.onclick=()=>{
+      const index=all('[data-dismiss-review]',section).indexOf(button);
+      dismissedReviewId=button.dataset.dismissReview;
+      if(!L.dismissReview(dismissedReviewId))notice.textContent='未能保存清理结果，请检查浏览器存储空间。';
+      const next=all('[data-dismiss-review]',section);(next[Math.min(index,next.length-1)]||$('.learn-review-notice button',section))?.focus({preventScroll:true});
+    });
     $('#exportLearning').onclick=()=>download(`基护学习记录-${L.day()}.json`,L.exportData());
     $('#importLearning').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{L.importData(await file.text());renderDashboard();$('#importStatus').textContent='已合并学习记录。';}catch(err){$('#importStatus').textContent=err.message;}};
   }

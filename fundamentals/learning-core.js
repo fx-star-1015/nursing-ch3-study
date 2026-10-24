@@ -21,6 +21,7 @@
     else if(mode!=='repeat') item.streak=Math.min(5,(item.streak||0)+1);
     const intervals=[1,1,3,7,14,30];
     Object.assign(item,{attempts:(item.attempts||0)+1,lastDay:today,lastAt:event.at,chapter:event.chapter,title:event.title,url:event.url,kind,lastOk:!!ok,uncertain:event.confidence==='unsure',reviewReason:'',due:successful?addDays(now,intervals[item.streak||0]):today});
+    item.reviewDismissed=false;
     d.items[id]=item;d.events.push(event);
     // Never silently discard a student's history.
     const saved=persist(d);
@@ -43,16 +44,24 @@
     result.unique=new Set(es.map(e=>e.id)).size;
     return result;
   }
-  const queue = (date=day()) => Object.values(read().items).filter(i=>i.due<=date).sort((a,b)=>Number(a.lastOk)-Number(b.lastOk)||a.due.localeCompare(b.due)||a.lastAt.localeCompare(b.lastAt));
+  const queue = (date=day()) => Object.values(read().items).filter(i=>!i.reviewDismissed&&i.due<=date).sort((a,b)=>Number(a.lastOk)-Number(b.lastOk)||a.due.localeCompare(b.due)||a.lastAt.localeCompare(b.lastAt));
+  const dismissReview = (id,dismissed=true) => {
+    const d=read(),item=d.items[id];if(!item)return false;
+    item.reviewDismissed=!!dismissed;item.lastAt=new Date().toISOString();
+    const saved=persist(d);
+    try{window.dispatchEvent(new CustomEvent('nursing-learning-update',{detail:{saved}}));}catch(_){}
+    return saved;
+  };
   const visit = (chapter,title,url) => {const d=read();d.last={chapter,title,url,at:new Date().toISOString()};persist(d);};
   const review = (id,options={}) => {
     const d=read(),item=d.items[id]||{id,attempts:0,streak:0,kind:'self'};
     Object.assign(item,{chapter:options.chapter||item.chapter||'',title:options.title||item.title||id,url:options.url||item.url||'',due:day(),lastAt:new Date().toISOString(),reviewReason:'先学习'});
+    item.reviewDismissed=false;
     d.items[id]=item;const saved=persist(d);
     try{window.dispatchEvent(new CustomEvent('nursing-learning-update',{detail:{saved}}));}catch(_){}
     return saved;
   };
-  window.NursingLearning={record,review,stats,queue,visit,day,read,exportData:()=>JSON.stringify(read(),null,2),importData:json=>{
+  window.NursingLearning={record,review,dismissReview,stats,queue,visit,day,read,exportData:()=>JSON.stringify(read(),null,2),importData:json=>{
     const incoming=JSON.parse(json);
     if(incoming.version!==1||!incoming.items||typeof incoming.items!=='object'||!Array.isArray(incoming.events)||incoming.events.length>200000) throw Error('不是有效的学习记录文件');
     const safeUrl=u=>typeof u==='string'&&/^(?:ch\d\d-[a-z-]+|positioning-demo|admission-demo|graded-care-demo|transfer-demo)\.html(?:#[a-zA-Z0-9_-]+)?$/.test(u);
