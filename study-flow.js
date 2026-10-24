@@ -26,6 +26,7 @@
 
 (() => {
   const buildStudyPet = () => {
+    if (document.body?.hasAttribute('data-hide-study-pet')) return;
     if (document.querySelector('.study-pet')) return;
     const lines = [
       '先把年龄、时间和症状圈出来，再判断它到底在考什么。',
@@ -412,6 +413,7 @@
     const notes = document.getElementById('notes');
     if (!practice) return;
     buildMoodDiary();
+    if (document.body.hasAttribute('data-skip-flow-notes')) return;
 
     const pageKey = document.body.dataset.key || location.pathname;
     if (document.getElementById('pre-quiz-note')) {
