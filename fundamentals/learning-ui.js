@@ -198,7 +198,7 @@
   let toolsPromise;
   function getTools(){
     if(window.NursingLearningTools)return Promise.resolve(window.NursingLearningTools);
-    if(!toolsPromise)toolsPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=new URL('learning-tools.js?v=20261026a',toolsBase);script.onload=()=>resolve(window.NursingLearningTools);script.onerror=()=>{toolsPromise=null;reject(Error('记录工具未能加载，请稍后重试。'));};document.body.append(script);});
+    if(!toolsPromise)toolsPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=new URL('learning-tools.js?v=20261026b',toolsBase);script.onload=()=>resolve(window.NursingLearningTools);script.onerror=()=>{toolsPromise=null;reject(Error('记录工具未能加载，请稍后重试。'));};document.body.append(script);});
     return toolsPromise;
   }
   let dismissedReviewId=null;

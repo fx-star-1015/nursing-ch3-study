@@ -19,7 +19,7 @@
   if(object(a)&&object(b)){const out={...a};for(const k of Object.keys(b)){if(!cleanKey(k))throw Error('记录中含有不支持的字段。');out[k]=mergeValue(a[k],b[k],k);}return out;}
   if(typeof a==='number'&&typeof b==='number')return Math.max(a,b);
   if(typeof a==='boolean'&&typeof b==='boolean')return a||b;
-  if(typeof a==='string'&&typeof b==='string'&&/notes|draft|explanation|joy|moodMessage/i.test(key))return a.includes(b)?a:b.includes(a)?b:a+'\n\n'+b;
+  if(typeof a==='string'&&typeof b==='string'&&/notes|draft|explanation|joy|moodMessage|body|content|reason/i.test(key))return a.includes(b)?a:b.includes(a)?b:a+'\n\n'+b;
   if(key==='lastAt'&&typeof a==='string'&&typeof b==='string')return a>b?a:b;
   return a;
  }
