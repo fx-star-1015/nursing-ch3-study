@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const KEY = 'nursing-learning-v1';
-  const safeUrl=u=>typeof u==='string'&&(/^(?:(?:\.\.\/)?introduction\/)?(?:ch\d\d(?:-[a-z-]+)?|intro\d\d-learning-lab|positioning-demo|admission-demo|graded-care-demo|transfer-demo)\.html(?:#[\w-]+)?$/.test(u)||/^\.\.\/medical\/cardiovascular\/heart-failure(?:-lab)?\.html(?:#[\w-]+)?$/.test(u));
+  const safeUrl=u=>typeof u==='string'&&(/^(?:(?:\.\.\/)?introduction\/)?(?:ch\d\d(?:-[a-z-]+)?|intro\d\d-learning-lab|positioning-demo|admission-demo|graded-care-demo|transfer-demo)\.html(?:#[\w-]+)?$/.test(u)||/^\.\.\/medical\/cardiovascular\/heart-failure(?:-lab)?\.html(?:#[\w-]+)?$/.test(u)||/^\.\.\/medical\/(?:introduction|respiratory|cardiovascular|digestive|urinary|hematology|endocrine-metabolic|rheumatology|neurology)\/study-\d{2}(?:-lab)?\.html(?:#[\w-]+)?$/.test(u));
   let memory = {version:1, items:{}, events:[], last:null};
   const read = () => { try { const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d?.version===1&&d.items&&Array.isArray(d.events)) memory=d; } catch (_) {} return memory; };
   const day = value => { const d=new Date(value===undefined?Date.now():value); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };

@@ -1,0 +1,10 @@
+{'file': 'respiratory-zh.svg', 'source': 'https://commons.wikimedia.org/wiki/File:Respiratory_system_complete_en.svg', 'author': 'Mariana Ruiz Villarreal (LadyofHats)', 'license': 'Public domain', 'licenseUrl': 'https://creativecommons.org/publicdomain/mark/1.0/', 'changes': '保留结构与引线，选择原图默认语言标签并翻译为中文。'}
+
+{'file': 'digestive.svg', 'source': 'https://commons.wikimedia.org/wiki/File:Digestive_system_diagram_zh-hans.svg', 'author': 'Mariana Ruiz、Jmarchn，PhiLiP中文翻译', 'license': 'Public domain', 'licenseUrl': 'https://creativecommons.org/publicdomain/mark/1.0/', 'changes': '原图未改动。'}
+
+{'file': 'nephron-zh.svg', 'source': 'https://commons.wikimedia.org/wiki/File:Kidney_Nephron.svg', 'author': 'Artwork by Holly Fischer；Tosha Langue矢量化', 'license': 'CC BY 3.0', 'licenseUrl': 'https://creativecommons.org/licenses/by/3.0/', 'changes': '标签中文翻译，解剖结构及引线未改动。'}
+
+{'file': 'brain.svg', 'source': 'https://commons.wikimedia.org/wiki/File:Brain_human_sagittal_section.svg', 'author': 'Patrick J. Lynch, medical illustrator；C. Carl Jaffe, MD', 'license': 'CC BY 2.5', 'licenseUrl': 'https://creativecommons.org/licenses/by/2.5/', 'changes': '原图未改动；图为矢状面，不用于直接展示全部血管供血区。'}
+
+{'file': 'joint-zh.svg', 'source': 'https://commons.wikimedia.org/wiki/File:Synovial_Joint_cy.svg', 'author': 'Cell Danwydd', 'license': 'CC BY-SA 4.0', 'licenseUrl': 'https://creativecommons.org/licenses/by-sa/4.0/', 'changes': '标签中文翻译，结构及引线未改动，翻译版按相同许可提供。'}
+人文插图：本项目使用imagegen新生成；非临床操作或解剖教学依据。

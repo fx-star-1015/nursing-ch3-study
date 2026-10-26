@@ -1,0 +1,598 @@
+{
+  "version": 1,
+  "textbook": "内科护理学第7版",
+  "units": [
+    {
+      "id": "medical-01-01",
+      "key": "1-1",
+      "chapter": 1,
+      "system": "introduction",
+      "unit": 1,
+      "title": "内科护理总论",
+      "members": [
+        "内科护理总论"
+      ],
+      "file": "study-01.html",
+      "lab": "study-01-lab.html",
+      "coreCount": 6,
+      "questions": 10,
+      "pastPaperQuestions": 0
+    },
+    {
+      "id": "medical-02-01",
+      "key": "2-1",
+      "chapter": 2,
+      "system": "respiratory",
+      "unit": 1,
+      "title": "呼吸系统症状与感染性疾病",
+      "members": [
+        "常见症状评估",
+        "急性呼吸道感染",
+        "肺部感染",
+        "肺炎链球菌肺炎",
+        "葡萄球菌肺炎",
+        "其他肺炎",
+        "肺脓肿"
+      ],
+      "file": "study-01.html",
+      "lab": "study-01-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 3
+    },
+    {
+      "id": "medical-02-02",
+      "key": "2-2",
+      "chapter": 2,
+      "system": "respiratory",
+      "unit": 2,
+      "title": "支气管扩张、肺结核与支气管哮喘",
+      "members": [
+        "支气管扩张",
+        "肺结核",
+        "支气管哮喘"
+      ],
+      "file": "study-02.html",
+      "lab": "study-02-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 8
+    },
+    {
+      "id": "medical-02-03",
+      "key": "2-3",
+      "chapter": 2,
+      "system": "respiratory",
+      "unit": 3,
+      "title": "慢阻肺与慢性肺源性心脏病",
+      "members": [
+        "慢阻肺",
+        "慢性肺源性心脏病"
+      ],
+      "file": "study-03.html",
+      "lab": "study-03-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 3
+    },
+    {
+      "id": "medical-02-04",
+      "key": "2-4",
+      "chapter": 2,
+      "system": "respiratory",
+      "unit": 4,
+      "title": "肺循环、睡眠呼吸障碍与呼吸衰竭",
+      "members": [
+        "肺血栓栓塞",
+        "睡眠呼吸暂停",
+        "呼吸衰竭与ARDS",
+        "机械通气"
+      ],
+      "file": "study-04.html",
+      "lab": "study-04-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 5
+    },
+    {
+      "id": "medical-02-05",
+      "key": "2-5",
+      "chapter": 2,
+      "system": "respiratory",
+      "unit": 5,
+      "title": "肺癌、胸膜疾病与呼吸系统诊疗",
+      "members": [
+        "原发性支气管肺癌",
+        "胸膜疾病",
+        "支气管镜与胸穿"
+      ],
+      "file": "study-05.html",
+      "lab": "study-05-lab.html",
+      "coreCount": 6,
+      "questions": 10,
+      "pastPaperQuestions": 2
+    },
+    {
+      "id": "medical-03-01",
+      "key": "3-1",
+      "chapter": 3,
+      "system": "cardiovascular",
+      "unit": 1,
+      "title": "循环症状、慢性心力衰竭与心肌疾病",
+      "members": [
+        "循环症状线索",
+        "慢性心力衰竭",
+        "心肌疾病"
+      ],
+      "file": "study-01.html",
+      "lab": "study-01-lab.html",
+      "coreCount": 6,
+      "questions": 10,
+      "pastPaperQuestions": 5
+    },
+    {
+      "id": "medical-03-02",
+      "key": "3-2",
+      "chapter": 3,
+      "system": "cardiovascular",
+      "unit": 2,
+      "title": "急性心力衰竭、心律失常与心脏骤停",
+      "members": [
+        "急性心力衰竭",
+        "心律失常与器械介入治疗",
+        "心脏骤停",
+        "窦性心律失常",
+        "房性心律失常",
+        "室性心律失常",
+        "房室交界区性心律失常",
+        "心脏传导阻滞",
+        "心脏起搏",
+        "电复律",
+        "心导管与射频消融"
+      ],
+      "file": "study-02.html",
+      "lab": "study-02-lab.html",
+      "coreCount": 9,
+      "questions": 10,
+      "pastPaperQuestions": 4
+    },
+    {
+      "id": "medical-03-03",
+      "key": "3-3",
+      "chapter": 3,
+      "system": "cardiovascular",
+      "unit": 3,
+      "title": "心脏瓣膜、感染性心内膜与心包疾病",
+      "members": [
+        "心脏瓣膜病",
+        "感染性心内膜炎",
+        "心包疾病"
+      ],
+      "file": "study-03.html",
+      "lab": "study-03-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 1
+    },
+    {
+      "id": "medical-03-04",
+      "key": "3-4",
+      "chapter": 3,
+      "system": "cardiovascular",
+      "unit": 4,
+      "title": "冠心病与原发性高血压",
+      "members": [
+        "冠心病、急性冠脉综合征与冠脉介入",
+        "原发性高血压"
+      ],
+      "file": "study-04.html",
+      "lab": "study-04-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 1
+    },
+    {
+      "id": "medical-04-01",
+      "key": "4-1",
+      "chapter": 4,
+      "system": "digestive",
+      "unit": 1,
+      "title": "胃食管反流、胃炎、消化性溃疡与胃癌",
+      "members": [
+        "胃食管反流病",
+        "胃炎",
+        "消化性溃疡",
+        "胃癌"
+      ],
+      "file": "study-01.html",
+      "lab": "study-01-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 4
+    },
+    {
+      "id": "medical-04-02",
+      "key": "4-2",
+      "chapter": 4,
+      "system": "digestive",
+      "unit": 2,
+      "title": "消化症状与炎症性肠病",
+      "members": [
+        "消化症状评估",
+        "肠结核与结核性腹膜炎",
+        "炎症性肠病",
+        "溃疡性结肠炎",
+        "克罗恩病"
+      ],
+      "file": "study-02.html",
+      "lab": "study-02-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 1
+    },
+    {
+      "id": "medical-04-03",
+      "key": "4-3",
+      "chapter": 4,
+      "system": "digestive",
+      "unit": 3,
+      "title": "脂肪性肝病、肝硬化、肝癌与肝性脑病",
+      "members": [
+        "脂肪性肝病与肝硬化",
+        "原发性肝癌",
+        "肝性脑病",
+        "酒精性肝病",
+        "非酒精性脂肪性肝病"
+      ],
+      "file": "study-03.html",
+      "lab": "study-03-lab.html",
+      "coreCount": 7,
+      "questions": 10,
+      "pastPaperQuestions": 2
+    },
+    {
+      "id": "medical-04-04",
+      "key": "4-4",
+      "chapter": 4,
+      "system": "digestive",
+      "unit": 4,
+      "title": "急性胰腺炎、上消化道出血与内镜护理",
+      "members": [
+        "急性胰腺炎",
+        "上消化道出血",
+        "腹穿与内镜护理"
+      ],
+      "file": "study-04.html",
+      "lab": "study-04-lab.html",
+      "coreCount": 7,
+      "questions": 10,
+      "pastPaperQuestions": 5
+    },
+    {
+      "id": "medical-05-01",
+      "key": "5-1",
+      "chapter": 5,
+      "system": "urinary",
+      "unit": 1,
+      "title": "泌尿症状与肾小球疾病",
+      "members": [
+        "泌尿症状线索",
+        "肾小球疾病框架",
+        "急性肾小球肾炎"
+      ],
+      "file": "study-01.html",
+      "lab": "study-01-lab.html",
+      "coreCount": 6,
+      "questions": 10,
+      "pastPaperQuestions": 6
+    },
+    {
+      "id": "medical-05-02",
+      "key": "5-2",
+      "chapter": 5,
+      "system": "urinary",
+      "unit": 2,
+      "title": "急慢性肾炎、肾病综合征与尿路感染",
+      "members": [
+        "急进性与慢性肾炎",
+        "肾病综合征",
+        "尿路感染"
+      ],
+      "file": "study-02.html",
+      "lab": "study-02-lab.html",
+      "coreCount": 7,
+      "questions": 10,
+      "pastPaperQuestions": 8
+    },
+    {
+      "id": "medical-05-03",
+      "key": "5-3",
+      "chapter": 5,
+      "system": "urinary",
+      "unit": 3,
+      "title": "急慢性肾衰竭与透析治疗",
+      "members": [
+        "急性肾损伤",
+        "慢性肾衰竭",
+        "血液透析",
+        "腹膜透析"
+      ],
+      "file": "study-03.html",
+      "lab": "study-03-lab.html",
+      "coreCount": 9,
+      "questions": 10,
+      "pastPaperQuestions": 8
+    },
+    {
+      "id": "medical-06-01",
+      "key": "6-1",
+      "chapter": 6,
+      "system": "hematology",
+      "unit": 1,
+      "title": "贫血评估、缺铁性与巨幼细胞贫血",
+      "members": [
+        "贫血与出血评估",
+        "缺铁性与巨幼细胞贫血"
+      ],
+      "file": "study-01.html",
+      "lab": "study-01-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 4
+    },
+    {
+      "id": "medical-06-02",
+      "key": "6-2",
+      "chapter": 6,
+      "system": "hematology",
+      "unit": 2,
+      "title": "再生障碍性、溶血性贫血与出血性疾病",
+      "members": [
+        "再生障碍性贫血",
+        "溶血性贫血",
+        "血小板减少与血友病",
+        "过敏性紫癜"
+      ],
+      "file": "study-02.html",
+      "lab": "study-02-lab.html",
+      "coreCount": 7,
+      "questions": 10,
+      "pastPaperQuestions": 3
+    },
+    {
+      "id": "medical-06-03",
+      "key": "6-3",
+      "chapter": 6,
+      "system": "hematology",
+      "unit": 3,
+      "title": "白血病",
+      "members": [
+        "白血病",
+        "急性白血病",
+        "慢性白血病"
+      ],
+      "file": "study-03.html",
+      "lab": "study-03-lab.html",
+      "coreCount": 7,
+      "questions": 10,
+      "pastPaperQuestions": 5
+    },
+    {
+      "id": "medical-06-04",
+      "key": "6-4",
+      "chapter": 6,
+      "system": "hematology",
+      "unit": 4,
+      "title": "DIC、淋巴瘤、骨髓瘤与造血干细胞移植",
+      "members": [
+        "弥散性血管内凝血",
+        "淋巴瘤与多发性骨髓瘤",
+        "造血干细胞移植与骨髓穿刺"
+      ],
+      "file": "study-04.html",
+      "lab": "study-04-lab.html",
+      "coreCount": 7,
+      "questions": 10,
+      "pastPaperQuestions": 1
+    },
+    {
+      "id": "medical-07-01",
+      "key": "7-1",
+      "chapter": 7,
+      "system": "endocrine-metabolic",
+      "unit": 1,
+      "title": "甲状腺功能亢进与减退",
+      "members": [
+        "甲状腺功能亢进",
+        "甲状腺功能减退"
+      ],
+      "file": "study-01.html",
+      "lab": "study-01-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 5
+    },
+    {
+      "id": "medical-07-02",
+      "key": "7-2",
+      "chapter": 7,
+      "system": "endocrine-metabolic",
+      "unit": 2,
+      "title": "腺垂体与肾上腺疾病",
+      "members": [
+        "内分泌评估与腺垂体功能减退",
+        "库欣综合征",
+        "肾上腺皮质功能减退",
+        "嗜铬细胞瘤"
+      ],
+      "file": "study-02.html",
+      "lab": "study-02-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 4
+    },
+    {
+      "id": "medical-07-03",
+      "key": "7-3",
+      "chapter": 7,
+      "system": "endocrine-metabolic",
+      "unit": 3,
+      "title": "糖尿病",
+      "members": [
+        "糖尿病"
+      ],
+      "file": "study-03.html",
+      "lab": "study-03-lab.html",
+      "coreCount": 7,
+      "questions": 10,
+      "pastPaperQuestions": 3
+    },
+    {
+      "id": "medical-07-04",
+      "key": "7-4",
+      "chapter": 7,
+      "system": "endocrine-metabolic",
+      "unit": 4,
+      "title": "肥胖、血脂、尿酸与骨代谢异常",
+      "members": [
+        "肥胖症与血脂异常",
+        "高尿酸血症与痛风",
+        "骨质疏松症"
+      ],
+      "file": "study-04.html",
+      "lab": "study-04-lab.html",
+      "coreCount": 7,
+      "questions": 10,
+      "pastPaperQuestions": 1
+    },
+    {
+      "id": "medical-08-01",
+      "key": "8-1",
+      "chapter": 8,
+      "system": "rheumatology",
+      "unit": 1,
+      "title": "风湿症状评估与系统性红斑狼疮",
+      "members": [
+        "风湿症状评估",
+        "系统性红斑狼疮"
+      ],
+      "file": "study-01.html",
+      "lab": "study-01-lab.html",
+      "coreCount": 7,
+      "questions": 10,
+      "pastPaperQuestions": 7
+    },
+    {
+      "id": "medical-08-02",
+      "key": "8-2",
+      "chapter": 8,
+      "system": "rheumatology",
+      "unit": 2,
+      "title": "强直性脊柱炎、类风湿关节炎与炎症性肌病",
+      "members": [
+        "强直性脊柱炎",
+        "类风湿关节炎",
+        "特发性炎症性肌病"
+      ],
+      "file": "study-02.html",
+      "lab": "study-02-lab.html",
+      "coreCount": 7,
+      "questions": 10,
+      "pastPaperQuestions": 4
+    },
+    {
+      "id": "medical-09-01",
+      "key": "9-1",
+      "chapter": 9,
+      "system": "neurology",
+      "unit": 1,
+      "title": "神经症状定位、TIA与脑梗死",
+      "members": [
+        "神经症状定位",
+        "短暂性脑缺血发作",
+        "脑梗死",
+        "认知障碍",
+        "言语障碍"
+      ],
+      "file": "study-01.html",
+      "lab": "study-01-lab.html",
+      "coreCount": 8,
+      "questions": 10,
+      "pastPaperQuestions": 5
+    },
+    {
+      "id": "medical-09-02",
+      "key": "9-2",
+      "chapter": 9,
+      "system": "neurology",
+      "unit": 2,
+      "title": "脑出血",
+      "members": [
+        "脑出血"
+      ],
+      "file": "study-02.html",
+      "lab": "study-02-lab.html",
+      "coreCount": 5,
+      "questions": 10,
+      "pastPaperQuestions": 8
+    },
+    {
+      "id": "medical-09-03",
+      "key": "9-3",
+      "chapter": 9,
+      "system": "neurology",
+      "unit": 3,
+      "title": "蛛网膜下腔出血",
+      "members": [
+        "蛛网膜下腔出血"
+      ],
+      "file": "study-03.html",
+      "lab": "study-03-lab.html",
+      "coreCount": 5,
+      "questions": 10,
+      "pastPaperQuestions": 7
+    },
+    {
+      "id": "medical-09-04",
+      "key": "9-4",
+      "chapter": 9,
+      "system": "neurology",
+      "unit": 4,
+      "title": "多发性硬化、帕金森病与癫痫",
+      "members": [
+        "多发性硬化",
+        "帕金森病",
+        "癫痫"
+      ],
+      "file": "study-04.html",
+      "lab": "study-04-lab.html",
+      "coreCount": 6,
+      "questions": 10,
+      "pastPaperQuestions": 3
+    },
+    {
+      "id": "medical-09-05",
+      "key": "9-5",
+      "chapter": 9,
+      "system": "neurology",
+      "unit": 5,
+      "title": "偏头痛、脊髓与周围神经疾病",
+      "members": [
+        "偏头痛",
+        "急性脊髓炎",
+        "周围神经疾病",
+        "重症肌无力",
+        "腰穿与脑血管介入",
+        "三叉神经痛",
+        "特发性面神经麻痹",
+        "吉兰-巴雷综合征",
+        "周期性瘫痪"
+      ],
+      "file": "study-05.html",
+      "lab": "study-05-lab.html",
+      "coreCount": 12,
+      "questions": 10,
+      "pastPaperQuestions": 4
+    }
+  ]
+}
