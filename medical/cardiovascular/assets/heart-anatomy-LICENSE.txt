@@ -1,0 +1,15 @@
+Heart anatomy illustration
+
+Original work: Heart diagram zh.svg
+Source: https://commons.wikimedia.org/wiki/File:Heart_diagram_zh.svg
+Original file: https://upload.wikimedia.org/wikipedia/commons/9/9a/Heart_diagram_zh.svg
+Illustration author: ZooFari
+Chinese text: Rehua
+License: Creative Commons Attribution-ShareAlike 3.0 Unported
+License URL: https://creativecommons.org/licenses/by-sa/3.0/
+
+Changes by ice冰冰·高分学姐团:
+Three Chinese labels were normalized: 无名动脉 to 头臂干; 大动脉 to 主动脉; 室间隔膜部 to 室间隔.
+Anatomical geometry and leader lines were retained.
+This SVG and these label modifications are distributed under the same CC BY-SA 3.0 license.
+The attribution and license apply to this illustration; no endorsement by the original authors is implied.

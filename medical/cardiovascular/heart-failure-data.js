@@ -371,5 +371,47 @@ window.HeartFailureStudy={
       "answer": 0,
       "explain": "教材的体重变化是水钠潴留警示，需要及时评估；它不是网页提供的自动加药处方。"
     }
+  ],
+  "core": [
+    {
+      "id": "trigger",
+      "category": "direct"
+    },
+    {
+      "id": "left",
+      "category": "major"
+    },
+    {
+      "id": "right",
+      "category": "major"
+    },
+    {
+      "id": "nyha",
+      "category": "direct"
+    },
+    {
+      "id": "tests",
+      "category": "support"
+    },
+    {
+      "id": "volume",
+      "category": "major"
+    },
+    {
+      "id": "drugs",
+      "category": "major"
+    },
+    {
+      "id": "digitalis",
+      "category": "direct"
+    },
+    {
+      "id": "acute",
+      "category": "major"
+    },
+    {
+      "id": "weight",
+      "category": "major"
+    }
   ]
 };
