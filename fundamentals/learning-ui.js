@@ -198,7 +198,7 @@
   let toolsPromise;
   function getTools(){
     if(window.NursingLearningTools)return Promise.resolve(window.NursingLearningTools);
-    if(!toolsPromise)toolsPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=new URL('learning-tools.js?v=20261026c',toolsBase);script.onload=()=>resolve(window.NursingLearningTools);script.onerror=()=>{toolsPromise=null;reject(Error('记录工具未能加载，请稍后重试。'));};document.body.append(script);});
+    if(!toolsPromise)toolsPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=new URL('learning-tools.js?v=20261026d',toolsBase);script.onload=()=>resolve(window.NursingLearningTools);script.onerror=()=>{toolsPromise=null;reject(Error('记录工具未能加载，请稍后重试。'));};document.body.append(script);});
     return toolsPromise;
   }
   let dismissedReviewId=null;
@@ -206,7 +206,7 @@
     const s=L.stats(),section=$('#learning-dashboard'),q=L.queue(),last=L.read().last;if(!section)return;
     const backupPanel=section.querySelector('.learn-backup-panel');backupPanel?.remove();
     const reviewDrawer=section.querySelector('.learn-home-records');if(reviewDrawer)section.dataset.mobileReviewOpen=String(reviewDrawer.open);
-    const escapeLink=u=>/^(?:(?:\.\.\/)?introduction\/)?(?:ch\d\d(?:-[a-z-]+)?|intro\d\d-learning-lab|positioning-demo|admission-demo|graded-care-demo|transfer-demo)\.html(?:#[\w-]+)?$/.test(u||'')?u:'index.html';
+    const escapeLink=u=>L.safeUrl(u)?u:'index.html';
     const metric=(label,r)=>`<article class="learn-metric ${r.rate===null?'':r.rate>=60?'good':'low'}"><span>${label}</span><b>${r.rate===null?'—':r.rate+'%'}</b><small>${r.attempts?`${r.correct}/${r.attempts} 次回答正确`:'暂无作答'}</small></article>`;
     section.innerHTML=`<div class="section-head"><div><p class="learn-kicker">继续你的学习节奏</p><h2>今日学习与待复习</h2></div><span class="learn-badge">${esc(L.day())}</span></div>${last?`<p class="learn-resume">上次学习：<a href="${escapeLink(last.url)}">${esc(last.title)} · 继续 →</a></p>`:''}<div class="learn-metrics">${metric('首次作答',s.first)}${metric('当日重复练习',s.repeat)}${metric('隔日复测',s.delayed)}</div><p class="learn-muted">今日客观练习 ${s.unique} 个不同考点 · 自评回忆 ${s.self} 次。历史互动总次数另见原有统计。</p><h3 id="review-queue">待复习 <span class="learn-badge">${q.length}</span></h3>${q.length?`<ul class="learn-review-list">${q.slice(0,8).map(i=>`<li><div><b>${esc(i.title)}</b><small>${i.reviewReason||(i.kind==='self'?'自评回忆':i.lastOk?(i.uncertain?'答对但没把握':'间隔复测'):'上次答错')} · ${esc(i.due)}</small></div><div class="learn-review-actions"><a href="${escapeLink(i.url)}">去复习 →</a><button type="button" data-dismiss-review="${esc(i.id)}" aria-label="移出待复习：${esc(i.title)}">移出</button></div></li>`).join('')}</ul>`:'<p class="learn-muted">现在没有到期条目。完成刷题或回忆后，会生成复习安排。</p>'}<details class="learn-muted learn-backup-panel"><summary>记录与备份</summary><p>记录保存在当前浏览器；不同手机和电脑不会自动同步。可导出、导入学习记录。复习间隔是初始规则，会根据实际使用调整。</p><div class="learn-buttons"><button type="button" id="exportLearning">导出记录</button><button type="button" id="importLearning" aria-describedby="importFormatHint">导入记录</button></div><p id="importFormatHint">可导入本网页的 JSON / 完整 TXT 备份；单文件上限 50 MiB，最多 200,000 条作答。可导出 JSON、TXT、Word（.docx）；Word 仅用于阅读和打印。详细要求见导入导出窗口。</p><p id="importStatus" role="status"></p></details>`;
     if(backupPanel)section.querySelector('.learn-backup-panel').replaceWith(backupPanel);

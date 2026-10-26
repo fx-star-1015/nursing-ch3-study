@@ -41,7 +41,7 @@
    if(current!==null){try{merged=JSON.stringify(mergeValue(JSON.parse(current),JSON.parse(value),key));}catch(err){if(err.message==='记录中含有不支持的字段。')throw err;merged=mergeValue(current,value,key);}}
    plan.push([key,merged]);
   }
-  const last=learning.last,safeLast=last&&typeof last.title==='string'&&Number.isFinite(Date.parse(last.at))&&typeof last.url==='string'&&/^(?:(?:\.\.\/)?introduction\/)?(?:ch\d\d(?:-[a-z-]+)?|intro\d\d-learning-lab|positioning-demo|admission-demo|graded-care-demo|transfer-demo)\.html(?:#[\w-]+)?$/.test(last.url);
+  const last=learning.last,safeLast=last&&typeof last.title==='string'&&Number.isFinite(Date.parse(last.at))&&L.safeUrl(last.url);
   const before=new Map(plan.map(([key])=>[key,localStorage.getItem(key)]));before.set(KEY,localStorage.getItem(KEY)||L.exportData());
   try{L.importData(JSON.stringify(learning));if(safeLast){const merged=JSON.parse(L.exportData());if(!merged.last||last.at>merged.last.at){merged.last=last;localStorage.setItem(KEY,JSON.stringify(merged));}}for(const [key,value] of plan)localStorage.setItem(key,value);}
   catch(err){for(const [key,value] of before){try{if(value===null)localStorage.removeItem(key);else localStorage.setItem(key,value);}catch(_){}}throw err;}
@@ -49,7 +49,7 @@
   return {events:learning.events.length,records:plan.length};
  }
  let dialog,reportsPromise;
- function getReports(){if(window.NursingLearningExport)return Promise.resolve(window.NursingLearningExport);if(!reportsPromise)reportsPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=new URL('learning-export.js?v=20261026c',base);script.onload=()=>resolve(window.NursingLearningExport);script.onerror=()=>{reportsPromise=null;reject(Error('文档工具未能加载，请重试。'));};document.body.append(script);});return reportsPromise;}
+ function getReports(){if(window.NursingLearningExport)return Promise.resolve(window.NursingLearningExport);if(!reportsPromise)reportsPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=new URL('learning-export.js?v=20261026d',base);script.onload=()=>resolve(window.NursingLearningExport);script.onerror=()=>{reportsPromise=null;reject(Error('文档工具未能加载，请重试。'));};document.body.append(script);});return reportsPromise;}
  function saveFile(blob,extension){const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=`护理学习记录-${L.day()}.${extension}`;a.hidden=true;document.body.append(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(url);},30000);}
  function makeDialog(){
   if(dialog)return dialog;

@@ -2,6 +2,7 @@
 (() => {
   'use strict';
   const KEY = 'nursing-learning-v1';
+  const safeUrl=u=>typeof u==='string'&&(/^(?:(?:\.\.\/)?introduction\/)?(?:ch\d\d(?:-[a-z-]+)?|intro\d\d-learning-lab|positioning-demo|admission-demo|graded-care-demo|transfer-demo)\.html(?:#[\w-]+)?$/.test(u)||/^\.\.\/medical\/cardiovascular\/heart-failure(?:-lab)?\.html(?:#[\w-]+)?$/.test(u));
   let memory = {version:1, items:{}, events:[], last:null};
   const read = () => { try { const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d?.version===1&&d.items&&Array.isArray(d.events)) memory=d; } catch (_) {} return memory; };
   const day = value => { const d=new Date(value===undefined?Date.now():value); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
@@ -61,10 +62,9 @@
     try{window.dispatchEvent(new CustomEvent('nursing-learning-update',{detail:{saved}}));}catch(_){}
     return saved;
   };
-  window.NursingLearning={record,review,dismissReview,stats,queue,visit,day,read,exportData:()=>JSON.stringify(read(),null,2),importData:json=>{
+  window.NursingLearning={record,review,dismissReview,stats,queue,visit,day,read,safeUrl,exportData:()=>JSON.stringify(read(),null,2),importData:json=>{
     const incoming=JSON.parse(json);
     if(incoming.version!==1||!incoming.items||typeof incoming.items!=='object'||!Array.isArray(incoming.events)||incoming.events.length>200000) throw Error('不是有效的学习记录文件');
-    const safeUrl=u=>typeof u==='string'&&/^(?:(?:\.\.\/)?introduction\/)?(?:ch\d\d(?:-[a-z-]+)?|intro\d\d-learning-lab|positioning-demo|admission-demo|graded-care-demo|transfer-demo)\.html(?:#[a-zA-Z0-9_-]+)?$/.test(u);
     for(const [id,i] of Object.entries(incoming.items)) if(!i||i.id!==id||typeof i.title!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(i.due)||!safeUrl(i.url))throw Error('学习条目格式不正确');
     for(const e of incoming.events)if(!e||typeof e.id!=='string'||!['objective','self'].includes(e.kind)||!['first','repeat','delayed'].includes(e.mode)||typeof e.ok!=='boolean'||!Number.isFinite(Date.parse(e.at))||!/^\d{4}-\d{2}-\d{2}$/.test(e.day))throw Error('学习事件格式不正确');
     const eventKey=e=>e.eventId||`${e.id}:${e.at}:${e.kind}`;

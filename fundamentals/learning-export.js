@@ -31,8 +31,8 @@
    if(value&&typeof value==='object'){if(value.body||value.content){note(value.title||label,value.body||value.content);return;}for(const [k,v] of Object.entries(value))if(/notes|explanation|draft/i.test(k))walk(v,label,k);return;}
    if(/notes?|explanation/i.test(key))note(label,value);
   }
-  const chapterLabel=key=>{const m=key.match(/(?:fundamentals-ch|introduction-|intro-note-)(\d+)/);return m?(key.includes('fundamentals')?'基础护理学':'护理学导论')+' 第 '+Number(m[1])+' 章笔记':'学习笔记';};
-  for(const [key,value] of Object.entries(records))if(/^(?:fundamentals-ch|intro-note-|intro-explanation-|nursing-introduction-)/.test(key))walk(decode(value),chapterLabel(key),key);
+  const chapterLabel=key=>{const m=key.match(/(?:fundamentals-ch|introduction-|intro-note-)(\d+)/);if(key.startsWith('nursing-medical-hf'))return '内科 心力衰竭笔记';return m?(key.includes('fundamentals')?'基础护理学':'护理学导论')+' 第 '+Number(m[1])+' 章笔记':'学习笔记';};
+  for(const [key,value] of Object.entries(records))if(/^(?:fundamentals-ch|intro-note-|intro-explanation-|nursing-introduction-|nursing-medical-)/.test(key))walk(decode(value),chapterLabel(key),key);
   if(!notes)add('暂无已保存的笔记。尚未保存的输入不会出现在这里。');
   add('待复习','Heading1');const queue=Object.values(data.items||{}).filter(i=>!i.reviewDismissed&&i.due<=window.NursingLearning.day());
   if(!queue.length)add('暂无到期待复习条目。');for(const item of queue){add(item.title,'Heading2');add('复习日期：'+item.due+'；'+(item.reviewReason||(!item.lastOk?'上次答错':item.uncertain?'答对但没把握':'间隔复测')));}
