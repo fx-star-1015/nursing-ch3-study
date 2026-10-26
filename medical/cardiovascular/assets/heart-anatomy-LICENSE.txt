@@ -13,3 +13,5 @@ Three Chinese labels were normalized: 无名动脉 to 头臂干; 大动脉 to �
 Anatomical geometry and leader lines were retained.
 This SVG and these label modifications are distributed under the same CC BY-SA 3.0 license.
 The attribution and license apply to this illustration; no endorsement by the original authors is implied.
+
+Animated adaptation: sequential structure halos and illustrative blood-flow dots were added as a separate SVG overlay by ice冰冰·高分学姐团. The original anatomical geometry was retained. The figure adaptation and overlay are released under CC BY-SA 3.0. Timing is educational and does not represent physiological flow speed or heart rate.
